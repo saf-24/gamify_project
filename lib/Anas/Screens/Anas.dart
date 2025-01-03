@@ -6,7 +6,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,8 @@ class MyApp extends StatelessWidget {
 }
 
 class NotificationsScreen extends StatelessWidget {
+  const NotificationsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,12 +45,12 @@ class NotificationsScreen extends StatelessWidget {
           Expanded(
             child: ListView(
               padding: const EdgeInsets.all(16.0),
-              children: [
+              children: const [
                 NotificationCard(
                   title: "New lesson added",
                   highlightColor: Colors.blue,
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 NotificationCard(
                   title: "Leaderboard update\nThe 1st is safwan!!",
                   highlightColor: Colors.purple,
@@ -68,10 +70,10 @@ class NotificationCard extends StatelessWidget {
   final Color highlightColor;
 
   const NotificationCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.highlightColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +97,7 @@ class NotificationCard extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: title.split(' ')[0] + ' ',
+                    text: '${title.split(' ')[0]} ',
                     style: TextStyle(
                       color: highlightColor,
                       fontWeight: FontWeight.bold,
@@ -125,7 +127,7 @@ class NotificationCard extends StatelessWidget {
 }
 
 class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({Key? key}) : super(key: key);
+  const BottomNavBar({super.key});
 
   @override
   Widget build(BuildContext context) {
