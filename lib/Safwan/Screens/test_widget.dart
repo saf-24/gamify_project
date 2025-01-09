@@ -5,12 +5,12 @@ class TestWidget extends StatelessWidget {
   final String disc;
   final String imagepath;
 
-  TestWidget({
+  const TestWidget({super.key, 
     required this.title,
     required this.disc,
     required this.imagepath,
   });
-
+  
   @override
   Widget build(BuildContext context) {
     return Container(
