@@ -19,24 +19,26 @@ class MyApp extends StatelessWidget {
   }
 }
 
-final List<Map<String,String >> test = [{
-  'title': 'math 1',
-  'image': 'assets/img/download.jpg',
-  'disc':'a new mid test added to math 1'
-},
-
-{
-  'title': 'java',
-  'image': 'assets/img/download.jpg',
-  'disc':'a new final test added to java 1'
-},
-
-{
-  'title': 'python',
-  'image': 'assets/img/download.jpg',
-  'disc':'a new Quiz added to python 1'
-},
-   
+final List<Map<String, String>> test = [
+  {
+    'title': 'math 1',
+    'image': 'assets/img/download.jpg',
+    'disc': 'a new mid test added to math 1',
+    'date': '9/01/2025'
+  },
+  {
+    'title': 'java',
+    'image': 'assets/img/download.jpg',
+    'disc':
+        'a new final test adde fdfgnldfgj  ldkjflk j  lkdfglj dlfkgjhlkdfhjg d to java 1',
+    'date': '9/01/2025'
+  },
+  {
+    'title': 'python',
+    'image': 'assets/img/download.jpg',
+    'disc': 'a new Quiz added to python 1',
+    'date': '9/01/2025'
+  },
 ];
 
 class St_home_page extends StatelessWidget {
@@ -71,17 +73,32 @@ class St_home_page extends StatelessWidget {
           ),
           backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         ),
-        body: SizedBox(
-            height: 190,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-                itemCount: test.length,
-                itemBuilder: (context, index) {
-                  return TestWidget(
-                    title: test[index]['title']!,
-                    disc: test[index]['disc']!,
-                    imagepath: test[index]['image']!,
-                  );
-                })));
+        body: 
+        
+        Column(
+          children: [
+            
+            SizedBox(
+              
+                height: 330,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: test.length,
+                    itemBuilder: (context, index) {
+                      return TestWidget(
+                        title: test[index]['title']!,
+                        disc: test[index]['disc']!,
+                        imagepath: test[index]['image']!,
+                        date: test[index]['date']!,
+                      );
+                    },
+                  ),
+                ),
+          ],
+        ),
+            
+          );
+          
+          
   }
 }
