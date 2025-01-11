@@ -17,8 +17,9 @@ class TestWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(26, 85, 24, 20),
+      margin: const EdgeInsets.fromLTRB(26, 107, 24,2),
       width: 359,
+      height: 330,
       child: Stack(
         children: [
           ClipRRect(
@@ -32,7 +33,9 @@ class TestWidget extends StatelessWidget {
                     fit: BoxFit.cover,
                     width: 400,
                     height: 300,
-                  ))),
+                  )
+                  )
+                  ),
           Positioned(
               top: 18,
               left: 24,
@@ -60,7 +63,7 @@ class TestWidget extends StatelessWidget {
           Positioned(
               top: 67,
               left: 24,
-              child: Container(
+              child: SizedBox(
                 width: 320,
                 child: Text(
                   disc,
@@ -75,16 +78,16 @@ class TestWidget extends StatelessWidget {
           Positioned(
             bottom: 23,
             right: 23,
+            width: 116,
+            height: 34,
             child: ElevatedButton(
               onPressed: () {},
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
+                backgroundColor: WidgetStateProperty.all(
                     const Color.fromARGB(255, 228, 228, 228)),
               ),
               child: Text("Explore",style: TextStyle(fontSize: 18, fontWeight:FontWeight.w800,letterSpacing: 1,color: const Color.fromARGB(255, 45, 110, 153) ),),
             ),
-            width: 116,
-            height: 34,
           ),
         ],
       ),
