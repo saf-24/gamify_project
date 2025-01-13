@@ -17,6 +17,8 @@ class MyApp extends StatelessWidget {
 }
 
 class DiagramQuizPage extends StatefulWidget {
+  const DiagramQuizPage({super.key});
+
   @override
   _DiagramQuizPageState createState() => _DiagramQuizPageState();
 }
@@ -51,7 +53,7 @@ class _DiagramQuizPageState extends State<DiagramQuizPage> {
               // App Bar
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   Icon(Icons.menu, size: 28, color: Colors.black),
                   Text(
                     "Gamify",
@@ -148,7 +150,7 @@ class _DiagramQuizPageState extends State<DiagramQuizPage> {
                     ),
                   ),
                 );
-              }).toList(),
+              }),
 
               Spacer(),
 

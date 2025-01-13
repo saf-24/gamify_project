@@ -84,12 +84,12 @@ class Stloginpage extends StatelessWidget {
                             ),
                           ),
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
+                            backgroundColor: WidgetStateProperty.all(
                               const Color.fromARGB(255, 255, 255, 255),
                             ),
-                            padding: MaterialStateProperty.all(
+                            padding: WidgetStateProperty.all(
                                 EdgeInsets.fromLTRB(32, 13, 32, 13)),
-                            shape: MaterialStateProperty.all(
+                            shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(28),
                               ),
@@ -114,12 +114,12 @@ class Stloginpage extends StatelessWidget {
                             ),
                           ),
                           style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
+                            backgroundColor: WidgetStateProperty.all(
                               const Color.fromARGB(197, 0, 129, 189),
                             ),
-                            padding: MaterialStateProperty.all(
+                            padding: WidgetStateProperty.all(
                                 EdgeInsets.fromLTRB(40, 16, 44, 16)),
-                            shape: MaterialStateProperty.all(
+                            shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(28),
                               ),
@@ -246,12 +246,12 @@ class Stloginpage extends StatelessWidget {
                                       const Color.fromARGB(255, 190, 228, 253),
                                   fontWeight: FontWeight.w900)),
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
+                              backgroundColor: WidgetStateProperty.all(
                                 const Color.fromARGB(197, 0, 129, 189),
                               ),
-                              padding: MaterialStateProperty.all(
+                              padding: WidgetStateProperty.all(
                                   EdgeInsets.fromLTRB(60, 14, 60, 14)),
-                              shape: MaterialStateProperty.all(
+                              shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(28)))),

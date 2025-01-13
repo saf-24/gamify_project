@@ -10,6 +10,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,6 +26,7 @@ class Stloginpage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ValueNotifier<bool> ischecked = ValueNotifier(false);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: AppBar(
@@ -82,12 +84,12 @@ class Stloginpage extends StatelessWidget {
                                       const Color.fromARGB(255, 27, 111, 167),
                                   fontWeight: FontWeight.w900)),
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
+                              backgroundColor: WidgetStateProperty.all(
                                 const Color.fromARGB(192, 255, 255, 255),
                               ),
-                              padding: MaterialStateProperty.all(
+                              padding: WidgetStateProperty.all(
                                   EdgeInsets.fromLTRB(32, 13, 32, 13)),
-                              shape: MaterialStateProperty.all(
+                              shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(28)))),
@@ -105,12 +107,12 @@ class Stloginpage extends StatelessWidget {
                                       const Color.fromARGB(255, 190, 228, 253),
                                   fontWeight: FontWeight.w900)),
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
+                              backgroundColor: WidgetStateProperty.all(
                                 const Color.fromARGB(197, 0, 129, 189),
                               ),
-                              padding: MaterialStateProperty.all(
+                              padding: WidgetStateProperty.all(
                                   EdgeInsets.fromLTRB(40, 16, 44, 16)),
-                              shape: MaterialStateProperty.all(
+                              shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(28)))),
@@ -173,6 +175,38 @@ class Stloginpage extends StatelessWidget {
                             )),
                       ),
                       Positioned(
+                        top: 270,
+                        left: 24,
+                        child: Row(
+                          children: [
+                            ValueListenableBuilder<bool>(
+                              valueListenable: ischecked,
+                              builder: (context, value, child) {
+                                return Checkbox(
+                                  activeColor:
+                                      const Color.fromARGB(255, 33, 140, 182),
+                                  value: value,
+                                  onChanged: (bool? newValue) {
+                                    ischecked.value = newValue ?? false;
+                                  },
+                                  side: BorderSide(
+                                      color:
+                                          const Color.fromARGB(255, 0, 87, 145),
+                                      width: 2),
+                                );
+                              },
+                            ),
+                            Text(
+                              "remember me",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  color: const Color.fromARGB(255, 0, 54, 90),
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
                         top: 320,
                         left: 85,
                         child: ElevatedButton(
@@ -184,12 +218,12 @@ class Stloginpage extends StatelessWidget {
                                       const Color.fromARGB(255, 190, 228, 253),
                                   fontWeight: FontWeight.w900)),
                           style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(
+                              backgroundColor: WidgetStateProperty.all(
                                 const Color.fromARGB(197, 0, 129, 189),
                               ),
-                              padding: MaterialStateProperty.all(
+                              padding: WidgetStateProperty.all(
                                   EdgeInsets.fromLTRB(60, 14, 60, 14)),
-                              shape: MaterialStateProperty.all(
+                              shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(28)))),
