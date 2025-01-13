@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
-class Course_home_page_2 extends StatelessWidget {
+
+class New_learn_widget extends StatelessWidget {
   final String title;
   final String disc;
   final String percent1;
   final String date;
 
-  const Course_home_page_2({
+  const New_learn_widget({
     super.key,
     required this.title,
     required this.disc,
@@ -16,11 +16,11 @@ class Course_home_page_2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double percent = 0.74;
+    
     return Container(
-      margin: const EdgeInsets.fromLTRB(21, 484, 24, 0),
-      width: 367,
-      height: 333,
+      margin: const EdgeInsets.fromLTRB(17, 15, 30, 0),
+      width: 400,
+      height: 300,
       child: SizedBox(
         
         width: 323,
@@ -31,7 +31,7 @@ class Course_home_page_2 extends StatelessWidget {
               padding: const EdgeInsets.all(8.5),
               child: Container(
                 width: 359,
-                height: 195,
+                height: 175,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(28),
                     color: const Color.fromARGB(255, 255, 255, 255),
@@ -46,7 +46,7 @@ class Course_home_page_2 extends StatelessWidget {
               ),
             ),
             Positioned(
-                top: 68,
+                top: 28,
                 left: 30,
                 child: Text(
                   title,
@@ -58,7 +58,7 @@ class Course_home_page_2 extends StatelessWidget {
                       letterSpacing: 3),
                 )),
             Positioned(
-                top: 165,
+                top: 145,
                 left: 30,
                 child: Text(
                   date,
@@ -70,7 +70,7 @@ class Course_home_page_2 extends StatelessWidget {
                       letterSpacing: 3),
                 )),
             Positioned(
-                top: 118,
+                top: 90,
                 left: 30,
                 child: SizedBox(
                   width: 320,
@@ -85,8 +85,8 @@ class Course_home_page_2 extends StatelessWidget {
                   ),
                 )),
             Positioned(
-              top: 155,
-              right: 23,
+              top: 135,
+              right: 50,
               width: 116,
               height: 34,
               child: ElevatedButton(
@@ -96,32 +96,16 @@ class Course_home_page_2 extends StatelessWidget {
                       const Color.fromARGB(255, 228, 228, 228)),
                 ),
                 child: Text(
-                  "Explore",
+                  "Start!",
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 22,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 1,
                       color: const Color.fromARGB(255, 45, 110, 153)),
                 ),
               ),
             ),
-            Positioned(
-              top: 10,
-              child: LinearPercentIndicator(
-              width: MediaQuery.of(context).size.width - 45,
-              
-              animation: true,
-              lineHeight: 52.0,
-              
-              animationDuration: 1000,
-              percent: percent,
-              center: Text(percent1,style: TextStyle(fontSize: 35,color: const Color.fromARGB(255, 255, 255, 255),fontWeight: FontWeight.w700),),
-              linearStrokeCap: LinearStrokeCap.roundAll,
-              progressColor: const Color.fromARGB(255, 82, 129, 156),
-              backgroundColor: const Color.fromARGB(218, 54, 59, 61),
-              barRadius: Radius.circular(28),
-            )
-            )
+            
           ],
         ),
       ),

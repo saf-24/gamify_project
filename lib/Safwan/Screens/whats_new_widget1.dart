@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class TestWidget extends StatelessWidget {
+class Whats_New_Widget extends StatelessWidget {
   final String title;
   final String disc;
   final String imagepath;
   final String date;
 
-  const TestWidget({
+  const Whats_New_Widget({
     super.key,
     required this.title,
     required this.disc,
@@ -17,7 +17,7 @@ class TestWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(26, 107, 24,2),
+      margin: const EdgeInsets.fromLTRB(26, 15, 65,2),
       width: 359,
       height: 330,
       child: Stack(

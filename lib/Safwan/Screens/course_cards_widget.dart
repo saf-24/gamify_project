@@ -3,7 +3,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 class Course_home_page extends StatelessWidget {
   final String title;
   final String disc;
-  final String percent1;
+  final double percent1;
   final String date;
 
   const Course_home_page({
@@ -16,15 +16,15 @@ class Course_home_page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double percent = 0.74;
+    
     return Container(
-      margin: const EdgeInsets.fromLTRB(21, 384, 24, 0),
-      width: 367,
-      height: 333,
+      margin: const EdgeInsets.fromLTRB(17, 10, 30, 0),
+      width: 400,
+      height: 50,
       child: SizedBox(
         
         width: 323,
-        height: 222,
+        height: 22,
         child: Stack(
           children: [
             Padding(
@@ -86,7 +86,7 @@ class Course_home_page extends StatelessWidget {
                 )),
             Positioned(
               top: 155,
-              right: 23,
+              right: 50,
               width: 116,
               height: 34,
               child: ElevatedButton(
@@ -106,16 +106,16 @@ class Course_home_page extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 10,
+              top: 9,
               child: LinearPercentIndicator(
-              width: MediaQuery.of(context).size.width - 45,
+              width: MediaQuery.of(context).size.width - 35,
               
               animation: true,
               lineHeight: 52.0,
               
               animationDuration: 1000,
-              percent: percent,
-              center: Text(percent1,style: TextStyle(fontSize: 35,color: const Color.fromARGB(255, 255, 255, 255),fontWeight: FontWeight.w700),),
+              percent: percent1,
+              center: Text('${(percent1 * 100).toStringAsFixed(1)}%', style: TextStyle(fontSize: 35, color: const Color.fromARGB(255, 255, 255, 255), fontWeight: FontWeight.w700),),
               linearStrokeCap: LinearStrokeCap.roundAll,
               progressColor: const Color.fromARGB(255, 82, 129, 156),
               backgroundColor: const Color.fromARGB(218, 54, 59, 61),
