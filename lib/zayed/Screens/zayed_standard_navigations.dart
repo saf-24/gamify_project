@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const Student_Courses_Page());
+  runApp(const Zayed_standard_navigations());
 }
 
-class Student_Courses_Page extends StatelessWidget {
-  const Student_Courses_Page({Key? key}) : super(key: key);
+class Zayed_standard_navigations extends StatelessWidget {
+  const Zayed_standard_navigations({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class Student_Courses_Page extends StatelessWidget {
       theme: ThemeData.light(useMaterial3: true),
       home: Scaffold(
         backgroundColor: const Color(0xFFe4e4e4),
-        // appbar ://------
+        // appbar ://------------------------------------------//
         appBar: AppBar(
           backgroundColor: const Color(0xFFf1f1f1),
           centerTitle: true,
@@ -75,34 +75,64 @@ class Student_Courses_Page extends StatelessWidget {
 
         // Custom Bottom Taskbar///////////---------------//////////-------
 
-        bottomNavigationBar: BottomAppBar(
+        bottomNavigationBar: Container(
           color: Colors.white,
+          padding: const EdgeInsets.only(bottom: 28.0),
+          height: 107,
+
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.home, size: 40.0),
-                color: Color.fromARGB(197, 0, 129, 189),
-                onPressed: () {
-                },
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.home, size: 40.0),
+                    color: Colors.grey,
+                    onPressed: () {
+                    },
+                  ),
+                  const Text("Home", style: TextStyle(height: 0.1)),
+                ],
               ),
-              IconButton(
-                icon: const Icon(Icons.menu_book_rounded, size: 37.0),
-                color: Colors.grey,
-                onPressed: () {
-                },
+              
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.menu_book_rounded, size: 37.0),
+                    color: Color.fromARGB(197, 0, 129, 189),
+                    onPressed: () {
+                    },
+                  ),
+                  const Text("Courses", style: TextStyle(height: 0.1)),
+                ],
               ),
-              IconButton(
-                icon: const Icon(Icons.videogame_asset, size: 42.5),
-                color: Colors.grey,
-                onPressed: () {
-                },
+
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.videogame_asset, size: 42.5),
+                    color: Colors.grey,
+                    onPressed: () {
+                    },
+                  ),
+                  const Text("Games", style: TextStyle(height: 0.1)),
+                ],
               ),
-              IconButton(
-                icon: const Icon(Icons.person, size: 38.0),
-                color: Colors.grey,
-                onPressed: () {
-                },
+
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.person, size: 38.0),
+                    color: Colors.grey,
+                    onPressed: () {
+                    },
+                  ),
+                  const Text("Profile", style: TextStyle(height: 0.1)),
+                ],
               ),
             ],
           ),
