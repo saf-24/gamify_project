@@ -64,14 +64,9 @@ class Zayed_standard_navigations extends StatelessWidget {
           ],
         ),
 
-        // Main content of the page ////////////-----------//////////------
+        // Main content of the page better be here : ////////////-----------//////////------
 
-        body: const Center(
-          child: Text(
-            "Main Content Here",
-            style: TextStyle(fontSize: 24.0),
-          ),
-        ),
+        
 
         // Custom Bottom Taskbar///////////---------------//////////-------
 
