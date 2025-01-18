@@ -1,3 +1,4 @@
+  
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
@@ -19,13 +20,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
-      home: const St_home_page(),
+      home: const Games_list(),
     );
   }
 }
 
-class St_home_page extends StatelessWidget {
-  const St_home_page({super.key});
+class Games_list extends StatelessWidget {
+  const Games_list({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -294,3 +295,5 @@ class St_home_page extends StatelessWidget {
         );
   }
 }
+
+
