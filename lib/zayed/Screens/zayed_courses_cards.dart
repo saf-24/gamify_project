@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-class Course_home_page extends StatelessWidget {
+class Courses_cards extends StatelessWidget {
   final String title;
   final String disc;
   final double percent1;
   final String date;
 
-  const Course_home_page({
+  const Courses_cards({
     super.key,
     required this.title,
     required this.disc,
@@ -18,9 +18,9 @@ class Course_home_page extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return Container(
-      margin: const EdgeInsets.fromLTRB(17, 10, 30, 0),
+      margin: const EdgeInsets.fromLTRB(17, 0, 18, 5),
       width: 400,
-      height: 50,
+      height: 220,
       child: SizedBox(
         
         width: 323,
@@ -86,7 +86,7 @@ class Course_home_page extends StatelessWidget {
                 )),
             Positioned(
               top: 155,
-              right: 50,
+              right: 30,
               width: 116,
               height: 34,
               child: ElevatedButton(
@@ -117,7 +117,7 @@ class Course_home_page extends StatelessWidget {
               percent: percent1,
               center: Text('${(percent1 * 100).toStringAsFixed(1)}%', style: TextStyle(fontSize: 35, color: const Color.fromARGB(255, 255, 255, 255), fontWeight: FontWeight.w700),),
               linearStrokeCap: LinearStrokeCap.roundAll,
-              progressColor: const Color.fromARGB(197, 0, 129, 189),
+              progressColor: const Color.fromARGB(197, 19, 161, 226),
               backgroundColor: const Color.fromARGB(218, 54, 59, 61),
               barRadius: Radius.circular(28),
             )
