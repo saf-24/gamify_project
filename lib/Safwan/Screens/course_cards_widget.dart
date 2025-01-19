@@ -18,7 +18,7 @@ class Course_home_page extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return Container(
-      margin: const EdgeInsets.fromLTRB(17, 10, 30, 0),
+      margin: const EdgeInsets.fromLTRB(17, 10, 32, 0),
       width: 400,
       height: 50,
       child: SizedBox(
