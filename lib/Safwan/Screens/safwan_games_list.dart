@@ -83,149 +83,180 @@ class Games_list extends StatelessWidget {
         ),
 
         
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
+        body:
+        Center(
+          child: Stack(
             children: [
-              WelcomWidget(username: username),
-              SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 450,
-                            height: 230,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: test.length,
-                              itemBuilder: (context, index) {
-                                return Whats_New_Widget(
-                                  title: test[index]['title']!,
-                                  disc: test[index]['disc']!,
-                                  imagepath: test[index]['image']!,
-                                  date: test[index]['date']!,
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(30, 20, 6, 0),
-                      child: Row(
-                        children: [
-                          
-                          RichText(
-                              text: TextSpan(
-                                  style: const TextStyle(
-                                      fontSize: 22,
-                                      color: Color.fromARGB(255, 0, 0, 0),
-                                      fontWeight: FontWeight.w500),
-                                  children: const [
-                                TextSpan(
-                                  text: "Continue your ",
-                                ),
-                                TextSpan(
-                                    text: "Progress...",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 43, 115, 148),
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 22
-                                        )
-                                      )
-                              ]
-                              )
-                              )
-                        ],
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 450,
-                            height: 225,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: test2.length,
-                              itemBuilder: (context, index) {
-                                return Course_home_page(
-                                  title: test2[index]['title']!,
-                                  disc: test2[index]['progres']!,
-                                  date: test2[index]['lessonName']!,
-                                  percent1: test3[index]['percent']!,
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(32, 15, 6, 0),
-                      child: Row(
-                        children: [
-                          
-                          RichText(
-                              text: TextSpan(
-                                  style: const TextStyle(
-                                      fontSize: 22,
-                                      color: Color.fromARGB(255, 0, 0, 0),
-                                      fontWeight: FontWeight.w500),
-                                  children: const [
-                                TextSpan(
-                                  text: "Start ",
-                                ),
-                                TextSpan(
-                                    text: "Learn ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 43, 115, 148),
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 22
-                                        )
-                                      ),
-                                      TextSpan(
-                                  text: "new things...",
-                                ),
-                              ]
-                              )
-                              )
-                        ],
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 450,
-                            height: 240,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: test.length,
-                              itemBuilder: (context, index) {
-                                return New_learn_widget(
-                                  title: test2[0]['title']!,
-                                  disc: test2[0]['progres']!,
-                                  date: test2[0]['lessonName']!,
-                                  percent1: test2[0]['percent']!,
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+              Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                width: 350,
+                height: 195,
+                
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(28),
+                    color: const Color.fromARGB(255, 151, 80, 218),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: const Offset(2, 7),
+                      )
+                    ]),
+                ),
+                
+                SizedBox(height: 30),
+                Container(
+                width: 350,
+                height: 195,
+                
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(28),
+                    color: const Color.fromARGB(255, 59, 201, 118),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: const Offset(2, 7),
+                      )
+                    ]),
+                ),
+                SizedBox(height: 30),
+                Container(
+                width: 350,
+                height: 195,
+                
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(28),
+                    color: const Color.fromARGB(255, 224, 145, 42),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 2,
+                        blurRadius: 7,
+                        offset: const Offset(2, 7),
+                      )
+                    ]),
+                ),
+              ],
+            ),
+            Positioned(
+              top: 166,
+              right: 41,
+              width: 266,
+              height: 40,
+              child: ElevatedButton(
+                
+                onPressed: () {},
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(
+                      const Color.fromARGB(255, 247, 231, 253)),
+                ),
+                child: Text(
+                  "Choose this Game",
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 1,
+                      color: const Color.fromARGB(197, 65, 7, 90)),
                 ),
               ),
+            ),
+            Positioned(
+              top: 45,
+              left: 26,
+              child: Text("Hints game",
+                style: TextStyle(
+                  fontSize: 33,
+                  color: const Color.fromARGB(255, 245, 219, 255),
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 3,
+                ),
+              ),
+              ),
+              Positioned(
+              top: 94,
+              left: 26,
+              child: Container(
+                width: 300,
+                child: Text("Choose thw correct answer through the hints given",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: const Color.fromARGB(255, 245, 219, 255),
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 3,
+                  ),
+                ),
+              ),
+              ),
+              Positioned(
+              top: 395,
+              right: 41,
+              width: 266,
+              height: 40,
+              child: ElevatedButton(
+                
+                onPressed: () {},
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(
+                      const Color.fromARGB(255, 231, 253, 244)),
+                ),
+                child: Text(
+                  "Choose this Game",
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 1,
+                      color: const Color.fromARGB(197, 7, 90, 69)),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 270,
+              left: 26,
+              child: Text("puzzle words",
+                style: TextStyle(
+                  fontSize: 33,
+                  color: const Color.fromARGB(255, 226, 248, 238),
+                  fontWeight: FontWeight.w800,
+                  letterSpacing: 3,
+                ),
+              ),
+              ),
+              Positioned(
+              top: 324,
+              left: 26,
+              child: Container(
+                width: 300,
+                child: Text("Drag and place the crrect choice in the correct space",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: const Color.fromARGB(255, 236, 248, 243),
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 3,
+                  ),
+                ),
+              ),
+              ),
+              Positioned(
+              top: 529,
+              left: 26,
+              child: Container(
+                width: 300,
+                child: Text("SOON...",
+                  style: TextStyle(
+                    fontSize: 78,
+                    color: const Color.fromARGB(255, 255, 213, 157),
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 3,
+                  ),
+                ),
+              ),
+              )
             ],
           ),
         ),
