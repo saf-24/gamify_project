@@ -4,11 +4,11 @@ import 'package:gamify_project/Safwan/Screens/dummy_data.dart';
 import 'package:gamify_project/zayed/Screens/zayed_courses_cards.dart';
 
 void main() {
-  runApp(const Zayed_courses_page());
+  runApp(const Zayed_standard_navigations());
 }
 
-class Zayed_courses_page extends StatelessWidget {
-  const Zayed_courses_page({Key? key}) : super(key: key);
+class Zayed_standard_navigations extends StatelessWidget {
+  const Zayed_standard_navigations({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
