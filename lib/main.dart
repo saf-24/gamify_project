@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
         '/st_home': (context) => const St_home_page(),
         '/st_course': (context) => const Zayed_standard_navigations(),
         '/st_games_list': (context) => const Games_list(),
-      
       },
 
 

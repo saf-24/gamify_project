@@ -271,6 +271,7 @@ class St_home_page extends StatelessWidget {
                     color: Colors.grey,
                     onPressed: () {
                       Navigator.pushReplacementNamed(context, '/st_games_list');
+                      
                     },
                   ),
                   const Text("Games", style: TextStyle(height: 0.1)),
