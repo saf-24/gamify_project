@@ -18,7 +18,7 @@ class New_learn_widget extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return Container(
-      margin: const EdgeInsets.fromLTRB(17, 15, 30, 0),
+      margin: const EdgeInsets.fromLTRB(17, 12, 32, 0),
       width: 400,
       height: 300,
       child: SizedBox(
@@ -101,7 +101,7 @@ class New_learn_widget extends StatelessWidget {
                       fontSize: 22,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 1,
-                      color: const Color.fromARGB(255, 45, 110, 153)),
+                      color: Color.fromARGB(197, 0, 129, 189),),
                 ),
               ),
             ),

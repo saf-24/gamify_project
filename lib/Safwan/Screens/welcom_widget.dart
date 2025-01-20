@@ -33,7 +33,7 @@ class WelcomWidget extends StatelessWidget {
                     TextSpan(
                         text: username,
                         style: const TextStyle(
-                            color: Color.fromARGB(255, 43, 115, 148),
+                            color: Color.fromARGB(197, 0, 129, 189),
                             fontWeight: FontWeight.w800,
                             fontSize: 29))
                 ]
@@ -57,7 +57,7 @@ class WelcomWidget extends StatelessWidget {
                     TextSpan(
                         text: "New?",
                         style: const TextStyle(
-                            color: Color.fromARGB(255, 43, 115, 148),
+                            color: Color.fromARGB(197, 0, 129, 189),
                             fontWeight: FontWeight.w700,
                             fontSize: 23))
                 ]

@@ -76,7 +76,9 @@ class Stloginpage extends StatelessWidget {
                         top: 34,
                         right: 27,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/');
+                          },
                           child: Text("Sign up",
                               style: TextStyle(
                                   fontSize: 25,
@@ -210,7 +212,9 @@ class Stloginpage extends StatelessWidget {
                         top: 320,
                         left: 85,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamedAndRemoveUntil(context, '/st_home', (route) => false);
+                          },
                           child: Text("Login",
                               style: TextStyle(
                                   fontSize: 30,

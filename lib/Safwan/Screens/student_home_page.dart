@@ -107,7 +107,7 @@ class St_home_page extends StatelessWidget {
                                 TextSpan(
                                     text: "Progress...",
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 43, 115, 148),
+                                        color: Color.fromARGB(197, 0, 129, 189),
                                         fontWeight: FontWeight.w800,
                                         fontSize: 22
                                         )
@@ -159,7 +159,7 @@ class St_home_page extends StatelessWidget {
                                 TextSpan(
                                     text: "Learn ",
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 43, 115, 148),
+                                        color: Color.fromARGB(197, 0, 129, 189),
                                         fontWeight: FontWeight.w800,
                                         fontSize: 22
                                         )
@@ -201,6 +201,74 @@ class St_home_page extends StatelessWidget {
               ),
             ],
           ),
-        ));
+        ),
+        bottomNavigationBar: Container(
+          color: Colors.white,
+          padding: const EdgeInsets.only(bottom: 14.0),
+          height: 96,
+
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.home, size: 40.0),
+                    color: Color.fromARGB(197, 0, 129, 189),
+                    onPressed: () {
+                    },
+                  ),
+                  const Text("Home", style: TextStyle(height: 0.1,color: Color.fromARGB(197, 0, 129, 189),fontWeight: FontWeight.w700)),
+                ],
+              ),
+              
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.menu_book_rounded, size: 40.0),
+                    color: Colors.grey,
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/st_course');
+                    },
+                  ),
+                  const Text("Courses", style: TextStyle(height: 0.1,)),
+                ],
+              ),
+
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.videogame_asset, size: 41),
+                    color: Colors.grey,
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/st_games_list');
+                      
+                    },
+                  ),
+                  const Text("Games", style: TextStyle(height: 0.1)),
+                ],
+              ),
+
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.person, size: 43),
+                    color: Colors.grey,
+                    onPressed: () {
+                    },
+                  ),
+                  const Text("Profile", style: TextStyle(height: 0.1)),
+                ],
+              ),
+            ],
+          ),
+          
+        ),
+        );
+        
   }
 }
