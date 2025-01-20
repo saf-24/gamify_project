@@ -18,7 +18,7 @@ class New_learn_widget extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return Container(
-      margin: const EdgeInsets.fromLTRB(17, 15, 32, 0),
+      margin: const EdgeInsets.fromLTRB(17, 15, 30, 0),
       width: 400,
       height: 300,
       child: SizedBox(

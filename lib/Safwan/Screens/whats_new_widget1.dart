@@ -17,7 +17,7 @@ class Whats_New_Widget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(25, 15, 65,2),
+      margin: const EdgeInsets.fromLTRB(26, 15, 65,2),
       width: 359,
       height: 330,
       child: Stack(
