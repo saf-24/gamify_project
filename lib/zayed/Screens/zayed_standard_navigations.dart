@@ -66,7 +66,7 @@ class Zayed_standard_navigations extends StatelessWidget {
 
         // Main content of the page better be here : ////////////-----------//////////------
 
-        
+
 
         // Custom Bottom Taskbar///////////---------------//////////-------
 
