@@ -240,8 +240,7 @@ class In_login_page extends StatelessWidget {
                       color: const Color.fromARGB(153, 231, 231, 231),
                       border: Border.all(
                           color: const Color.fromARGB(94, 161, 161, 161),
-                          width: 3)
-                          ),
+                          width: 3)),
                 ),
               ),
             ),

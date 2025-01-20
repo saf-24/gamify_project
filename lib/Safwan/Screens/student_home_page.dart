@@ -30,58 +30,32 @@ class St_home_page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xFFe4e4e4),
-        // appbar ://------------------------------------------//
+        backgroundColor: const Color.fromARGB(255, 230, 230, 230),
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 252, 252, 252),
-          centerTitle: true,
-          toolbarHeight: 65.0, // Adjust AppBar height
-          
-
-          // menu icon :----------------------------------------------
-
-          leading: Padding(
-            padding: const EdgeInsets.only(bottom: 1.0),
-            child: IconButton(
-              icon: const Icon(
-                Icons.menu,
-                size: 47.0,
-                color: Color.fromARGB(197, 0, 129, 189),
-              ),
-              onPressed: () {},
-            ),
-          ),
-
-          // title :-------------------------------------------
-
-          title: const Text(
+          title: Text(
             "Gamify",
             style: TextStyle(
-              color: Color.fromARGB(197, 0, 129, 189),
-              fontSize: 33.0,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 1
-            ),
+                fontSize: 32,
+                color: Color.fromARGB(197, 13, 99, 139),
+                fontWeight: FontWeight.w600),
           ),
-
-          // notification icon :---------------------------------------
-
+          centerTitle: true,
           actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 6.0),
-              child: IconButton(
-                icon: const Icon(
-                  Icons.notifications_none,
-                  size: 34.0,
-                  color: Color.fromARGB(197, 0, 129, 189),
-                ),
-                onPressed: () {},
-              ),
-            )
+            IconButton(
+              tooltip: "notifications",
+              icon: const Icon(Icons.notifications_none,
+                  size: 35.4, color: Color.fromARGB(197, 13, 99, 139)),
+              onPressed: () {},
+            ),
           ],
+          leading: IconButton(
+            tooltip: "Menu",
+            icon: const Icon(Icons.menu,
+                size: 35.4, color: Color.fromARGB(197, 13, 99, 139)),
+            onPressed: () {},
+          ),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         ),
-
-        
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
@@ -295,5 +269,6 @@ class St_home_page extends StatelessWidget {
           
         ),
         );
+        
   }
 }
