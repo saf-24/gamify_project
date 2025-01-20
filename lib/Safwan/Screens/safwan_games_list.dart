@@ -2,11 +2,7 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
-import 'package:gamify_project/Safwan/Screens/course_cards_widget.dart';
-import 'package:gamify_project/Safwan/Screens/new_learrn_widget.dart';
-import 'package:gamify_project/Safwan/Screens/dummy_data.dart';
-import 'package:gamify_project/Safwan/Screens/welcom_widget.dart';
-import 'package:gamify_project/Safwan/Screens/whats_new_widget1.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -275,6 +271,7 @@ class Games_list extends StatelessWidget {
                     icon: const Icon(Icons.home, size: 40.0),
                     color: Colors.grey,
                     onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/st_home');
                     },
                   ),
                   const Text("Home", style: TextStyle(height: 0.1)),
@@ -286,11 +283,12 @@ class Games_list extends StatelessWidget {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.menu_book_rounded, size: 40.0),
-                    color: Color.fromARGB(197, 0, 129, 189),
+                    color: Colors.grey,
                     onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/st_course');
                     },
                   ),
-                  const Text("Courses", style: TextStyle(height: 0.1, color: Color.fromARGB(197, 0, 129, 189),fontWeight: FontWeight.w700)),
+                  const Text("Courses", style: TextStyle(height: 0.1, )),
                 ],
               ),
 
@@ -299,11 +297,11 @@ class Games_list extends StatelessWidget {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.videogame_asset, size: 41),
-                    color: Colors.grey,
+                    color: Color.fromARGB(197, 0, 129, 189),
                     onPressed: () {
                     },
                   ),
-                  const Text("Games", style: TextStyle(height: 0.1)),
+                  const Text("Games", style: TextStyle(height: 0.1,color: Color.fromARGB(197, 0, 129, 189),fontWeight: FontWeight.w700)),
                 ],
               ),
 

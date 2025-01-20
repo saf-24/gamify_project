@@ -117,7 +117,7 @@ class Course_home_page extends StatelessWidget {
               percent: percent1,
               center: Text('${(percent1 * 100).toStringAsFixed(1)}%', style: TextStyle(fontSize: 35, color: const Color.fromARGB(255, 255, 255, 255), fontWeight: FontWeight.w700),),
               linearStrokeCap: LinearStrokeCap.roundAll,
-              progressColor: const Color.fromARGB(197, 0, 129, 189),
+              progressColor: const Color.fromARGB(197, 19, 161, 226),
               backgroundColor: const Color.fromARGB(218, 54, 59, 61),
               barRadius: Radius.circular(28),
             )
