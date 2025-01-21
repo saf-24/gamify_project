@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 class New_learn_widget extends StatelessWidget {
   final String title;
   final String disc;
-  final String percent1;
-  final String date;
+  
 
   const New_learn_widget({
     super.key,
     required this.title,
     required this.disc,
-    required this.date,
-    required this.percent1,
+
   });
 
   @override
@@ -57,20 +55,9 @@ class New_learn_widget extends StatelessWidget {
                       
                       letterSpacing: 3),
                 )),
+            
             Positioned(
-                top: 145,
-                left: 30,
-                child: Text(
-                  date,
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: const Color.fromARGB(255, 0, 0, 0),
-                      fontWeight: FontWeight.w500,
-                      wordSpacing: 2,
-                      letterSpacing: 3),
-                )),
-            Positioned(
-                top: 90,
+                top: 65,
                 left: 30,
                 child: SizedBox(
                   width: 320,

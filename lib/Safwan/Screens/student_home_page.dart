@@ -7,6 +7,7 @@ import 'package:gamify_project/Safwan/Screens/dummy_data.dart';
 import 'package:gamify_project/Safwan/Screens/welcom_widget.dart';
 import 'package:gamify_project/Safwan/Screens/whats_new_widget1.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -19,13 +20,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
-      home: const St_home_page(),
+      home: const St_home_page_old(),
     );
   }
 }
 
-class St_home_page extends StatelessWidget {
-  const St_home_page({super.key});
+class St_home_page_old extends StatelessWidget {
+  const St_home_page_old({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -187,8 +188,7 @@ class St_home_page extends StatelessWidget {
                                 return New_learn_widget(
                                   title: test2[0]['title']!,
                                   disc: test2[0]['progres']!,
-                                  date: test2[0]['lessonName']!,
-                                  percent1: test2[0]['percent']!,
+
                                 );
                               },
                             ),
@@ -257,8 +257,9 @@ class St_home_page extends StatelessWidget {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.person, size: 43),
-                    color: Colors.grey,
+                    color: const Color.fromARGB(255, 22, 158, 221),
                     onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/test_fire_2');
                     },
                   ),
                   const Text("Profile", style: TextStyle(height: 0.1)),
