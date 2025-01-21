@@ -32,7 +32,7 @@ class Lessons_cards extends StatelessWidget {
               top: 0,
               left: 0,
               right: 10,
-              bottom: 5,
+              bottom: 9,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 9, 17, 18),
                 child: ElevatedButton(
@@ -92,7 +92,7 @@ class Lessons_cards extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 9,
+              bottom: 143,
               child: LinearPercentIndicator(
                 width: MediaQuery.of(context).size.width - 34,
                 animation: true,
