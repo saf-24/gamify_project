@@ -7,9 +7,15 @@ class TestPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Gamify'),
         centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.menu), // أيقونة القوائم
+          onPressed: () {
+            // يمكنك إضافة الإجراء هنا (فتح درج أو قائمة جانبية)
+          },
+        ),
         actions: [
           IconButton(
-            icon: Icon(Icons.notifications),
+            icon: Icon(Icons.notifications), // أيقونة الإشعارات
             onPressed: () {},
           ),
         ],
@@ -29,14 +35,11 @@ class TestPage extends StatelessWidget {
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: Center(
-                      child: Text(
-                        '', // إزالة النص
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 27, 111, 167),
-                        ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Image.asset(
+                        'assets/images/diagram.png', // ضع مسار الصورة هنا
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
@@ -77,7 +80,10 @@ class TestPage extends StatelessWidget {
                       backgroundColor: Color.fromARGB(255, 27, 111, 167),
                     ),
                     onPressed: () {},
-                    child: Text('Test'),
+                    child: Text(
+                      'Test',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ],
@@ -86,7 +92,7 @@ class TestPage extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              color: Colors.white.withOpacity(0.7), // لون شفاف
+              color: Colors.white.withOpacity(0.7),
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -94,52 +100,70 @@ class TestPage extends StatelessWidget {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.home,
-                          color: Color.fromARGB(255, 27, 111, 167)),
-                      SizedBox(height: 5),
-                      Text(
-                        'Home',
-                        style:
-                            TextStyle(color: Color.fromARGB(255, 27, 111, 167)),
+                      IconButton(
+                        icon: const Icon(Icons.home, size: 40.0),
+                        color: Color.fromARGB(197, 0, 129, 189),
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/st_home');
+                        },
+                      ),
+                      const Text(
+                        "Home",
+                        style: TextStyle(height: 0.1),
                       ),
                     ],
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.book,
-                          color: Color.fromARGB(255, 27, 111, 167)),
-                      SizedBox(height: 5),
-                      Text(
-                        'Courses',
-                        style:
-                            TextStyle(color: Color.fromARGB(255, 27, 111, 167)),
+                      IconButton(
+                        icon: const Icon(Icons.menu_book_rounded, size: 40.0),
+                        color: Color.fromARGB(197, 0, 129, 189),
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/st_course');
+                        },
+                      ),
+                      const Text(
+                        "Courses",
+                        style: TextStyle(
+                          height: 0.1,
+                          color: Color.fromARGB(197, 0, 129, 189),
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ],
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.games,
-                          color: Color.fromARGB(255, 27, 111, 167)),
-                      SizedBox(height: 5),
-                      Text(
-                        'Games',
-                        style:
-                            TextStyle(color: Color.fromARGB(255, 27, 111, 167)),
+                      IconButton(
+                        icon: const Icon(Icons.videogame_asset, size: 41),
+                        color: Color.fromARGB(197, 0, 129, 189),
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, '/st_games_list');
+                        },
+                      ),
+                      const Text(
+                        "Games",
+                        style: TextStyle(height: 0.1),
                       ),
                     ],
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.account_circle,
-                          color: Color.fromARGB(255, 27, 111, 167)),
-                      SizedBox(height: 5),
-                      Text(
-                        'Account',
-                        style:
-                            TextStyle(color: Color.fromARGB(255, 27, 111, 167)),
+                      IconButton(
+                        icon: const Icon(Icons.person, size: 43),
+                        color: Color.fromARGB(197, 0, 129, 189),
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, '/st_account');
+                        },
+                      ),
+                      const Text(
+                        "Account",
+                        style: TextStyle(height: 0.1),
                       ),
                     ],
                   ),
