@@ -4,11 +4,11 @@ import 'package:gamify_project/Safwan/Screens/dummy_data.dart';
 import 'package:gamify_project/zayed/Screens/zayed_courses_cards.dart';
 
 void main() {
-  runApp(const Zayed_courses_page());
+  runApp(const Zayed_standard_navigations());
 }
 
-class Zayed_courses_page extends StatelessWidget {
-  const Zayed_courses_page({Key? key}) : super(key: key);
+class Zayed_standard_navigations extends StatelessWidget {
+  const Zayed_standard_navigations({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +19,10 @@ class Zayed_courses_page extends StatelessWidget {
         backgroundColor: const Color(0xFFe4e4e4),
         // appbar ://------------------------------------------//
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 244, 243, 243),
+          backgroundColor: const Color.fromARGB(255, 252, 252, 252),
           centerTitle: true,
-          toolbarHeight: 80.0, // Adjust AppBar height
-          elevation: 4.0,
-          shadowColor: Colors.grey.withOpacity(0.5),
+          toolbarHeight: 65.0, // Adjust AppBar height
+          
 
           // menu icon :----------------------------------------------
 
@@ -46,6 +45,8 @@ class Zayed_courses_page extends StatelessWidget {
             style: TextStyle(
               color: Color.fromARGB(197, 0, 129, 189),
               fontSize: 33.0,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 1
             ),
           ),
 
@@ -84,7 +85,7 @@ class Zayed_courses_page extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.71,
+              height: MediaQuery.of(context).size.height * 0.74,
               child: ListView.builder(
                 itemCount: test2.length,
                 itemBuilder: (context, index) {
@@ -105,8 +106,8 @@ class Zayed_courses_page extends StatelessWidget {
 
         bottomNavigationBar: Container(
           color: Colors.white,
-          padding: const EdgeInsets.only(bottom: 28.0),
-          height: 107,
+          padding: const EdgeInsets.only(bottom: 14.0),
+          height: 96,
 
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -118,9 +119,10 @@ class Zayed_courses_page extends StatelessWidget {
                     icon: const Icon(Icons.home, size: 40.0),
                     color: Colors.grey,
                     onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/st_home');
                     },
                   ),
-                  const Text("Home", style: TextStyle(height: 0.1)),
+                  const Text("Home", style: TextStyle(height: 0.1,)),
                 ],
               ),
               
@@ -128,12 +130,13 @@ class Zayed_courses_page extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.menu_book_rounded, size: 37.0),
+                    icon: const Icon(Icons.menu_book_rounded, size: 40.0),
                     color: Color.fromARGB(197, 0, 129, 189),
                     onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/st_course');
                     },
                   ),
-                  const Text("Courses", style: TextStyle(height: 0.1)),
+                  const Text("Courses", style: TextStyle(height: 0.1,color: Color.fromARGB(197, 0, 129, 189),fontWeight: FontWeight.w700)),
                 ],
               ),
 
@@ -141,9 +144,10 @@ class Zayed_courses_page extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.videogame_asset, size: 42.5),
+                    icon: const Icon(Icons.videogame_asset, size: 41),
                     color: Colors.grey,
                     onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/st_games_list');
                     },
                   ),
                   const Text("Games", style: TextStyle(height: 0.1)),
@@ -154,7 +158,7 @@ class Zayed_courses_page extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.person, size: 38.0),
+                    icon: const Icon(Icons.person, size: 43),
                     color: Colors.grey,
                     onPressed: () {
                     },

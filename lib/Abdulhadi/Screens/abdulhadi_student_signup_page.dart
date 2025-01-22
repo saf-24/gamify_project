@@ -4,6 +4,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_student_login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,13 +17,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
-      home: const Stloginpage(),
+      home: const Stsignuppage(),
     );
   }
 }
 
-class Stloginpage extends StatelessWidget {
-  const Stloginpage({super.key});
+class Stsignuppage extends StatelessWidget {
+  const Stsignuppage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +76,9 @@ class Stloginpage extends StatelessWidget {
                         top: 42,
                         left: 33,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/st_login');
+                          },
                           child: Text(
                             "Login",
                             style: TextStyle(
@@ -86,7 +89,7 @@ class Stloginpage extends StatelessWidget {
                           ),
                           style: ButtonStyle(
                             backgroundColor: WidgetStateProperty.all(
-                              const Color.fromARGB(255, 255, 255, 255),
+                              const Color.fromARGB(193, 255, 255, 255),
                             ),
                             padding: WidgetStateProperty.all(
                                 EdgeInsets.fromLTRB(32, 13, 32, 13)),
@@ -119,7 +122,7 @@ class Stloginpage extends StatelessWidget {
                               const Color.fromARGB(197, 0, 129, 189),
                             ),
                             padding: WidgetStateProperty.all(
-                                EdgeInsets.fromLTRB(40, 16, 44, 16)),
+                                EdgeInsets.fromLTRB(31, 16, 31, 16)),
                             shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(28),
@@ -209,22 +212,26 @@ class Stloginpage extends StatelessWidget {
                             )),
                       ),
                       Positioned(
-                        top: 400,
-                        left: 85,
+                        top: 395,
+                        left: 80,
                         child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text("Login",
+                          
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/st_login');
+                          },
+                          child: Text("Sign up",
                               style: TextStyle(
                                   fontSize: 30,
                                   color:
                                       const Color.fromARGB(255, 190, 228, 253),
                                   fontWeight: FontWeight.w900)),
                           style: ButtonStyle(
+                            
                               backgroundColor: WidgetStateProperty.all(
                                 const Color.fromARGB(197, 0, 129, 189),
                               ),
                               padding: WidgetStateProperty.all(
-                                  EdgeInsets.fromLTRB(60, 14, 60, 14)),
+                                  EdgeInsets.fromLTRB(50, 14, 50, 14)),
                               shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius:

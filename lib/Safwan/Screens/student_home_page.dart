@@ -7,6 +7,7 @@ import 'package:gamify_project/Safwan/Screens/dummy_data.dart';
 import 'package:gamify_project/Safwan/Screens/welcom_widget.dart';
 import 'package:gamify_project/Safwan/Screens/whats_new_widget1.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -19,13 +20,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
-      home: const St_home_page(),
+      home: const St_home_page_old(),
     );
   }
 }
 
-class St_home_page extends StatelessWidget {
-  const St_home_page({super.key});
+class St_home_page_old extends StatelessWidget {
+  const St_home_page_old({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +108,7 @@ class St_home_page extends StatelessWidget {
                                 TextSpan(
                                     text: "Progress...",
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 43, 115, 148),
+                                        color: Color.fromARGB(197, 0, 129, 189),
                                         fontWeight: FontWeight.w800,
                                         fontSize: 22
                                         )
@@ -159,7 +160,7 @@ class St_home_page extends StatelessWidget {
                                 TextSpan(
                                     text: "Learn ",
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 43, 115, 148),
+                                        color: Color.fromARGB(197, 0, 129, 189),
                                         fontWeight: FontWeight.w800,
                                         fontSize: 22
                                         )
@@ -187,8 +188,7 @@ class St_home_page extends StatelessWidget {
                                 return New_learn_widget(
                                   title: test2[0]['title']!,
                                   disc: test2[0]['progres']!,
-                                  date: test2[0]['lessonName']!,
-                                  percent1: test2[0]['percent']!,
+
                                 );
                               },
                             ),
@@ -201,6 +201,75 @@ class St_home_page extends StatelessWidget {
               ),
             ],
           ),
-        ));
+        ),
+        bottomNavigationBar: Container(
+          color: Colors.white,
+          padding: const EdgeInsets.only(bottom: 14.0),
+          height: 96,
+
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.home, size: 40.0),
+                    color: Color.fromARGB(197, 0, 129, 189),
+                    onPressed: () {
+                    },
+                  ),
+                  const Text("Home", style: TextStyle(height: 0.1,color: Color.fromARGB(197, 0, 129, 189),fontWeight: FontWeight.w700)),
+                ],
+              ),
+              
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.menu_book_rounded, size: 40.0),
+                    color: Colors.grey,
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/st_course');
+                    },
+                  ),
+                  const Text("Courses", style: TextStyle(height: 0.1,)),
+                ],
+              ),
+
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.videogame_asset, size: 41),
+                    color: Colors.grey,
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/st_games_list');
+                      
+                    },
+                  ),
+                  const Text("Games", style: TextStyle(height: 0.1)),
+                ],
+              ),
+
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.person, size: 43),
+                    color: const Color.fromARGB(255, 22, 158, 221),
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/test_fire_2');
+                    },
+                  ),
+                  const Text("Profile", style: TextStyle(height: 0.1)),
+                ],
+              ),
+            ],
+          ),
+          
+        ),
+        );
+        
   }
 }

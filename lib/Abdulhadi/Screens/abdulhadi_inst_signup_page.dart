@@ -15,13 +15,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
-      home: const Stloginpage(),
+      home: const instisignup(),
     );
   }
 }
 
-class Stloginpage extends StatelessWidget {
-  const Stloginpage({super.key});
+class instisignup extends StatelessWidget {
+  const instisignup({super.key});
 
   @override
   Widget build(BuildContext context) {
