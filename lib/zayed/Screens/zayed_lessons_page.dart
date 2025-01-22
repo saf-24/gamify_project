@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:gamify_project/Safwan/Screens/dummy_data.dart';
-import 'package:gamify_project/zayed/Screens/zayed_Lessons_cards.dart';
+import 'package:gamify_project/zayed/Screens/zayed_leaderboard_page.dart';
+import 'package:gamify_project/zayed/Screens/zayed_lessons_cards.dart';
+
+
+
 
 void main() {
   runApp(const Zayed_lessons_page());
@@ -115,7 +119,7 @@ class Zayed_lessons_page extends StatelessWidget {
                           // TextButton aligned to the right
                           TextButton(
                             onPressed: () {
-                              // Add functionality here for TextButton
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_test_page()));
                             },
                             child: Text(
                               "test",
@@ -130,21 +134,43 @@ class Zayed_lessons_page extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: screenHeight * 0.02),
-                  height: screenHeight * 0.477, // Responsive height
-                  child: ListView.builder(
-                    itemCount: test2.length,
-                    itemBuilder: (context, index) {
-                      return Lessons_cards(
-                        title: test2[index]['title']!,
-                        disc: test2[index]['progres']!,
-                        date: test2[index]['lessonName']!,
-                        percent1: test3[index]['percent']!,
+                StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('lessons')
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+
+                      if (snapshot.hasError) {
+                        return Center(child: Text("Error fetching data"));
+                      }
+
+                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                        return Center(child: Text("No subjects available"));
+                      }
+
+                      final subjects = snapshot.data!.docs;
+
+                      return Container(
+                        margin: EdgeInsets.only(top: screenHeight * 0.02),
+                        height: screenHeight * 0.477, // Responsive height
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: subjects.length,
+                          itemBuilder: (context, index) {
+                            final subject = subjects[index].data()
+                                as Map<String, dynamic>;
+                            return Lessons_cards(
+                              lessonTitle: subject['lesson_name'] ?? 'N/A',
+                              chapterNumber: int.tryParse(subject['Chapter_number'].toString()) ?? 0,
+                              date: subject['date'] ?? 'N/A',
+                            );
+                          },
+                        ),
                       );
-                    },
-                  ),
-                ),
+                    }),
               ],
             ),
           ),
