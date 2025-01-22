@@ -29,7 +29,7 @@ class Course_home_page extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.5),
-              child: Container(
+                child: Container(
                 width: 359,
                 height: 195,
                 decoration: BoxDecoration(

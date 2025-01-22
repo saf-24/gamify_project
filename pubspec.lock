@@ -285,7 +285,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "14.2.5"
-<<<<<<< Updated upstream
   web:
     dependency: transitive
     description:
@@ -294,8 +293,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
-=======
->>>>>>> Stashed changes
 sdks:
   dart: ">=3.5.4 <4.0.0"
   flutter: ">=3.22.0"
