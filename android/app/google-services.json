@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "859231252975",
+    "project_id": "gamify-3005e",
+    "storage_bucket": "gamify-3005e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859231252975:android:0b205ce205c3c6b28a461a",
+        "android_client_info": {
+          "package_name": "com.example.gamify_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA4r8nL9bvfKd-Ds5nRYgl85DVG4cCyQI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -16,13 +16,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
-      home: const Stloginpage(),
+      home: const In_login_page(),
     );
   }
 }
 
-class Stloginpage extends StatelessWidget {
-  const Stloginpage({super.key});
+class In_login_page extends StatelessWidget {
+  const In_login_page({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +76,7 @@ class Stloginpage extends StatelessWidget {
                         top: 34,
                         right: 27,
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/');
-                          },
+                          onPressed: () {},
                           child: Text("Sign up",
                               style: TextStyle(
                                   fontSize: 25,
@@ -140,7 +138,7 @@ class Stloginpage extends StatelessWidget {
                             child: TextField(
                               decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "E-mail",
+                                  hintText: "ID",
                                   hintStyle: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w400,
@@ -148,7 +146,7 @@ class Stloginpage extends StatelessWidget {
                                           255, 33, 123, 165)),
                                   contentPadding: EdgeInsets.only(left: 20)),
                             )),
-                      ),
+                      ), 
                       Positioned(
                         top: 219,
                         left: 28,
@@ -212,9 +210,7 @@ class Stloginpage extends StatelessWidget {
                         top: 320,
                         left: 85,
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamedAndRemoveUntil(context, '/st_home', (route) => false);
-                          },
+                          onPressed: () {},
                           child: Text("Login",
                               style: TextStyle(
                                   fontSize: 30,

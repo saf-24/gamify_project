@@ -11,19 +11,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TestPage(),
+      home: Test_fire(),
     );
   }
 }
 
-class TestPage extends StatefulWidget {
-  const TestPage({super.key});
+class Test_fire extends StatefulWidget {
+  const Test_fire({super.key});
 
   @override
   _TestPageState createState() => _TestPageState();
 }
 
-class _TestPageState extends State<TestPage> {
+class _TestPageState extends State<Test_fire> {
   int _selectedAnswerIndex = -1;
   bool _isLoading = true;
   String? _questionText;
@@ -43,12 +43,13 @@ class _TestPageState extends State<TestPage> {
           .collection('questions')
           .doc('wldn95QOXjCxdCtEYUYQ') // Replace with your document ID
           .get();
-
+          
       if (doc.exists) {
         setState(() {
-          _questionText = doc['question'];
-          _answers = List<String>.from(doc['answers']);
-          _correctAnswerIndex = doc['correctAnswerIndex'];
+          var data = doc.data() as Map<String, dynamic>?;
+          _questionText = data != null && data.containsKey('question') ? data['question'] : 'No question available';
+          _answers = data != null && data.containsKey('answers') ? List<String>.from(data['answers']) : [];
+          _correctAnswerIndex = data != null && data.containsKey('correctAnswer') ? data['correctAnswer'] : -1;
           _isLoading = false;
         });
       } else {

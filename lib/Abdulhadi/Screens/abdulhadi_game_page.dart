@@ -5,6 +5,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,6 +17,8 @@ class MyApp extends StatelessWidget {
 }
 
 class HintPage extends StatefulWidget {
+  const HintPage({super.key});
+
   @override
   _HintPageState createState() => _HintPageState();
 }
@@ -58,7 +62,7 @@ class _HintPageState extends State<HintPage> {
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFD1B5F5), // Light purple
                   ),
-                  children: [
+                  children: const [
                     TextSpan(
                       text: '15 points',
                       style: TextStyle(
@@ -179,7 +183,7 @@ class AnswerButton extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  const AnswerButton({
+  const AnswerButton({super.key, 
     required this.label,
     required this.text,
     required this.isSelected,
