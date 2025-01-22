@@ -1,17 +1,22 @@
 
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 
-class Lessons_cards extends StatelessWidget {
+class Quiz_cards extends StatelessWidget {
   final String lessonTitle;
   final int chapterNumber;
   final String date;
+  final double grade;
+  final int Qnumber;
 
-  const Lessons_cards({
+  const Quiz_cards({
     super.key,
     required this.lessonTitle,
     required this.chapterNumber,
     required this.date,
+    required this.grade,
+    required this.Qnumber,
   });
 
   @override
@@ -46,8 +51,8 @@ class Lessons_cards extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 30,
-              left: 34,
+              top: 50,
+              left: 31,
               child: Text(
                 lessonTitle,
                 style: TextStyle(
@@ -59,8 +64,8 @@ class Lessons_cards extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 130,
-              left: 34,
+              top: 137,
+              left: 31,
               child: Text(
                 date,
                 style: TextStyle(
@@ -73,8 +78,8 @@ class Lessons_cards extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 82,
-              left: 34,
+              top: 100,
+              left: 33,
               child: SizedBox(
                 width: 320,
                 child: Text(
@@ -89,7 +94,29 @@ class Lessons_cards extends StatelessWidget {
                 ),
               ),
             ),
-            
+              Positioned(
+              bottom: 150,
+              child: LinearPercentIndicator(
+                width: MediaQuery.of(context).size.width - 31,
+                animation: true,
+                lineHeight: 48.0,
+                
+                animationDuration: 1000,
+                percent: grade,
+                center: Text(
+                  '${(grade * 10).toInt()}/$Qnumber',
+                  style: TextStyle(
+                    fontSize: 28,
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                linearStrokeCap: LinearStrokeCap.roundAll,
+                progressColor: const Color.fromARGB(197, 19, 161, 226),
+                backgroundColor: const Color.fromARGB(255, 0, 71, 91),
+                barRadius: Radius.circular(20),
+              ),
+            )
           ],
         ),
       ),

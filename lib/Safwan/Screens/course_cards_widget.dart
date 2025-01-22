@@ -90,7 +90,9 @@ class Course_home_page extends StatelessWidget {
               width: 116,
               height: 34,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/lesson_page');
+                },
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(
                       const Color.fromARGB(255, 228, 228, 228)),
