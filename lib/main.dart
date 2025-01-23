@@ -39,8 +39,6 @@ class MyApp extends StatelessWidget {
         '/test_fire': (context) => const Test_fire(),
         '/lesson_page': (context) => const Zayed_lessons_page(),
         '/quiz_page': (context) => const Zayed_test_page(),
-        
-
       },
     );
   }

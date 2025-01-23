@@ -133,17 +133,7 @@ class Zayed_test_page extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(top: screenHeight * 0.02),
                   height: screenHeight * 0.477, // Responsive height
-                  child: ListView.builder(
-                    itemCount: test2.length,
-                    itemBuilder: (context, index) {
-                      return Lessons_cards(
-                        title: test2[index]['title']!,
-                        disc: test2[index]['progres']!,
-                        date: test2[index]['lessonName']!,
-                        percent1: test3[index]['percent']!,
-                      );
-                    },
-                  ),
+                  
                 ),
               ],
             ),
