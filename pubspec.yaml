@@ -66,6 +66,7 @@ flutter:
   assets:
     - assets/img/login_bachground1.png
     - assets/img/download.jpg
+    - assets/img/profile_back.png
   
 
   # An image asset can refer to one or more resolution-specific "variants", see
