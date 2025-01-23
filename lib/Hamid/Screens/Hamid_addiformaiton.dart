@@ -65,13 +65,13 @@ class AddPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+            children: const [
               Text(
                 "Add Students",
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: const Color.fromARGB(255, 27, 111, 167),
+                  color: Color.fromARGB(255, 27, 111, 167),
                 ),
               ),
               SectionWidget(
@@ -85,7 +85,7 @@ class AddPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: const Color.fromARGB(255, 27, 111, 167),
+                  color: Color.fromARGB(255, 27, 111, 167),
                 ),
               ),
               SectionWidget(
@@ -108,8 +108,8 @@ class SectionWidget extends StatelessWidget {
   const SectionWidget({
     required this.title,
     required this.description,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

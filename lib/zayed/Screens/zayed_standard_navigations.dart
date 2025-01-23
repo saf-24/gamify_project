@@ -6,7 +6,7 @@ void main() {
 }
 
 class Zayed_standard_navigations extends StatelessWidget {
-  const Zayed_standard_navigations({Key? key}) : super(key: key);
+  const Zayed_standard_navigations({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -71,7 +71,7 @@ class St_home_page_old extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          Container(
+                          SizedBox(
                             width: 450,
                             height: 230,
                             child: ListView.builder(
@@ -123,7 +123,7 @@ class St_home_page_old extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          Container(
+                          SizedBox(
                             width: 450,
                             height: 225,
                             child: ListView.builder(
@@ -178,7 +178,7 @@ class St_home_page_old extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          Container(
+                          SizedBox(
                             width: 450,
                             height: 240,
                             child: ListView.builder(

@@ -4,7 +4,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:gamify_project/Safwan/Screens/safwan_student_login_page.dart';
 
 void main() {
   runApp(const MyApp());
