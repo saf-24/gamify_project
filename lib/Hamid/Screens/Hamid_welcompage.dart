@@ -67,6 +67,17 @@ class Stloginpage extends StatelessWidget {
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 11),
                 child: Container(
+                  width: 360,
+                  height: 360,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(40),
+                    ),
+                    color: const Color.fromARGB(153, 231, 231, 231),
+                    border: Border.all(
+                        color: const Color.fromARGB(94, 161, 161, 161),
+                        width: 3),
+                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -139,17 +150,6 @@ class Stloginpage extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ),
-                  width: 360,
-                  height: 360,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(40),
-                    ),
-                    color: const Color.fromARGB(153, 231, 231, 231),
-                    border: Border.all(
-                        color: const Color.fromARGB(94, 161, 161, 161),
-                        width: 3),
                   ),
                 ),
               ),

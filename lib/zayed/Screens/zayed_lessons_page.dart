@@ -11,7 +11,7 @@ void main() {
 }
 
 class Zayed_lessons_page extends StatelessWidget {
-  const Zayed_lessons_page({Key? key}) : super(key: key);
+  const Zayed_lessons_page({super.key});
 
   @override
   Widget build(BuildContext context) {

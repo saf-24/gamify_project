@@ -8,7 +8,7 @@ void main() {
 }
 
 class Zayed_quiz_page extends StatelessWidget {
-  const Zayed_quiz_page({Key? key}) : super(key: key);
+  const Zayed_quiz_page({super.key});
 
   @override
   Widget build(BuildContext context) {

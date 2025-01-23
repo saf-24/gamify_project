@@ -177,7 +177,7 @@ class Games_list extends StatelessWidget {
               Positioned(
               top: 94,
               left: 26,
-              child: Container(
+              child: SizedBox(
                 width: 300,
                 child: Text("Choose thw correct answer through the hints given",
                   style: TextStyle(
@@ -226,7 +226,7 @@ class Games_list extends StatelessWidget {
               Positioned(
               top: 324,
               left: 26,
-              child: Container(
+              child: SizedBox(
                 width: 300,
                 child: Text("Drag and place the crrect choice in the correct space",
                   style: TextStyle(
@@ -241,7 +241,7 @@ class Games_list extends StatelessWidget {
               Positioned(
               top: 529,
               left: 26,
-              child: Container(
+              child: SizedBox(
                 width: 300,
                 child: Text("SOON...",
                   style: TextStyle(

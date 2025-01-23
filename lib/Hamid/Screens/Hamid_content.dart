@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TestPage extends StatelessWidget {
+  const TestPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +92,7 @@ class TestPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
+                children: const [
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
