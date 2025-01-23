@@ -9,7 +9,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +21,8 @@ class MyApp extends StatelessWidget {
 }
 
 class TestPage extends StatefulWidget {
+  const TestPage({super.key});
+
   @override
   _TestPageState createState() => _TestPageState();
 }
@@ -235,7 +237,7 @@ class _TestPageState extends State<TestPage> {
 class ResultsPage extends StatelessWidget {
   final int score;
 
-  const ResultsPage({required this.score});
+  const ResultsPage({super.key, required this.score});
 
   @override
   Widget build(BuildContext context) {
