@@ -6,8 +6,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,8 +16,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyProfilePage extends StatefulWidget {
-  const MyProfilePage({super.key});
-
   @override
   _MyProfilePageState createState() => _MyProfilePageState();
 }
@@ -85,21 +81,19 @@ class _MyProfilePageState extends State<MyProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       
-      body: SizedBox(
+      body: Container(
         width: 423,
         height: double.infinity,
         child: Stack(
           children: [
             
-            Container(
-              child: Positioned(
-                top: -10,
-                right: -5,
-              
-                child: Image.asset(
-                  "assets/img/profile_back.png",
-                  scale: 0.65,
-                ),
+            Positioned(
+              top: -10,
+              right: -5,
+            
+              child: Image.asset(
+                "assets/img/profile_back.png",
+                scale: 0.65,
               ),
             ),
             Row(
