@@ -15,17 +15,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TestPage(),
+      home: QuizPage(),
     );
   }
 }
 
-class TestPage extends StatefulWidget {
+class QuizPage extends StatefulWidget {
   @override
-  _TestPageState createState() => _TestPageState();
+  _QuizPageState createState() => _QuizPageState();
 }
 
-class _TestPageState extends State<TestPage> {
+class _QuizPageState extends State<QuizPage> {
   int _selectedAnswerIndex = -1;
   bool _isLoading = true;
   String _questionText = '';
@@ -33,6 +33,7 @@ class _TestPageState extends State<TestPage> {
   int _correctAnswerIndex = -1;
   int _questionIndex = 1;
   int _totalCorrectAnswers = 0;
+  List<int> _questionHistory = [];
 
   @override
   void initState() {
@@ -57,7 +58,6 @@ class _TestPageState extends State<TestPage> {
           _isLoading = false;
         });
       } else {
-        // Navigate to results if no more questions are available
         _navigateToResults();
       }
     } catch (e) {
@@ -80,12 +80,24 @@ class _TestPageState extends State<TestPage> {
     }
 
     setState(() {
+      _questionHistory.add(_questionIndex);
       _selectedAnswerIndex = -1;
       _questionIndex++;
       _isLoading = true;
     });
 
     _fetchQuestion();
+  }
+
+  void _goBack() {
+    if (_questionHistory.isNotEmpty) {
+      setState(() {
+        _questionIndex = _questionHistory.removeLast();
+        _isLoading = true;
+      });
+
+      _fetchQuestion();
+    }
   }
 
   void _navigateToResults() {
@@ -100,14 +112,14 @@ class _TestPageState extends State<TestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFf4f4f4),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         centerTitle: true,
         title: Text(
           "Gamify",
           style: TextStyle(
-            color: Color(0xFF007ab9),
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -119,111 +131,97 @@ class _TestPageState extends State<TestPage> {
           : Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Spacer(),
                   Text(
-                    "Question $_questionIndex",
+                    _questionText,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Container(
-                    padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          blurRadius: 10,
-                          offset: Offset(0, 5),
-                        )
-                      ],
-                    ),
-                    child: Text(
-                      _questionText,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black87,
-                      ),
+                      color: Colors.black87,
                     ),
                   ),
                   SizedBox(height: 20),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: _answers.length,
-                      itemBuilder: (context, index) {
-                        String letter = String.fromCharCode(
-                            65 + index); // Generate A, B, C, ...
-                        return GestureDetector(
-                          onTap: () => _onAnswerSelected(index),
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
-                            padding: const EdgeInsets.all(16.0),
-                            decoration: BoxDecoration(
-                              color: _selectedAnswerIndex == index
-                                  ? Colors.blue[100]
-                                  : Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(
-                                color: _selectedAnswerIndex == index
-                                    ? Colors.blue
-                                    : Colors.grey[300]!,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  "$letter. ",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    _answers[index],
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.black87,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                  ..._answers.asMap().entries.map((entry) {
+                    int index = entry.key;
+                    String answer = entry.value;
+                    return GestureDetector(
+                      onTap: () => _onAnswerSelected(index),
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 8.0),
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          color: _selectedAnswerIndex == index
+                              ? Colors.blue[100]
+                              : Colors.grey[200],
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color: _selectedAnswerIndex == index
+                                ? Colors.blue
+                                : Colors.grey[300]!,
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: ElevatedButton(
-                      onPressed: _submitAnswer,
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 32, vertical: 12),
-                        backgroundColor: Color(0xFF007ab9),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              "${String.fromCharCode(65 + index)}. ",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            Expanded(
+                              child: Text(
+                                answer,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      child: Text(
-                        "Next",
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                    );
+                  }).toList(),
+                  Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                        onPressed: _goBack,
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 12),
+                          backgroundColor: Colors.grey,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: Text(
+                          "Back",
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
                       ),
-                    ),
+                      ElevatedButton(
+                        onPressed: _submitAnswer,
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 12),
+                          backgroundColor: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: Text(
+                          "Next",
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -240,14 +238,14 @@ class ResultsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFf4f4f4),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         centerTitle: true,
         title: Text(
           "Results",
           style: TextStyle(
-            color: Color(0xFF007ab9),
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -271,7 +269,7 @@ class ResultsPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () => Navigator.pop(context),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF007ab9),
+                backgroundColor: Colors.blue,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                 shape: RoundedRectangleBorder(

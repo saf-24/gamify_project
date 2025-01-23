@@ -35,7 +35,8 @@ class _HintPageState extends State<HintPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF6A4BA3), // Purple background
+      backgroundColor:
+          Color(0xFFE6F7FF), // Updated to match the main app theme (light blue)
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -49,7 +50,7 @@ class _HintPageState extends State<HintPage> {
                   onTap: () {
                     // Handle close button action
                   },
-                  child: Icon(Icons.close, color: Colors.white, size: 30),
+                  child: Icon(Icons.close, color: Colors.black, size: 30),
                 ),
               ),
               SizedBox(height: 20),
@@ -60,14 +61,14 @@ class _HintPageState extends State<HintPage> {
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFFD1B5F5), // Light purple
+                    color: Color(0xFF1D4E89), // Updated to dark blue
                   ),
                   children: const [
                     TextSpan(
                       text: '15 points',
                       style: TextStyle(
                         fontSize: 20,
-                        color: Color(0xFFFFD700), // Gold
+                        color: Color(0xFFFFA500), // Orange for contrast
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -79,13 +80,13 @@ class _HintPageState extends State<HintPage> {
                 'It is the basis of object-oriented programming in Java:',
                 style: TextStyle(
                   fontSize: 18,
-                  color: Colors.white,
+                  color: Colors.black, // Changed to black for readability
                 ),
               ),
               // Add spacing before the divider
               SizedBox(height: 30),
               Divider(
-                color: Colors.white54,
+                color: Colors.black54,
                 thickness: 1,
                 height: 80,
               ),
@@ -127,7 +128,7 @@ class _HintPageState extends State<HintPage> {
                       // Handle next hint action
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFB394F6), // Purple
+                      backgroundColor: Color(0xFF1D4E89), // Dark blue
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -153,7 +154,7 @@ class _HintPageState extends State<HintPage> {
                     style: ElevatedButton.styleFrom(
                       shape: CircleBorder(),
                       padding: EdgeInsets.all(16),
-                      backgroundColor: Color(0xFFB394F6), // Purple
+                      backgroundColor: Color(0xFF1D4E89), // Dark blue
                     ),
                     child: Icon(Icons.arrow_forward, color: Colors.white),
                   ),
@@ -164,7 +165,7 @@ class _HintPageState extends State<HintPage> {
               Text(
                 '2 try left\nQuestion 1/10',
                 style: TextStyle(
-                  color: Colors.white70,
+                  color: Colors.black54,
                   fontSize: 14,
                 ),
                 textAlign: TextAlign.center,
@@ -183,7 +184,8 @@ class AnswerButton extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  const AnswerButton({super.key, 
+  const AnswerButton({
+    super.key,
     required this.label,
     required this.text,
     required this.isSelected,
@@ -199,8 +201,8 @@ class AnswerButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
         decoration: BoxDecoration(
           color: isSelected
-              ? Color(0xFF9673D4)
-              : Color(0xFFB394F6), // Selected/Unselected colors
+              ? Color(0xFF1D88C9) // Selected button - darker blue
+              : Color(0xFF87CEEB), // Unselected button - light blue
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -217,7 +219,7 @@ class AnswerButton extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF6A4BA3), // Purple text
+                  color: Color(0xFF1D4E89), // Dark blue text
                 ),
               ),
             ),
@@ -228,7 +230,7 @@ class AnswerButton extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: Colors.black, // Changed to black for readability
               ),
             ),
           ],
