@@ -33,40 +33,48 @@ class _TestPageState extends State<TestPage> {
   String _questionText = '';
   List<String> _answers = [];
   int _correctAnswerIndex = -1;
-  int _questionIndex = 1;
+  int _questionIndex = 0;
   int _totalCorrectAnswers = 0;
+  List<DocumentSnapshot> _questions = [];
 
   @override
   void initState() {
     super.initState();
-    _fetchQuestion();
+    _fetchQuestions();
   }
 
-  Future<void> _fetchQuestion() async {
+  Future<void> _fetchQuestions() async {
     try {
-      DocumentSnapshot doc = await FirebaseFirestore.instance
-          .collection('questions')
-          .doc('Q$_questionIndex')
-          .get();
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('questions').get();
 
-      if (doc.exists) {
-        final data = doc.data() as Map<String, dynamic>;
-
+      if (querySnapshot.docs.isNotEmpty) {
         setState(() {
-          _questionText = data['question'] ?? 'No question available';
-          _answers = List<String>.from(data['answer'] ?? []);
-          _correctAnswerIndex = data['correctAnswer'] ?? -1;
-          _isLoading = false;
+          _questions = querySnapshot.docs;
+          _loadQuestion();
         });
       } else {
-        // Navigate to results if no more questions are available
         _navigateToResults();
       }
     } catch (e) {
       setState(() {
-        _questionText = 'Error fetching question';
+        _questionText = 'Error fetching questions';
         _isLoading = false;
       });
+    }
+  }
+
+  void _loadQuestion() {
+    if (_questionIndex < _questions.length) {
+      final data = _questions[_questionIndex].data() as Map<String, dynamic>;
+      setState(() {
+        _questionText = data['question'] ?? 'No question available';
+        _answers = List<String>.from(data['answer'] ?? []);
+        _correctAnswerIndex = data['correctAnswer'] ?? -1;
+        _isLoading = false;
+      });
+    } else {
+      _navigateToResults();
     }
   }
 
@@ -87,7 +95,7 @@ class _TestPageState extends State<TestPage> {
       _isLoading = true;
     });
 
-    _fetchQuestion();
+    _loadQuestion();
   }
 
   void _navigateToResults() {
@@ -124,7 +132,7 @@ class _TestPageState extends State<TestPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Question $_questionIndex",
+                    "Question ${_questionIndex + 1}",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
