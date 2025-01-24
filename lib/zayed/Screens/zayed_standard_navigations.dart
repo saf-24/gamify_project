@@ -2,11 +2,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const Zayed_standard_navigations());
+  runApp(const Zayed_standard_navigations2());
 }
 
-class Zayed_standard_navigations extends StatelessWidget {
-  const Zayed_standard_navigations({super.key});
+class Zayed_standard_navigations2 extends StatelessWidget {
+  const Zayed_standard_navigations2({super.key});
 
   @override
   Widget build(BuildContext context) {
