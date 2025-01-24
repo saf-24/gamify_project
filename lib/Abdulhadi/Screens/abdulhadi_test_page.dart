@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -26,9 +30,11 @@ class TestPage extends StatefulWidget {
 class _TestPageState extends State<TestPage> {
   int _selectedAnswerIndex = -1;
   bool _isLoading = true;
-  String? _questionText;
-  List<String>? _answers;
-  int? _correctAnswerIndex;
+  String _questionText = '';
+  List<String> _answers = [];
+  int _correctAnswerIndex = -1;
+  int _questionIndex = 1;
+  int _totalCorrectAnswers = 0;
 
   @override
   void initState() {
@@ -38,24 +44,29 @@ class _TestPageState extends State<TestPage> {
 
   Future<void> _fetchQuestion() async {
     try {
-      // Fetch question from Firestore
       DocumentSnapshot doc = await FirebaseFirestore.instance
           .collection('questions')
-          .doc('wldn95QOXjCxdCtEYUYQ') // Replace with your document ID
+          .doc('Q$_questionIndex')
           .get();
 
       if (doc.exists) {
+        final data = doc.data() as Map<String, dynamic>;
+
         setState(() {
-          _questionText = doc['question'];
-          _answers = List<String>.from(doc['answers']);
-          _correctAnswerIndex = doc['correctAnswerIndex'];
+          _questionText = data['question'] ?? 'No question available';
+          _answers = List<String>.from(data['answer'] ?? []);
+          _correctAnswerIndex = data['correctAnswer'] ?? -1;
           _isLoading = false;
         });
       } else {
-        print("Document does not exist");
+        // Navigate to results if no more questions are available
+        _navigateToResults();
       }
     } catch (e) {
-      print("Error fetching question: $e");
+      setState(() {
+        _questionText = 'Error fetching question';
+        _isLoading = false;
+      });
     }
   }
 
@@ -63,157 +74,218 @@ class _TestPageState extends State<TestPage> {
     setState(() {
       _selectedAnswerIndex = index;
     });
+  }
 
-    // Check if the answer is correct
-    if (index == _correctAnswerIndex) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Correct Answer!")),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Wrong Answer. Try Again!")),
-      );
+  void _submitAnswer() {
+    if (_selectedAnswerIndex == _correctAnswerIndex) {
+      _totalCorrectAnswers++;
     }
+
+    setState(() {
+      _selectedAnswerIndex = -1;
+      _questionIndex++;
+      _isLoading = true;
+    });
+
+    _fetchQuestion();
+  }
+
+  void _navigateToResults() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ResultsPage(score: _totalCorrectAnswers),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: _isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // App Bar
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Icon(Icons.menu, size: 28, color: Colors.black),
-                        Text(
-                          "Gamify",
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Icon(Icons.notifications,
-                            size: 28, color: Colors.black),
+      backgroundColor: const Color(0xFFf4f4f4),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          "Gamify",
+          style: TextStyle(
+            color: Color(0xFF007ab9),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        elevation: 0,
+      ),
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Question $_questionIndex",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: Offset(0, 5),
+                        )
                       ],
                     ),
-                    const SizedBox(height: 20),
-
-                    // Image Placeholder
-                    Container(
-                      height: 200,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "Image Placeholder",
-                          style: TextStyle(color: Colors.black45),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-
-                    // Question
-                    Text(
-                      _questionText ?? "Loading question...",
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                    child: Text(
+                      _questionText,
+                      style: TextStyle(
+                        fontSize: 16,
                         color: Colors.black87,
                       ),
-                      textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 20),
-
-                    // Answer Buttons
-                    if (_answers != null)
-                      ..._answers!.asMap().entries.map((entry) {
-                        int index = entry.key;
-                        String answer = entry.value;
+                  ),
+                  SizedBox(height: 20),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: _answers.length,
+                      itemBuilder: (context, index) {
+                        String letter = String.fromCharCode(
+                            65 + index); // Generate A, B, C, ...
                         return GestureDetector(
                           onTap: () => _onAnswerSelected(index),
                           child: Container(
                             margin: const EdgeInsets.symmetric(vertical: 8.0),
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 16.0,
-                              horizontal: 12.0,
-                            ),
+                            padding: const EdgeInsets.all(16.0),
                             decoration: BoxDecoration(
                               color: _selectedAnswerIndex == index
-                                  ? Colors.green
-                                  : Colors.grey[200],
-                              borderRadius: BorderRadius.circular(12),
+                                  ? Colors.blue[100]
+                                  : Colors.white,
+                              borderRadius: BorderRadius.circular(15),
                               border: Border.all(
                                 color: _selectedAnswerIndex == index
-                                    ? Colors.green
-                                    : Colors.grey[400]!,
-                                width: 2,
+                                    ? Colors.blue
+                                    : Colors.grey[300]!,
                               ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  blurRadius: 5,
+                                  offset: Offset(0, 3),
+                                ),
+                              ],
                             ),
                             child: Row(
                               children: [
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Text(
-                                    String.fromCharCode(
-                                        65 + index), // A, B, C, D
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                                Text(
+                                  "$letter. ",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
                                   ),
                                 ),
-                                const SizedBox(width: 16),
-                                Text(
-                                  answer,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
+                                Expanded(
+                                  child: Text(
+                                    _answers[index],
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black87,
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
                         );
-                      }),
-
-                    const Spacer(),
-
-                    // Next Button
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Handle next action
-                          print("Next question...");
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: const CircleBorder(),
-                          padding: const EdgeInsets.all(16),
-                          backgroundColor: Colors.blue,
+                      },
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: ElevatedButton(
+                      onPressed: _submitAnswer,
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 32, vertical: 12),
+                        backgroundColor: Color(0xFF007ab9),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        child: const Icon(Icons.arrow_forward,
-                            color: Colors.white),
+                      ),
+                      child: Text(
+                        "Next",
+                        style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ),
-                  ],
+                  ),
+                ],
+              ),
+            ),
+    );
+  }
+}
+
+class ResultsPage extends StatelessWidget {
+  final int score;
+
+  const ResultsPage({super.key, required this.score});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFf4f4f4),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: Text(
+          "Results",
+          style: TextStyle(
+            color: Color(0xFF007ab9),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        elevation: 0,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Your Score",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Text(
+              "$score",
+              style: TextStyle(fontSize: 48, color: Colors.blue),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF007ab9),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
+              ),
+              child: Text(
+                "Back to Home",
+                style: TextStyle(fontSize: 16, color: Colors.white),
+              ),
+            ),
+          ],
         ),
       ),
     );
