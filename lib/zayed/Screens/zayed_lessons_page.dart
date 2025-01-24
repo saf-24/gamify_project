@@ -226,17 +226,15 @@ class Zayed_lessons_page extends StatelessWidget {
     );
   }
 
-  Widget _buildNavItem(
-      IconData icon, String label, Color color, double screenHeight) {
+  Widget _buildNavItem(IconData icon, String label, Color color, double screenHeight) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        IconButton(
-          icon: Icon(icon, size: screenHeight * 0.047), // Responsive size
-          color: color,
-          onPressed: () {},
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Icon(icon, color: color, size: screenHeight * 0.04),
+        Text(
+          label,
+          style: TextStyle(color: color, fontSize: screenHeight * 0.02),
         ),
-        Text(label, style: const TextStyle(height: 0.1)),
       ],
     );
   }
