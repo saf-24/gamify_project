@@ -73,16 +73,53 @@ class Stloginpage extends StatelessWidget {
                 child: Container(
                   child: Stack(
                     children: [
-                      
                       Positioned(
-                        top: 25,
-                        left: 34,
-                        child: Text("Login as a Student",
-                            style: TextStyle(
-                                fontSize: 26,
-                                color:
-                                    const Color.fromARGB(255, 54, 127, 156),
-                                fontWeight: FontWeight.w900)),
+                        top: 34,
+                        right: 27,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, '/');
+                          },
+                          child: Text("Sign up",
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  color:
+                                      const Color.fromARGB(255, 27, 111, 167),
+                                  fontWeight: FontWeight.w900)),
+                          style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all(
+                                const Color.fromARGB(192, 255, 255, 255),
+                              ),
+                              padding: WidgetStateProperty.all(
+                                  EdgeInsets.fromLTRB(32, 13, 32, 13)),
+                              shape: WidgetStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(28)))),
+                        ),
+                      ),
+                      Positioned(
+                        top: 28,
+                        left: 33,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: Text("Login",
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color:
+                                      const Color.fromARGB(255, 190, 228, 253),
+                                  fontWeight: FontWeight.w900)),
+                          style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all(
+                                const Color.fromARGB(197, 0, 129, 189),
+                              ),
+                              padding: WidgetStateProperty.all(
+                                  EdgeInsets.fromLTRB(40, 16, 44, 16)),
+                              shape: WidgetStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(28)))),
+                        ),
                       ),
                       SizedBox(
                         height: 44,
@@ -108,7 +145,8 @@ class Stloginpage extends StatelessWidget {
                                   hintStyle: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(255, 54, 127, 156)),
+                                      color: const Color.fromARGB(
+                                          255, 33, 123, 165)),
                                   contentPadding: EdgeInsets.only(left: 20)),
                             )),
                       ),
@@ -134,7 +172,8 @@ class Stloginpage extends StatelessWidget {
                                   hintStyle: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(255, 54, 127, 156)),
+                                      color: const Color.fromARGB(
+                                          255, 33, 123, 165)),
                                   contentPadding: EdgeInsets.only(left: 20)),
                             )),
                       ),
@@ -175,7 +214,8 @@ class Stloginpage extends StatelessWidget {
                         left: 83,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => St_home_page()), (Route<dynamic> route) => false);
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, '/st_home', (route) => false);
                           },
                           child: Text("Login",
                               style: TextStyle(
