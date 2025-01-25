@@ -5,8 +5,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gamify_project/Safwan/Screens/course_cards_widget.dart';
 import 'package:gamify_project/Safwan/Screens/dummy_data.dart';
 import 'package:gamify_project/Safwan/Screens/new_learrn_widget.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_anas.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
 import 'package:gamify_project/Safwan/Screens/welcom_widget.dart';
 import 'package:gamify_project/Safwan/Screens/whats_new_widget1.dart';
+import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
 
 
 void main() {
@@ -33,12 +36,13 @@ class St_home_page extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
-      appBar: AppBar(
+    appBar: AppBar(
+      toolbarHeight: 65,
         title: Text(
           "Gamify",
           style: TextStyle(
               fontSize: 32,
-              color: Color.fromARGB(197, 13, 99, 139),
+              color: Color.fromARGB(197, 0, 129, 189),
               fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
@@ -46,14 +50,14 @@ class St_home_page extends StatelessWidget {
           IconButton(
             tooltip: "notifications",
             icon: const Icon(Icons.notifications_none,
-                size: 35.4, color: Color.fromARGB(197, 13, 99, 139)),
+                size: 39.4, color: Color.fromARGB(197, 0, 129, 189),),
             onPressed: () {},
           ),
         ],
         leading: IconButton(
           tooltip: "Menu",
           icon: const Icon(Icons.menu,
-              size: 35.4, color: Color.fromARGB(197, 13, 99, 139)),
+              size: 43.4, color: Color.fromARGB(197, 0, 129, 189),),
           onPressed: () {},
         ),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
@@ -286,7 +290,9 @@ class St_home_page extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.home, size: 40.0),
                   color: Color.fromARGB(197, 0, 129, 189),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page()));
+                  },
                 ),
                 const Text("Home",
                     style: TextStyle(
@@ -302,12 +308,15 @@ class St_home_page extends StatelessWidget {
                   icon: const Icon(Icons.menu_book_rounded, size: 40.0),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/st_course');
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_standard_navigations()));
                   },
                 ),
                 const Text(
                   "Courses",
-                  style: TextStyle(height: 0.1),
+                  style: TextStyle(
+                        height: 0.1,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w700),
                 ),
               ],
             ),
@@ -318,7 +327,7 @@ class St_home_page extends StatelessWidget {
                   icon: const Icon(Icons.videogame_asset, size: 41),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/st_games_list');
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Games_list()));
                   },
                 ),
                 const Text("Games", style: TextStyle(height: 0.1)),
@@ -331,7 +340,7 @@ class St_home_page extends StatelessWidget {
                   icon: const Icon(Icons.person, size: 43),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/test_fire');
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage()));
                   },
                 ),
                 const Text("Profile", style: TextStyle(height: 0.1)),

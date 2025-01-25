@@ -1,5 +1,9 @@
 //THE SECOND PAGE MY PROFILE;
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Hamid/Screens/Hamid_welcompage.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
+import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
+import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
 
 
 void main() {
@@ -7,8 +11,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,8 +21,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyProfilePage extends StatefulWidget {
-  const MyProfilePage({super.key});
-
   @override
   _MyProfilePageState createState() => _MyProfilePageState();
 }
@@ -39,7 +39,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
-      body: SizedBox(
+      body: Container(
         width: 423,
         height: double.infinity,
         child: Stack(
@@ -71,24 +71,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                       
               ],
             ),
-            Container(
-              margin: EdgeInsets.fromLTRB(350, 46, 0, 0),
-              child: IconButton(
-              tooltip: "notifications",
-              icon: const Icon(Icons.notifications_none,
-                  size: 35.4, color: Color.fromARGB(255, 255, 255, 255)),
-              onPressed: () {},
-            ),
-            ),
-             Container(
-              margin: EdgeInsets.fromLTRB(12, 47, 0, 0),
-               child: IconButton(
-                  tooltip: "Menu",
-                  icon: const Icon(Icons.menu,
-                  size: 35.4,  color: Color.fromARGB(255, 255, 255, 255)),
-                  onPressed: () {},
-                       ),
-             ),
+            
             Container(
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -222,8 +205,55 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   
                   ),
               ],
-            )
-            
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(350, 46, 0, 0),
+              child: IconButton(
+              tooltip: "notifications",
+              icon: const Icon(Icons.notifications_none,
+                  size: 35.4, color: Color.fromARGB(255, 255, 255, 255)),
+              onPressed: () {},
+            ),
+            ),
+             Container(
+  margin: EdgeInsets.fromLTRB(12, 47, 0, 0),
+  child: IconButton(
+    tooltip: "Menu",
+    icon: const Icon(Icons.logout,
+        size: 35.4, color: Color.fromARGB(255, 255, 255, 255)),
+    onPressed: () {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Confirm logout"),
+            content: Text("Are you sure you want to log out?",style: TextStyle(fontSize: 20),),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // إغلاق الرسالة
+                },
+                child: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,),),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => welcome_page()),
+                    (Route<dynamic> route) => false,
+                  );
+                },
+                child: Text("Log out",style: TextStyle(fontSize: 18,color: const Color.fromARGB(255, 255, 0, 0),)),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  ),
+),
+
           ],
         ),
       ),
@@ -240,7 +270,9 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 IconButton(
                   icon: const Icon(Icons.home, size: 40.0),
                   color: Colors.grey,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page()));
+                  },
                 ),
                 const Text("Home",
                     style: TextStyle(
@@ -256,7 +288,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   icon: const Icon(Icons.menu_book_rounded, size: 40.0),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/st_course');
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_standard_navigations()));
                   },
                 ),
                 const Text(
@@ -272,7 +304,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   icon: const Icon(Icons.videogame_asset, size: 41),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/st_games_list');
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Games_list()));
                   },
                 ),
                 const Text("Games", style: TextStyle(height: 0.1)),

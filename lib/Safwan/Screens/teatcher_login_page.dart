@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
-// abdulhadi_student_signup_page
 
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,21 +11,23 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
-      home: const Stsignuppage(),
+      home: const Taloginpage(),
     );
   }
 }
 
-class Stsignuppage extends StatelessWidget {
-  const Stsignuppage({super.key});
+class Taloginpage extends StatelessWidget {
+  const Taloginpage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ValueNotifier<bool> ischecked = ValueNotifier(false);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: AppBar(
@@ -44,8 +46,8 @@ class Stsignuppage extends StatelessWidget {
       body: Stack(
         children: [
           Positioned(
-            top: 60,
-            left: 135,
+            top: 30,
+            left: 115,
             child: Container(
               child: Text(
                 "Gamify",
@@ -71,67 +73,21 @@ class Stsignuppage extends StatelessWidget {
                 child: Container(
                   child: Stack(
                     children: [
-                      Positioned(
-                        top: 42,
-                        left: 33,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/st_login');
-                          },
-                          child: Text(
-                            "Login",
+                    Positioned(
+                        top: 25,
+                        left: 35,
+                        child: Text("Login as a Teacher",
                             style: TextStyle(
-                              fontSize: 25,
-                              color: const Color.fromARGB(255, 27, 111, 167),
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all(
-                              const Color.fromARGB(193, 255, 255, 255),
-                            ),
-                            padding: WidgetStateProperty.all(
-                                EdgeInsets.fromLTRB(32, 13, 32, 13)),
-                            shape: WidgetStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(28),
-                              ),
-                            ),
-                          ),
-                        ),
+                                fontSize: 26,
+                                color:
+                                    const Color.fromARGB(255, 54, 127, 156),
+                                fontWeight: FontWeight.w900)),
                       ),
                       SizedBox(
                         height: 44,
                       ),
                       Positioned(
-                        top: 34, // Top position for the Sign up button
-                        right: 27,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Sign up",
-                            style: TextStyle(
-                              fontSize: 30,
-                              color: const Color.fromARGB(255, 190, 228, 253),
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all(
-                              const Color.fromARGB(197, 0, 129, 189),
-                            ),
-                            padding: WidgetStateProperty.all(
-                                EdgeInsets.fromLTRB(31, 16, 31, 16)),
-                            shape: WidgetStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(28),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 139,
+                        top: 102,
                         left: 28,
                         child: Container(
                             alignment: Alignment.center,
@@ -140,7 +96,7 @@ class Stsignuppage extends StatelessWidget {
                                 color: const Color.fromARGB(141, 241, 241, 241),
                                 border: Border.all(
                                     color:
-                                        const Color.fromARGB(255, 64, 157, 194),
+                                        const Color.fromARGB(255, 54, 127, 156),
                                     width: 3)),
                             width: 303,
                             height: 55,
@@ -151,13 +107,12 @@ class Stsignuppage extends StatelessWidget {
                                   hintStyle: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(
-                                          255, 33, 123, 165)),
+                                      color: const Color.fromARGB(255, 54, 127, 156)),
                                   contentPadding: EdgeInsets.only(left: 20)),
                             )),
                       ),
                       Positioned(
-                        top: 219,
+                        top: 179,
                         left: 28,
                         child: Container(
                             alignment: Alignment.center,
@@ -166,7 +121,7 @@ class Stsignuppage extends StatelessWidget {
                                 color: const Color.fromARGB(141, 241, 241, 241),
                                 border: Border.all(
                                     color:
-                                        const Color.fromARGB(255, 64, 157, 194),
+                                        const Color.fromARGB(255, 54, 127, 156),
                                     width: 3)),
                             width: 303,
                             height: 55,
@@ -178,59 +133,61 @@ class Stsignuppage extends StatelessWidget {
                                   hintStyle: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(
-                                          255, 33, 123, 165)),
+                                      color: const Color.fromARGB(255, 54, 127, 156)),
                                   contentPadding: EdgeInsets.only(left: 20)),
                             )),
                       ),
                       Positioned(
-                        top: 299,
-                        left: 28,
-                        child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(28),
-                                color: const Color.fromARGB(141, 241, 241, 241),
-                                border: Border.all(
-                                    color:
-                                        const Color.fromARGB(255, 64, 157, 194),
-                                    width: 3)),
-                            width: 303,
-                            height: 55,
-                            child: TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Confirm Password",
-                                  hintStyle: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(
-                                          255, 33, 123, 165)),
-                                  contentPadding: EdgeInsets.only(left: 20)),
-                            )),
+                        top: 240,
+                        left: 24,
+                        child: Row(
+                          children: [
+                            ValueListenableBuilder<bool>(
+                              valueListenable: ischecked,
+                              builder: (context, value, child) {
+                                return Checkbox(
+                                  activeColor:
+                                      const Color.fromARGB(255, 54, 127, 156),
+                                  value: value,
+                                  onChanged: (bool? newValue) {
+                                    ischecked.value = newValue ?? false;
+                                  },
+                                  side: BorderSide(
+                                      color:
+                                          const Color.fromARGB(255, 0, 87, 145),
+                                      width: 2),
+                                );
+                              },
+                            ),
+                            Text(
+                              "remember me",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  color: const Color.fromARGB(255, 0, 54, 90),
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
                       ),
                       Positioned(
-                        top: 395,
-                        left: 80,
+                        top: 300,
+                        left: 83,
                         child: ElevatedButton(
-                          
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, '/st_login');
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => St_home_page()), (Route<dynamic> route) => false);
                           },
-                          child: Text("Sign up",
+                          child: Text("Login",
                               style: TextStyle(
                                   fontSize: 30,
                                   color:
                                       const Color.fromARGB(255, 190, 228, 253),
                                   fontWeight: FontWeight.w900)),
                           style: ButtonStyle(
-                            
                               backgroundColor: WidgetStateProperty.all(
                                 const Color.fromARGB(197, 0, 129, 189),
                               ),
                               padding: WidgetStateProperty.all(
-                                  EdgeInsets.fromLTRB(50, 14, 50, 14)),
+                                  EdgeInsets.fromLTRB(50, 10, 50, 10)),
                               shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius:
@@ -240,7 +197,7 @@ class Stsignuppage extends StatelessWidget {
                     ],
                   ),
                   width: 360,
-                  height: 520,
+                  height: 410,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(40),

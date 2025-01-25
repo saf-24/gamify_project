@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_inst_signup_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,7 +36,7 @@ class In_login_page extends StatelessWidget {
             icon: const Icon(
               Icons.settings,
               size: 35.4,
-              color: Color.fromARGB(197, 0, 129, 189),
+              color: const Color.fromARGB(255, 54, 127, 156),
             ),
             onPressed: () {},
           )
@@ -45,8 +46,8 @@ class In_login_page extends StatelessWidget {
       body: Stack(
         children: [
           Positioned(
-            top: 60,
-            left: 135,
+            top: 30,
+            left: 115,
             child: Container(
               child: Text(
                 "Gamify",
@@ -73,22 +74,24 @@ class In_login_page extends StatelessWidget {
                   child: Stack(
                     children: [
                       Positioned(
-                        top: 34,
+                        top: 28,
                         right: 27,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => instisignup()));
+                          },
                           child: Text("Sign up",
                               style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: 22,
                                   color:
                                       const Color.fromARGB(255, 27, 111, 167),
                                   fontWeight: FontWeight.w900)),
                           style: ButtonStyle(
                               backgroundColor: WidgetStateProperty.all(
-                                const Color.fromARGB(192, 255, 255, 255),
+                                const Color.fromARGB(225, 255, 255, 255),
                               ),
                               padding: WidgetStateProperty.all(
-                                  EdgeInsets.fromLTRB(32, 13, 32, 13)),
+                                  EdgeInsets.fromLTRB(24, 12, 24, 12)),
                               shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius:
@@ -102,7 +105,7 @@ class In_login_page extends StatelessWidget {
                           onPressed: () {},
                           child: Text("Login",
                               style: TextStyle(
-                                  fontSize: 30,
+                                  fontSize: 22,
                                   color:
                                       const Color.fromARGB(255, 190, 228, 253),
                                   fontWeight: FontWeight.w900)),
@@ -111,7 +114,7 @@ class In_login_page extends StatelessWidget {
                                 const Color.fromARGB(197, 0, 129, 189),
                               ),
                               padding: WidgetStateProperty.all(
-                                  EdgeInsets.fromLTRB(40, 16, 44, 16)),
+                                  EdgeInsets.fromLTRB(35, 12, 35, 12)),
                               shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius:
@@ -122,7 +125,7 @@ class In_login_page extends StatelessWidget {
                         height: 44,
                       ),
                       Positioned(
-                        top: 139,
+                        top: 119,
                         left: 28,
                         child: Container(
                             alignment: Alignment.center,
@@ -131,7 +134,7 @@ class In_login_page extends StatelessWidget {
                                 color: const Color.fromARGB(141, 241, 241, 241),
                                 border: Border.all(
                                     color:
-                                        const Color.fromARGB(255, 64, 157, 194),
+                                        const Color.fromARGB(255, 54, 127, 156),
                                     width: 3)),
                             width: 303,
                             height: 55,
@@ -142,13 +145,12 @@ class In_login_page extends StatelessWidget {
                                   hintStyle: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(
-                                          255, 33, 123, 165)),
+                                      color: const Color.fromARGB(255, 54, 127, 156)),
                                   contentPadding: EdgeInsets.only(left: 20)),
                             )),
                       ), 
                       Positioned(
-                        top: 219,
+                        top: 191,
                         left: 28,
                         child: Container(
                             alignment: Alignment.center,
@@ -157,7 +159,7 @@ class In_login_page extends StatelessWidget {
                                 color: const Color.fromARGB(141, 241, 241, 241),
                                 border: Border.all(
                                     color:
-                                        const Color.fromARGB(255, 64, 157, 194),
+                                        const Color.fromARGB(255, 54, 127, 156),
                                     width: 3)),
                             width: 303,
                             height: 55,
@@ -169,13 +171,12 @@ class In_login_page extends StatelessWidget {
                                   hintStyle: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(
-                                          255, 33, 123, 165)),
+                                      color: const Color.fromARGB(255, 54, 127, 156)),
                                   contentPadding: EdgeInsets.only(left: 20)),
                             )),
                       ),
                       Positioned(
-                        top: 270,
+                        top: 250,
                         left: 24,
                         child: Row(
                           children: [
@@ -184,7 +185,7 @@ class In_login_page extends StatelessWidget {
                               builder: (context, value, child) {
                                 return Checkbox(
                                   activeColor:
-                                      const Color.fromARGB(255, 33, 140, 182),
+                                      const Color.fromARGB(255, 54, 127, 156),
                                   value: value,
                                   onChanged: (bool? newValue) {
                                     ischecked.value = newValue ?? false;
@@ -207,8 +208,8 @@ class In_login_page extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        top: 320,
-                        left: 85,
+                        top: 310,
+                        left: 89,
                         child: ElevatedButton(
                           onPressed: () {},
                           child: Text("Login",
@@ -216,13 +217,13 @@ class In_login_page extends StatelessWidget {
                                   fontSize: 30,
                                   color:
                                       const Color.fromARGB(255, 190, 228, 253),
-                                  fontWeight: FontWeight.w900)),
+                                  fontWeight: FontWeight.w800,letterSpacing: 1)),
                           style: ButtonStyle(
                               backgroundColor: WidgetStateProperty.all(
                                 const Color.fromARGB(197, 0, 129, 189),
                               ),
                               padding: WidgetStateProperty.all(
-                                  EdgeInsets.fromLTRB(60, 14, 60, 14)),
+                                  EdgeInsets.fromLTRB(40, 10, 40, 10)),
                               shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius:
@@ -232,7 +233,7 @@ class In_login_page extends StatelessWidget {
                     ],
                   ),
                   width: 360,
-                  height: 444,
+                  height: 424,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(40),
