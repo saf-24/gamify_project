@@ -1,5 +1,10 @@
 //THE SECOND PAGE MY PROFILE;
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Hamid/Screens/Hamid_welcompage.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
+import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
+import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -21,66 +26,19 @@ class MyProfilePage extends StatefulWidget {
 }
 
 class _MyProfilePageState extends State<MyProfilePage> {
-  String name = "Safwan";
+  String FirstName = "Safwan";
+  String FullName = "Safwan Alghamdi";
+  String Magor = "information system";
+
   String profilePictureUrl = "";
   int xp = 1500;
   int level = 3;
   int nextLevelXP = 2000;
 
-  int _selectedIndex = 3;
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      // Navigation logic for other pages
-    });
-  }
-
-  void _editName() {
-    TextEditingController nameController = TextEditingController(text: name);
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text("Edit Name"),
-        content: TextField(
-          controller: nameController,
-          decoration: InputDecoration(hintText: "Enter new name"),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              setState(() {
-                name = nameController.text;
-              });
-              Navigator.of(context).pop();
-            },
-            child: Text("Save"),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text("Cancel"),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _editPicture() {
-    // Add actual image picker logic here
-    setState(() {
-      profilePictureUrl = ""; // Replace with actual image URL after picking
-    });
-  }
-
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       body: Container(
         width: 423,
         height: double.infinity,
@@ -102,7 +60,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 Container(
                         margin: EdgeInsets.only(top: 50),
                         child: Text(
-                          name,
+                          FirstName,
                           style: TextStyle(
                             fontSize: 24,
                             color: const Color.fromARGB(255, 248, 248, 248),
@@ -110,8 +68,10 @@ class _MyProfilePageState extends State<MyProfilePage> {
                           ),
                         ),
                       ),
+                      
               ],
             ),
+            
             Container(
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -121,9 +81,9 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 children: [
         
                   Container(
-                    margin: EdgeInsets.fromLTRB(210, 180, 0, 0),
+                    margin: EdgeInsets.fromLTRB(210, 185, 0, 0),
                     child: CircleAvatar(
-                      backgroundColor: const Color.fromARGB(255, 221, 221, 221),
+                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                       radius: 75,
                       backgroundImage: profilePictureUrl.isNotEmpty
                           ? NetworkImage(profilePictureUrl)
@@ -134,17 +94,239 @@ class _MyProfilePageState extends State<MyProfilePage> {
                     ),
                   ),
                   SizedBox(height: 3),
-                  
-
                 ],
               ),
             ),
             SizedBox(height: 20),
-            
+
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(0, 335, 0, 0),
+                    child: Text("Student info",style: TextStyle(
+                      fontSize: 29,
+                      color: const Color.fromARGB(255, 10, 100, 136),
+                      fontWeight: FontWeight.bold,
+                    ),
+                    ),
+                    
+                  ),
+                ),
+                SizedBox(height: 20),
+                Container(
+                  margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                  child: Text("Full name",style: TextStyle(
+                    fontSize: 20,
+                    color: const Color.fromARGB(255, 0, 0, 0),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  )
+                  ),
+
+                Container(
+                  margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.person,
+                        size: 31.4, color:Color.fromARGB(255, 10, 100, 136),),
+                        onPressed: () {},
+            ),
+                      Text(FullName,style: TextStyle(
+                        fontSize: 18,
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                        fontWeight: FontWeight.w500,
+                      ),
+                      ),
+                      
+                    ],
+                  )
+                  
+                  ),
+                  SizedBox(height: 20),
+                    Container(
+                  margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                  child: Text("Email",style: TextStyle(
+                    fontSize: 18,
+                    color: const Color.fromARGB(255, 0, 0, 0),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  )
+                  ),
+                  Container(
+                  margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        
+                        icon: const Icon(Icons.email,
+                        size: 25.4, color:Color.fromARGB(255, 10, 100, 136),),
+                        onPressed: () {},
+            ),
+                      Text("safwanalgha@gmail.com",style: TextStyle(
+                        fontSize: 18,
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                        fontWeight: FontWeight.w500,
+                      ),),
+                    ],
+                  )
+                  
+                  ),
+                  SizedBox(height: 20),
+                    Container(
+                  margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                  child: Text("Major",style: TextStyle(
+                    fontSize: 18,
+                    color: const Color.fromARGB(255, 0, 0, 0),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  )
+                  ),
+                  Container(
+                  margin: EdgeInsets.fromLTRB(40, 0, 0, 0),
+                  child: Row(
+                    children: [
+                      IconButton(
+
+                        icon: const Icon(Icons.school,
+                        size: 29.4, color:Color.fromARGB(255, 10, 100, 136),),
+                        onPressed: () {},
+            ),
+                      Text(Magor,style: TextStyle(
+                        fontSize: 18,
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                        fontWeight: FontWeight.w500,
+                      ),),
+                    ],
+                  )
+                  
+                  ),
+              ],
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(350, 46, 0, 0),
+              child: IconButton(
+              tooltip: "notifications",
+              icon: const Icon(Icons.notifications_none,
+                  size: 35.4, color: Color.fromARGB(255, 255, 255, 255)),
+              onPressed: () {},
+            ),
+            ),
+             Container(
+  margin: EdgeInsets.fromLTRB(12, 47, 0, 0),
+  child: IconButton(
+    tooltip: "Menu",
+    icon: const Icon(Icons.logout,
+        size: 35.4, color: Color.fromARGB(255, 255, 255, 255)),
+    onPressed: () {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Confirm logout"),
+            content: Text("Are you sure you want to log out?",style: TextStyle(fontSize: 20),),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // إغلاق الرسالة
+                },
+                child: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,),),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => welcome_page()),
+                    (Route<dynamic> route) => false,
+                  );
+                },
+                child: Text("Log out",style: TextStyle(fontSize: 18,color: const Color.fromARGB(255, 255, 0, 0),)),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  ),
+),
+
           ],
         ),
       ),
-    
+          bottomNavigationBar: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.only(bottom: 14.0),
+        height: 96,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.home, size: 40.0),
+                  color: Colors.grey,
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page()));
+                  },
+                ),
+                const Text("Home",
+                    style: TextStyle(
+                        height: 0.1,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w700)),
+              ],
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.menu_book_rounded, size: 40.0),
+                  color: Colors.grey,
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_standard_navigations()));
+                  },
+                ),
+                const Text(
+                  "Courses",
+                  style: TextStyle(height: 0.1),
+                ),
+              ],
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.videogame_asset, size: 41),
+                  color: Colors.grey,
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Games_list()));
+                  },
+                ),
+                const Text("Games", style: TextStyle(height: 0.1)),
+              ],
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.person, size: 43),
+                  color: Color.fromARGB(197, 0, 129, 189),
+                  onPressed: () {
+                    
+                  },
+                ),
+                const Text("Profile", style: TextStyle(height: 0.1,color: Color.fromARGB(197, 0, 129, 189),
+                        fontWeight: FontWeight.w700)),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

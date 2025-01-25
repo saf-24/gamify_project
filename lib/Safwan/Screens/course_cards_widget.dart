@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamify_project/zayed/Screens/zayed_lessons_page.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 class Course_home_page extends StatelessWidget {
   final String title;
@@ -91,7 +92,7 @@ class Course_home_page extends StatelessWidget {
               height: 34,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/lesson_page');
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_lessons_page()));
                 },
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(

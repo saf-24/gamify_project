@@ -9,6 +9,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,6 +21,8 @@ class MyApp extends StatelessWidget {
 }
 
 class AddLessonsScreen extends StatelessWidget {
+  const AddLessonsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +36,7 @@ class AddLessonsScreen extends StatelessWidget {
               color: Colors.blue, fontSize: 20, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        actions: [
+        actions: const [
           Icon(Icons.notifications, color: Colors.blue),
         ],
       ),
@@ -180,6 +184,8 @@ class AddQuestionScreen extends StatelessWidget {
     TextEditingController(),
   ];
   final ValueNotifier<int?> correctAnswerNotifier = ValueNotifier<int?>(null);
+
+  AddQuestionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

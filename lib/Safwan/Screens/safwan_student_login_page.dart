@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,7 +36,7 @@ class Stloginpage extends StatelessWidget {
             icon: const Icon(
               Icons.settings,
               size: 35.4,
-              color: Color.fromARGB(197, 0, 129, 189),
+              color: Color.fromARGB(255, 54, 127, 156),
             ),
             onPressed: () {},
           )
@@ -45,8 +46,8 @@ class Stloginpage extends StatelessWidget {
       body: Stack(
         children: [
           Positioned(
-            top: 60,
-            left: 135,
+            top: 30,
+            left: 115,
             child: Container(
               child: Text(
                 "Gamify",
@@ -124,7 +125,7 @@ class Stloginpage extends StatelessWidget {
                         height: 44,
                       ),
                       Positioned(
-                        top: 139,
+                        top: 102,
                         left: 28,
                         child: Container(
                             alignment: Alignment.center,
@@ -133,7 +134,7 @@ class Stloginpage extends StatelessWidget {
                                 color: const Color.fromARGB(141, 241, 241, 241),
                                 border: Border.all(
                                     color:
-                                        const Color.fromARGB(255, 64, 157, 194),
+                                        const Color.fromARGB(255, 54, 127, 156),
                                     width: 3)),
                             width: 303,
                             height: 55,
@@ -150,7 +151,7 @@ class Stloginpage extends StatelessWidget {
                             )),
                       ),
                       Positioned(
-                        top: 219,
+                        top: 179,
                         left: 28,
                         child: Container(
                             alignment: Alignment.center,
@@ -159,7 +160,7 @@ class Stloginpage extends StatelessWidget {
                                 color: const Color.fromARGB(141, 241, 241, 241),
                                 border: Border.all(
                                     color:
-                                        const Color.fromARGB(255, 64, 157, 194),
+                                        const Color.fromARGB(255, 54, 127, 156),
                                     width: 3)),
                             width: 303,
                             height: 55,
@@ -177,7 +178,7 @@ class Stloginpage extends StatelessWidget {
                             )),
                       ),
                       Positioned(
-                        top: 270,
+                        top: 240,
                         left: 24,
                         child: Row(
                           children: [
@@ -186,7 +187,7 @@ class Stloginpage extends StatelessWidget {
                               builder: (context, value, child) {
                                 return Checkbox(
                                   activeColor:
-                                      const Color.fromARGB(255, 33, 140, 182),
+                                      const Color.fromARGB(255, 54, 127, 156),
                                   value: value,
                                   onChanged: (bool? newValue) {
                                     ischecked.value = newValue ?? false;
@@ -209,8 +210,8 @@ class Stloginpage extends StatelessWidget {
                         ),
                       ),
                       Positioned(
-                        top: 320,
-                        left: 85,
+                        top: 300,
+                        left: 83,
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.pushNamedAndRemoveUntil(
@@ -227,7 +228,7 @@ class Stloginpage extends StatelessWidget {
                                 const Color.fromARGB(197, 0, 129, 189),
                               ),
                               padding: WidgetStateProperty.all(
-                                  EdgeInsets.fromLTRB(60, 14, 60, 14)),
+                                  EdgeInsets.fromLTRB(50, 10, 50, 10)),
                               shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius:
@@ -237,7 +238,7 @@ class Stloginpage extends StatelessWidget {
                     ],
                   ),
                   width: 360,
-                  height: 444,
+                  height: 410,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(40),

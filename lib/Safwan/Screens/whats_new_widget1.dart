@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Anas/Screens/Anas.dart';
 
 class Whats_New_Widget extends StatelessWidget {
   final String title;
@@ -81,7 +82,9 @@ class Whats_New_Widget extends StatelessWidget {
             width: 116,
             height: 34,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationsScreen()));
+              },
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.all(
                     const Color.fromARGB(255, 228, 228, 228)),
