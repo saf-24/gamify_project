@@ -60,7 +60,7 @@ class points_bars extends StatelessWidget {
             child: Text(
               ranks.toString(),
               style: TextStyle(
-                color: const Color.fromARGB(255, 110, 107, 107),
+                color: const Color.fromARGB(255, 111, 107, 107),
                 fontSize: screenHeight * 0.038,
                 fontWeight: FontWeight.w700,
               ),
