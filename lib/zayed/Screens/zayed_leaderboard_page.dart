@@ -26,8 +26,8 @@ class Zayed_leaderboard_page extends StatelessWidget {
             padding: EdgeInsets.only(bottom: screenHeight * 0.0),
             child: IconButton(
               icon: Icon(
-                Icons.menu,
-                size: screenHeight * 0.059, // Responsive size
+                Icons.arrow_back,
+                size: screenHeight * 0.051, // Responsive size
                 color: const Color.fromARGB(255, 255, 255, 255),
               ),
               onPressed: () {},
@@ -37,10 +37,10 @@ class Zayed_leaderboard_page extends StatelessWidget {
           title: Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.0),
             child: Text(
-              "Gamify",
+              "Leaderboard",
               style: TextStyle(
                 color: const Color.fromARGB(255, 255, 255, 255),
-                fontSize: screenHeight * 0.045, // Responsive font size
+                fontSize: screenHeight * 0.04, // Responsive font size
               ),
             ),
           ),
@@ -69,46 +69,123 @@ class Zayed_leaderboard_page extends StatelessWidget {
                 height: screenHeight * 0.345, // Adjust height
                 fit: BoxFit.none, // Maintain aspect ratio
               ),
-              Positioned(
+
+                Positioned(
                 top: screenHeight * 0.1175,
                 right: screenHeight * 0.0215, // Adjust position
                 child: Container(
                   height: screenHeight * 0.1, // Circle size (adjust to match image circles)
                   width: screenHeight * 0.1,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 222, 220, 220),
-                    shape: BoxShape.circle,
+                  color: const Color.fromARGB(255, 222, 220, 220),
+                  shape: BoxShape.circle,
                   ),
                 ),
-              ),
+                ),
+                Positioned(
+                top: screenHeight * 0.233,
+                right: screenHeight * 0.012,                
+                child: Column(
+                  children: [
+                  Text("abdulhadi", 
+                    style: TextStyle(fontSize: 25,
+                    color: const Color.fromARGB(255, 238, 235, 235)
+                    ),
+                  ),
+                  Text("100 points",
+                    style: TextStyle(fontSize: 18,
+                    color: const Color.fromARGB(255, 238, 235, 235)
+                    ),
+                  ),
+                  ],
+                ),
+                ),
 
-              Positioned(
+                Positioned(
                 top: screenHeight * 0.074,
                 right: screenHeight * 0.166, // Adjust position
-                child:Container(
+                child: Container(
                   height: screenHeight * 0.11, // Circle size (adjust to match image circles)
                   width: screenHeight * 0.11,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 219, 216, 216),
-                    shape: BoxShape.circle,
+                  color: const Color.fromARGB(255, 219, 216, 216),
+                  shape: BoxShape.circle,
                   ),
                 ),
-              ),
+                ),
+                Positioned(
+                top: screenHeight * 0.202,
+                left: screenHeight * 0.178,                
+                child: Column(
+                  children: [
+                  Text("zayed", 
+                    style: TextStyle(fontSize: 25 , 
+                    color: const Color.fromARGB(255, 238, 235, 235)
+                    ),
+                  ),
+                  Text("100 points",
+                    style: TextStyle(fontSize: 18,
+                    color: const Color.fromARGB(255, 238, 235, 235)
+                    ),
+                  ),
+                  ],
+                ),
+                ),
 
-              Positioned(
+                Positioned(
                 top: screenHeight * 0.123,
                 left: screenHeight * 0.024, // Adjust position
                 child: Container(
                   height: screenHeight * 0.1, // Circle size (adjust to match image circles)
                   width: screenHeight * 0.1,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 216, 215, 215),
-                    shape: BoxShape.circle,
+                  color: const Color.fromARGB(255, 216, 215, 215),
+                  shape: BoxShape.circle,
                   ),
                 ),
-              ),
-              Container(
-                // most add the bars here .
+                ),
+                Positioned(
+                top: screenHeight * 0.24,
+                left: screenHeight * 0.025,                
+                child: Column(
+                  children: [
+                  Text("safwan",
+                    style: TextStyle(fontSize: 25,
+                    color: const Color.fromARGB(255, 238, 235, 235)
+                    ),
+                  ),
+                  Text("100 points",
+                    style: TextStyle(fontSize: 18,
+                    color: const Color.fromARGB(255, 238, 235, 235)
+                    ),
+                  ),
+                  ],
+                ),
+                ),
+              
+              // List of points bars
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: screenHeight * 0.35),
+                    child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.44,
+                    child: ListView.builder(
+                      itemCount: 8,
+                      itemBuilder: (context, index) {
+                        return points_bars(
+                          names: "John Doe",
+                          points: 100,
+                          ranks: index + 4,
+                          );
+                      },
+                    ),
+                    ),
+                  ),
+                  ],
+                ),
               ),
             ],
         ),

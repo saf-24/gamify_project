@@ -1,82 +1,72 @@
 
 import 'package:flutter/material.dart';
 
-
-class Zayed_points_bars extends StatelessWidget {
+class points_bars extends StatelessWidget {
   final String names;
   final int points;
+  final int ranks;
 
-  const Zayed_points_bars({
+  const points_bars({
     super.key,
     required this.names,
     required this.points,
+    required this.ranks,
   });
 
   @override
   Widget build(BuildContext context) {
+    final double screenHeight = MediaQuery.of(context).size.height;
+
     return Container(
-      margin: const EdgeInsets.fromLTRB(17, 0, 0, 0),
-      width: 400,
-      height: 199,
-      child: SizedBox(
-        width: 323,
-        height: 22,
-        child: Stack(
-          children: [
-            // Reposition the ElevatedButton using Positioned
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 10,
-              bottom: 9,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 9, 17, 18),
-                child: ElevatedButton(
-                  onPressed: () => {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                  child: Container(), // Add an empty container as the child
-                ),
+      margin: EdgeInsets.fromLTRB(screenHeight * 0.01, screenHeight * 0.01, 0, 0),
+      child: Stack(
+        children: [
+          Image.asset(
+            'assets/img/pointbar.png', // Path to the image
+            height: screenHeight * 0.09, // Adjust height
+            fit: BoxFit.contain, // Maintain aspect ratio
+          ),
+          Positioned(
+            top: screenHeight * 0.026,
+            left: ranks >= 10
+                ? screenHeight * 0.1 // Adjust left for double digits
+                : screenHeight * 0.0759,  // Default left for single digits,
+            child: Text(
+              names,
+              style: TextStyle(
+                color: const Color.fromARGB(255, 110, 107, 107),
+                fontSize: screenHeight * 0.023,
+                fontWeight: FontWeight.w700,
               ),
             ),
-            Positioned(
-              top: 30,
-              left: 34,
-              child: Text(
-                names,
-                style: TextStyle(
-                  fontSize: 26,
-                  color: const Color.fromARGB(255, 0, 0, 0),
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 3,
-                ),
+          ),
+
+          Positioned(
+            top: screenHeight * 0.031,
+            right: screenHeight * 0.053,
+            child: Text(
+              points.toString() + " Points",
+              style: TextStyle(
+                color: const Color.fromARGB(255, 238, 235, 235),
+                fontSize: screenHeight * 0.017,
+                fontWeight: FontWeight.w700,
               ),
             ),
-          
-            Positioned(
-              top: 82,
-              left: 34,
-              child: SizedBox(
-                width: 320,
-                child: Text(
-                  points.toString(),
-                  style: TextStyle(
-                    fontSize: 17.6,
-                    color: const Color.fromARGB(255, 0, 0, 0),
-                    wordSpacing: 2,
-                    letterSpacing: 1,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+          ),
+
+          Positioned(
+            top: screenHeight * 0.0145,
+            left: screenHeight * 0.04,
+            child: Text(
+              ranks.toString(),
+              style: TextStyle(
+                color: const Color.fromARGB(255, 111, 107, 107),
+                fontSize: screenHeight * 0.038,
+                fontWeight: FontWeight.w700,
               ),
             ),
-            
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
