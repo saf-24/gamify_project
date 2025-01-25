@@ -1,5 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_anas.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
+import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
+import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
 import 'package:gamify_project/zayed/Screens/zayed_quiz_page.dart';
 import 'package:gamify_project/zayed/Screens/zayed_lessons_cards.dart';
 
@@ -25,46 +29,38 @@ class Zayed_lessons_page extends StatelessWidget {
 
         // AppBar
         appBar: AppBar(
-          backgroundColor: const Color(0xFFffffff),
+          toolbarHeight: 65,
+          title: Text(
+            "Gamify",
+            style: TextStyle(
+                fontSize: 32,
+                color: Color.fromARGB(197, 0, 129, 189),
+                fontWeight: FontWeight.w600),
+          ),
           centerTitle: true,
-          toolbarHeight: screenHeight * 0.08, // Adjust height based on screen size
-          // Menu icon
-          leading: Padding(
-            padding: EdgeInsets.only(bottom: screenHeight * 0.0),
-            child: IconButton(
-              icon: Icon(
-                Icons.menu,
-                size: screenHeight * 0.059, // Responsive size
-                color: const Color.fromARGB(197, 0, 129, 189),
+          actions: <Widget>[
+            IconButton(
+              tooltip: "notifications",
+              icon: const Icon(
+                Icons.notifications_none,
+                size: 39.4,
+                color: Color.fromARGB(197, 0, 129, 189),
               ),
               onPressed: () {},
             ),
-          ),
-          // Title
-          title: Padding(
-            padding: EdgeInsets.only(bottom: screenHeight * 0.0),
-            child: Text(
-              "Gamify",
-              style: TextStyle(
-                color: const Color.fromARGB(197, 0, 129, 189),
-                fontSize: screenHeight * 0.045, // Responsive font size
-              ),
-            ),
-          ),
-          // Notification icon
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(bottom: screenHeight * 0.0),
-              child: IconButton(
-                icon: Icon(
-                  Icons.notifications_none,
-                  size: screenHeight * 0.045, // Responsive size
-                  color: const Color.fromARGB(197, 0, 129, 189),
-                ),
-                onPressed: () {},
-              ),
-            ),
           ],
+          leading: IconButton(
+            tooltip: "Menu",
+            icon: const Icon(
+              Icons.arrow_back,
+              size: 43.4,
+              color: Color.fromARGB(197, 0, 129, 189),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         ),
 
         // Main Content
@@ -123,10 +119,10 @@ class Zayed_lessons_page extends StatelessWidget {
                             // TextButton aligned to the right
                             TextButton(
                               onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_quiz_page()));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Zayed_quiz_page()));
                               },
                               child: Text(
-                                "test",
+                                "Tests",
                                 style: TextStyle(
                                   fontSize: screenHeight * 0.03, // Responsive font size
                                   color: const Color.fromARGB(197, 0, 129, 189),
@@ -206,36 +202,80 @@ class Zayed_lessons_page extends StatelessWidget {
         ),
 
         // Bottom Navigation Bar 
-        bottomNavigationBar: Container(
-          color: Colors.white,
-          padding: EdgeInsets.only(bottom: screenHeight * 0.02),
-          height: screenHeight * 0.1, // Responsive height
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              _buildNavItem(Icons.home, "Home", Colors.grey, screenHeight),
-              _buildNavItem(Icons.menu_book_rounded, "Courses",
-                  const Color.fromARGB(197, 0, 129, 189), screenHeight),
-              _buildNavItem(Icons.videogame_asset, "Games", Colors.grey,
-                  screenHeight),
-              _buildNavItem(Icons.person, "Profile", Colors.grey, screenHeight),
-            ],
-          ),
+          bottomNavigationBar: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.only(bottom: 14.0),
+        height: 96,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.home, size: 40.0),
+                  color: Colors.grey,
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page()));
+                  },
+                ),
+                const Text("Home",
+                    style: TextStyle(
+                        height: 0.1,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w700)),
+              ],
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.menu_book_rounded, size: 40.0),
+                  color: Color.fromARGB(197, 0, 129, 189),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_standard_navigations()));
+                  },
+                ),
+                const Text(
+                  "Courses",
+                  style: TextStyle(
+                        height: 0.1,
+                        color: Color.fromARGB(197, 0, 129, 189),
+                        fontWeight: FontWeight.w700),
+                ),
+              ],
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.videogame_asset, size: 41),
+                  color: Colors.grey,
+                  onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Games_list()));
+                  },
+                ),
+                const Text("Games", style: TextStyle(height: 0.1)),
+              ],
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.person, size: 43),
+                  color: Colors.grey,
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage()));
+                  },
+                ),
+                const Text("Profile", style: TextStyle(height: 0.1)),
+              ],
+            ),
+          ],
         ),
+      ),
       ),
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, Color color, double screenHeight) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Icon(icon, color: color, size: screenHeight * 0.04),
-        Text(
-          label,
-          style: TextStyle(color: color, fontSize: screenHeight * 0.02),
-        ),
-      ],
-    );
-  }
 }

@@ -2,6 +2,10 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_anas.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_anas_game.dart';
+import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
+import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
 
 
 void main() {
@@ -30,54 +34,31 @@ class Games_list extends StatelessWidget {
         backgroundColor: const Color(0xFFe4e4e4),
         // appbar ://------------------------------------------//
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(255, 252, 252, 252),
-          centerTitle: true,
-          toolbarHeight: 65.0, // Adjust AppBar height
-          
-
-          // menu icon :----------------------------------------------
-
-          leading: Padding(
-            padding: const EdgeInsets.only(bottom: 1.0),
-            child: IconButton(
-              icon: const Icon(
-                Icons.menu,
-                size: 47.0,
-                color: Color.fromARGB(197, 0, 129, 189),
-              ),
-              onPressed: () {},
-            ),
-          ),
-
-          // title :-------------------------------------------
-
-          title: const Text(
-            "Gamify",
-            style: TextStyle(
+      toolbarHeight: 65,
+        title: Text(
+          "Gamify",
+          style: TextStyle(
+              fontSize: 32,
               color: Color.fromARGB(197, 0, 129, 189),
-              fontSize: 33.0,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 1
-            ),
-          ),
-
-          // notification icon :---------------------------------------
-
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 6.0),
-              child: IconButton(
-                icon: const Icon(
-                  Icons.notifications_none,
-                  size: 34.0,
-                  color: Color.fromARGB(197, 0, 129, 189),
-                ),
-                onPressed: () {},
-              ),
-            )
-          ],
+              fontWeight: FontWeight.w600),
         ),
-
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            tooltip: "notifications",
+            icon: const Icon(Icons.notifications_none,
+                size: 39.4, color: Color.fromARGB(197, 0, 129, 189),),
+            onPressed: () {},
+          ),
+        ],
+        leading: IconButton(
+          tooltip: "Menu",
+          icon: const Icon(Icons.menu,
+              size: 43.4, color: Color.fromARGB(197, 0, 129, 189),),
+          onPressed: () {},
+        ),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      ),
         
         body:
         Center(
@@ -89,7 +70,7 @@ class Games_list extends StatelessWidget {
               children: [
                 Container(
                 width: 350,
-                height: 195,
+                height: 215,
                 
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(28),
@@ -107,7 +88,7 @@ class Games_list extends StatelessWidget {
                 SizedBox(height: 30),
                 Container(
                 width: 350,
-                height: 195,
+                height: 215,
                 
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(28),
@@ -122,26 +103,11 @@ class Games_list extends StatelessWidget {
                     ]),
                 ),
                 SizedBox(height: 30),
-                Container(
-                width: 350,
-                height: 195,
                 
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(28),
-                    color: const Color.fromARGB(255, 224, 145, 42),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 7,
-                        offset: const Offset(2, 7),
-                      )
-                    ]),
-                ),
               ],
             ),
             Positioned(
-              top: 166,
+              top: 236,
               right: 41,
               width: 266,
               height: 40,
@@ -155,7 +121,7 @@ class Games_list extends StatelessWidget {
                 child: Text(
                   "Choose this Game",
                   style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 17,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 1,
                       color: const Color.fromARGB(197, 65, 7, 90)),
@@ -163,7 +129,7 @@ class Games_list extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 45,
+              top: 90,
               left: 26,
               child: Text("Hints game",
                 style: TextStyle(
@@ -175,13 +141,13 @@ class Games_list extends StatelessWidget {
               ),
               ),
               Positioned(
-              top: 94,
+              top: 157,
               left: 26,
               child: SizedBox(
                 width: 300,
                 child: Text("Choose thw correct answer through the hints given",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 14,
                     color: const Color.fromARGB(255, 245, 219, 255),
                     fontWeight: FontWeight.w500,
                     letterSpacing: 3,
@@ -190,13 +156,15 @@ class Games_list extends StatelessWidget {
               ),
               ),
               Positioned(
-              top: 395,
+              top: 483,
               right: 41,
               width: 266,
               height: 40,
               child: ElevatedButton(
                 
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PuzzleGameScreen()));
+                },
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(
                       const Color.fromARGB(255, 231, 253, 244)),
@@ -204,7 +172,7 @@ class Games_list extends StatelessWidget {
                 child: Text(
                   "Choose this Game",
                   style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 18,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 1,
                       color: const Color.fromARGB(197, 7, 90, 69)),
@@ -212,7 +180,7 @@ class Games_list extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 270,
+              top: 330,
               left: 26,
               child: Text("puzzle words",
                 style: TextStyle(
@@ -224,13 +192,13 @@ class Games_list extends StatelessWidget {
               ),
               ),
               Positioned(
-              top: 324,
+              top: 394,
               left: 26,
               child: SizedBox(
                 width: 300,
                 child: Text("Drag and place the crrect choice in the correct space",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 14,
                     color: const Color.fromARGB(255, 236, 248, 243),
                     fontWeight: FontWeight.w600,
                     letterSpacing: 3,
@@ -238,21 +206,7 @@ class Games_list extends StatelessWidget {
                 ),
               ),
               ),
-              Positioned(
-              top: 529,
-              left: 26,
-              child: SizedBox(
-                width: 300,
-                child: Text("SOON...",
-                  style: TextStyle(
-                    fontSize: 78,
-                    color: const Color.fromARGB(255, 255, 213, 157),
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 3,
-                  ),
-                ),
-              ),
-              )
+              
             ],
           ),
         ),
@@ -271,7 +225,7 @@ class Games_list extends StatelessWidget {
                     icon: const Icon(Icons.home, size: 40.0),
                     color: Colors.grey,
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/st_home');
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page()));
                     },
                   ),
                   const Text("Home", style: TextStyle(height: 0.1)),
@@ -285,7 +239,7 @@ class Games_list extends StatelessWidget {
                     icon: const Icon(Icons.menu_book_rounded, size: 40.0),
                     color: Colors.grey,
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/st_course');
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_standard_navigations()));
                     },
                   ),
                   const Text("Courses", style: TextStyle(height: 0.1, )),
@@ -312,6 +266,7 @@ class Games_list extends StatelessWidget {
                     icon: const Icon(Icons.person, size: 43),
                     color: Colors.grey,
                     onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage()));
                     },
                   ),
                   const Text("Profile", style: TextStyle(height: 0.1)),

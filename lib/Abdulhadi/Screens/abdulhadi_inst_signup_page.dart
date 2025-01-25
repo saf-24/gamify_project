@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_institusoin_logn_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,8 +44,7 @@ class instisignup extends StatelessWidget {
       body: Stack(
         children: [
           Positioned(
-            top: 37,
-            left: 135,
+            left: 115,
             child: Container(
               child: Text(
                 "Gamify",
@@ -71,177 +71,15 @@ class instisignup extends StatelessWidget {
                   child: Stack(
                     children: [
                       Positioned(
-                        top: 42,
-                        left: 33,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                              fontSize: 25,
-                              color: const Color.fromARGB(255, 27, 111, 167),
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all(
-                              const Color.fromARGB(255, 255, 255, 255),
-                            ),
-                            padding: WidgetStateProperty.all(
-                                EdgeInsets.fromLTRB(32, 13, 32, 13)),
-                            shape: WidgetStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(28),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 44,
-                      ),
-                      Positioned(
-                        top: 34, // Top position for the Sign up button
+                        top: 30,
                         right: 27,
                         child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Sign up",
-                            style: TextStyle(
-                              fontSize: 30,
-                              color: const Color.fromARGB(255, 190, 228, 253),
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all(
-                              const Color.fromARGB(197, 0, 129, 189),
-                            ),
-                            padding: WidgetStateProperty.all(
-                                EdgeInsets.fromLTRB(40, 16, 44, 16)),
-                            shape: WidgetStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(28),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 139,
-                        left: 28,
-                        child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(28),
-                                color: const Color.fromARGB(141, 241, 241, 241),
-                                border: Border.all(
-                                    color:
-                                        const Color.fromARGB(255, 64, 157, 194),
-                                    width: 3)),
-                            width: 303,
-                            height: 55,
-                            child: TextField(
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Full name",
-                                  hintStyle: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(
-                                          255, 33, 123, 165)),
-                                  contentPadding: EdgeInsets.only(left: 20)),
-                            )),
-                      ),
-                      Positioned(
-                        top: 219,
-                        left: 28,
-                        child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(28),
-                                color: const Color.fromARGB(141, 241, 241, 241),
-                                border: Border.all(
-                                    color:
-                                        const Color.fromARGB(255, 64, 157, 194),
-                                    width: 3)),
-                            width: 303,
-                            height: 55,
-                            child: TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Institution Email Address",
-                                  hintStyle: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(
-                                          255, 33, 123, 165)),
-                                  contentPadding: EdgeInsets.only(left: 20)),
-                            )),
-                      ),
-                      Positioned(
-                        top: 299,
-                        left: 28,
-                        child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(28),
-                                color: const Color.fromARGB(141, 241, 241, 241),
-                                border: Border.all(
-                                    color:
-                                        const Color.fromARGB(255, 64, 157, 194),
-                                    width: 3)),
-                            width: 303,
-                            height: 55,
-                            child: TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Job title",
-                                  hintStyle: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(
-                                          255, 33, 123, 165)),
-                                  contentPadding: EdgeInsets.only(left: 20)),
-                            )),
-                      ),
-                      Positioned(
-                        top: 379,
-                        left: 28,
-                        child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(28),
-                                color: const Color.fromARGB(141, 241, 241, 241),
-                                border: Border.all(
-                                    color:
-                                        const Color.fromARGB(255, 64, 157, 194),
-                                    width: 3)),
-                            width: 303,
-                            height: 55,
-                            child: TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Institution name",
-                                  hintStyle: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(
-                                          255, 33, 123, 165)),
-                                  contentPadding: EdgeInsets.only(left: 20)),
-                            )),
-                      ),
-                      Positioned(
-                        top: 480,
-                        left: 85,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text("Login",
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => instisignup()));
+                          },
+                          child: Text("Sign up",
                               style: TextStyle(
-                                  fontSize: 30,
+                                  fontSize: 22,
                                   color:
                                       const Color.fromARGB(255, 190, 228, 253),
                                   fontWeight: FontWeight.w900)),
@@ -250,7 +88,162 @@ class instisignup extends StatelessWidget {
                                 const Color.fromARGB(197, 0, 129, 189),
                               ),
                               padding: WidgetStateProperty.all(
-                                  EdgeInsets.fromLTRB(60, 14, 60, 14)),
+                                  EdgeInsets.fromLTRB(24, 11, 24, 12)),
+                              shape: WidgetStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(28)))),
+                        ),
+                      ),
+                      Positioned(
+                        top: 30,
+                        left: 33,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => In_login_page()));
+                          },
+                          child: Text("Login",
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  color:
+                                      const Color.fromARGB(255, 27, 111, 167),
+                                  fontWeight: FontWeight.w900)),
+                          style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all(
+                                const Color.fromARGB(244, 255, 255, 255),
+                              ),
+                              padding: WidgetStateProperty.all(
+                                  EdgeInsets.fromLTRB(35, 12, 35, 12)),
+                              shape: WidgetStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(28)))),
+                        ),
+                      ),
+                      Positioned(
+                        top: 125,
+                        left: 28,
+                        child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(28),
+                                color: const Color.fromARGB(141, 241, 241, 241),
+                                border: Border.all(
+                                    color:
+                                        const Color.fromARGB(255, 64, 157, 194),
+                                    width: 3)),
+                            width: 303,
+                            height: 55,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Full name *",
+                                  hintStyle: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color.fromARGB(
+                                          255, 33, 123, 165)),
+                                  contentPadding: EdgeInsets.only(left: 20)),
+                            )),
+                      ),
+                      Positioned(
+                        top: 200,
+                        left: 28,
+                        child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(28),
+                                color: const Color.fromARGB(141, 241, 241, 241),
+                                border: Border.all(
+                                    color:
+                                        const Color.fromARGB(255, 64, 157, 194),
+                                    width: 3)),
+                            width: 303,
+                            height: 55,
+                            child: TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Institution Email Address *",
+                                  hintStyle: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color.fromARGB(
+                                          255, 33, 123, 165)),
+                                  contentPadding: EdgeInsets.only(left: 20)),
+                            )),
+                      ),
+                      Positioned(
+                        top: 274,
+                        left: 28,
+                        child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(28),
+                                color: const Color.fromARGB(141, 241, 241, 241),
+                                border: Border.all(
+                                    color:
+                                        const Color.fromARGB(255, 64, 157, 194),
+                                    width: 3)),
+                            width: 303,
+                            height: 55,
+                            child: TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Job title *",
+                                  hintStyle: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color.fromARGB(
+                                          255, 33, 123, 165)),
+                                  contentPadding: EdgeInsets.only(left: 20)),
+                            )),
+                      ),
+                      Positioned(
+                        top: 347,
+                        left: 28,
+                        child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(28),
+                                color: const Color.fromARGB(141, 241, 241, 241),
+                                border: Border.all(
+                                    color:
+                                        const Color.fromARGB(255, 64, 157, 194),
+                                    width: 3)),
+                            width: 303,
+                            height: 55,
+                            child: TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Institution name *",
+                                  hintStyle: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color.fromARGB(
+                                          255, 33, 123, 165)),
+                                  contentPadding: EdgeInsets.only(left: 20)),
+                            )),
+                      ),
+                      Positioned(
+                        top: 435,
+                        left: 80,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: Text("Sign up",
+                              style: TextStyle(
+                                  fontSize: 27,
+                                  color:
+                                      const Color.fromARGB(255, 212, 238, 255),
+                                  fontWeight: FontWeight.w900)),
+                          style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all(
+                                const Color.fromARGB(197, 0, 129, 189),
+                              ),
+                              padding: WidgetStateProperty.all(
+                                  EdgeInsets.fromLTRB(40, 10, 40, 10)),
                               shape: WidgetStateProperty.all(
                                   RoundedRectangleBorder(
                                       borderRadius:
@@ -260,7 +253,7 @@ class instisignup extends StatelessWidget {
                     ],
                   ),
                   width: 360,
-                  height: 600,
+                  height: 550,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(40),

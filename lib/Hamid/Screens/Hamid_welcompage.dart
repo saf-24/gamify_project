@@ -1,6 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_inst_signup_page.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_institusoin_logn_page.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_student_login_page.dart';
+import 'package:gamify_project/Safwan/Screens/teatcher_login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,13 +17,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
-      home: const Stloginpage(),
+      home: const welcome_page(),
     );
   }
 }
 
-class Stloginpage extends StatelessWidget {
-  const Stloginpage({super.key});
+class welcome_page extends StatelessWidget {
+  const welcome_page({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +46,15 @@ class Stloginpage extends StatelessWidget {
       body: Stack(
         children: [
           Positioned(
-            top: 60,
-            left: MediaQuery.of(context).size.width * 0.35,
+            top: 30,
+            left: 115,
             child: Text(
               "Gamify",
               style: TextStyle(
                 fontSize: 47,
                 color: const Color.fromARGB(255, 54, 127, 156),
                 fontWeight: FontWeight.w700,
-                fontStyle: FontStyle.italic,
+                
               ),
             ),
           ),
@@ -71,7 +75,7 @@ class Stloginpage extends StatelessWidget {
                   height: 360,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(
-                      Radius.circular(40),
+                      Radius.circular(35),
                     ),
                     color: const Color.fromARGB(153, 231, 231, 231),
                     border: Border.all(
@@ -84,69 +88,77 @@ class Stloginpage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Stloginpage()));
+
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                            const Color.fromARGB(255, 8, 130, 179),
+                          ),
+                          padding: WidgetStateProperty.all(
+                              EdgeInsets.fromLTRB(40, 13, 40, 13)),
+                          shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(28))),
+                        ),
                         child: Text(
-                          "Sign as Student",
+                          "Enter as Student",
                           style: TextStyle(
                             fontSize: 25,
                             color: const Color.fromARGB(192, 255, 255, 255),
                             fontWeight: FontWeight.w900,
                             fontStyle: FontStyle.italic,
                           ),
-                        ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            const Color.fromARGB(255, 27, 111, 167),
-                          ),
-                          padding: MaterialStateProperty.all(
-                              EdgeInsets.fromLTRB(32, 13, 32, 13)),
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(28))),
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Taloginpage()));
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                            const Color.fromARGB(255, 8, 130, 179),
+                          ),
+                          padding: WidgetStateProperty.all(
+                              EdgeInsets.fromLTRB(25, 13, 25, 13)),
+                          shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(28))),
+                        ),
                         child: Text(
-                          "Sign as University",
+                          "Enter as Instructor",
                           style: TextStyle(
                             fontSize: 25,
                             color: const Color.fromARGB(192, 255, 255, 255),
                             fontWeight: FontWeight.w900,
                             fontStyle: FontStyle.italic,
                           ),
-                        ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            const Color.fromARGB(255, 27, 111, 167),
-                          ),
-                          padding: MaterialStateProperty.all(
-                              EdgeInsets.fromLTRB(32, 13, 32, 13)),
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(28))),
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => In_login_page()));
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                            const Color.fromARGB(255, 8, 130, 179),
+                          ),
+                          padding: WidgetStateProperty.all(
+                              EdgeInsets.fromLTRB(25, 13, 25, 13)),
+                          shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(28))),
+                        ),
                         child: Text(
-                          "Sign as Instructor",
+                          "Enter as University",
                           style: TextStyle(
                             fontSize: 25,
                             color: const Color.fromARGB(192, 255, 255, 255),
                             fontWeight: FontWeight.w900,
                             fontStyle: FontStyle.italic,
                           ),
-                        ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            const Color.fromARGB(255, 27, 111, 167),
-                          ),
-                          padding: MaterialStateProperty.all(
-                              EdgeInsets.fromLTRB(32, 13, 32, 13)),
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(28))),
                         ),
                       ),
                     ],

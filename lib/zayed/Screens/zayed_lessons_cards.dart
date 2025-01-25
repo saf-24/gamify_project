@@ -46,12 +46,12 @@ class Lessons_cards extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 30,
+              top: 43,
               left: 34,
               child: Text(
                 lessonTitle,
                 style: TextStyle(
-                  fontSize: 26,
+                  fontSize: 25,
                   color: const Color.fromARGB(255, 0, 0, 0),
                   fontWeight: FontWeight.w700,
                   letterSpacing: 3,
@@ -59,7 +59,7 @@ class Lessons_cards extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 130,
+              top: 132,
               left: 34,
               child: Text(
                 date,
@@ -73,7 +73,7 @@ class Lessons_cards extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: 82,
+              top: 90,
               left: 34,
               child: SizedBox(
                 width: 320,
@@ -89,7 +89,16 @@ class Lessons_cards extends StatelessWidget {
                 ),
               ),
             ),
-            
+            Container(
+              margin: const EdgeInsets.fromLTRB(9, 0, 0, 0),
+              width: 359,
+              height: 45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(28),
+                color: Color.fromARGB(255, 0, 129, 189),
+              
+              ),
+            ),
           ],
         ),
       ),
