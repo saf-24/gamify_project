@@ -27,8 +27,8 @@ class Zayed_leaderboard_page extends StatelessWidget {
             padding: EdgeInsets.only(bottom: screenHeight * 0.0),
             child: IconButton(
               icon: Icon(
-                Icons.menu,
-                size: screenHeight * 0.059, // Responsive size
+                Icons.arrow_back,
+                size: screenHeight * 0.051, // Responsive size
                 color: const Color.fromARGB(255, 255, 255, 255),
               ),
               onPressed: () {},
@@ -38,10 +38,10 @@ class Zayed_leaderboard_page extends StatelessWidget {
           title: Padding(
             padding: EdgeInsets.only(bottom: screenHeight * 0.0),
             child: Text(
-              "Gamify",
+              "Leaderboard",
               style: TextStyle(
                 color: const Color.fromARGB(255, 255, 255, 255),
-                fontSize: screenHeight * 0.045, // Responsive font size
+                fontSize: screenHeight * 0.04, // Responsive font size
               ),
             ),
           ),
@@ -108,8 +108,28 @@ class Zayed_leaderboard_page extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                // most add the bars here .
+              SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: screenHeight * 0.35),
+                    child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.44,
+                    child: ListView.builder(
+                      itemCount: 8,
+                      itemBuilder: (context, index) {
+                        return points_bars(
+                          names: "John Doe",
+                          points: 100,
+                          ranks: index + 4,
+                          );
+                      },
+                    ),
+                    ),
+                  ),
+                  ],
+                ),
               ),
             ],
         ),
