@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:gamify_project/Safwan/Screens/dummy_data.dart';
 import 'package:gamify_project/zayed/Screens/zayed_courses_cards.dart';
 
 void main() {

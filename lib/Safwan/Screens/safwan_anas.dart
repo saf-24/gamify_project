@@ -7,6 +7,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,6 +19,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyProfilePage extends StatefulWidget {
+  const MyProfilePage({super.key});
+
   @override
   _MyProfilePageState createState() => _MyProfilePageState();
 }
@@ -35,7 +39,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
-      body: Container(
+      body: SizedBox(
         width: 423,
         height: double.infinity,
         child: Stack(

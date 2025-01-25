@@ -85,6 +85,16 @@ class Stloginpage extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {},
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                            const Color.fromARGB(255, 27, 111, 167),
+                          ),
+                          padding: WidgetStateProperty.all(
+                              EdgeInsets.fromLTRB(32, 13, 32, 13)),
+                          shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(28))),
+                        ),
                         child: Text(
                           "Sign as Student",
                           style: TextStyle(
@@ -94,19 +104,19 @@ class Stloginpage extends StatelessWidget {
                             fontStyle: FontStyle.italic,
                           ),
                         ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            const Color.fromARGB(255, 27, 111, 167),
-                          ),
-                          padding: MaterialStateProperty.all(
-                              EdgeInsets.fromLTRB(32, 13, 32, 13)),
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(28))),
-                        ),
                       ),
                       ElevatedButton(
                         onPressed: () {},
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                            const Color.fromARGB(255, 27, 111, 167),
+                          ),
+                          padding: WidgetStateProperty.all(
+                              EdgeInsets.fromLTRB(32, 13, 32, 13)),
+                          shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(28))),
+                        ),
                         child: Text(
                           "Sign as University",
                           style: TextStyle(
@@ -116,19 +126,19 @@ class Stloginpage extends StatelessWidget {
                             fontStyle: FontStyle.italic,
                           ),
                         ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            const Color.fromARGB(255, 27, 111, 167),
-                          ),
-                          padding: MaterialStateProperty.all(
-                              EdgeInsets.fromLTRB(32, 13, 32, 13)),
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(28))),
-                        ),
                       ),
                       ElevatedButton(
                         onPressed: () {},
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                            const Color.fromARGB(255, 27, 111, 167),
+                          ),
+                          padding: WidgetStateProperty.all(
+                              EdgeInsets.fromLTRB(32, 13, 32, 13)),
+                          shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(28))),
+                        ),
                         child: Text(
                           "Sign as Instructor",
                           style: TextStyle(
@@ -137,16 +147,6 @@ class Stloginpage extends StatelessWidget {
                             fontWeight: FontWeight.w900,
                             fontStyle: FontStyle.italic,
                           ),
-                        ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                            const Color.fromARGB(255, 27, 111, 167),
-                          ),
-                          padding: MaterialStateProperty.all(
-                              EdgeInsets.fromLTRB(32, 13, 32, 13)),
-                          shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(28))),
                         ),
                       ),
                     ],
