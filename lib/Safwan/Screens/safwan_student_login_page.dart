@@ -213,7 +213,8 @@ class Stloginpage extends StatelessWidget {
                         left: 85,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pushNamedAndRemoveUntil(context, '/st_home', (route) => false);
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, '/st_home', (route) => false);
                           },
                           child: Text("Login",
                               style: TextStyle(
