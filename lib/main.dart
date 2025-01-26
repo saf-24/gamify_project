@@ -6,7 +6,7 @@ import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
 import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
 import 'package:gamify_project/Safwan/Screens/test_firebace.dart';
 import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
-
+import 'package:gamify_project/zayed/Screens/zayed_standard_navigations.dart';
 
 import 'Safwan/Screens/safwan_student_login_page.dart';
 
@@ -24,13 +24,11 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
-
       routes: {
         '/': (context) => const Stsignuppage(),
         '/st_login': (context) => const Stloginpage(),
@@ -38,13 +36,7 @@ class MyApp extends StatelessWidget {
         '/st_course': (context) => const Zayed_standard_navigations(),
         '/st_games_list': (context) => const Games_list(),
         '/test_fire': (context) => const Test_fire(),
-        
-
-
       },
     );
   }
 }
-
-
-  

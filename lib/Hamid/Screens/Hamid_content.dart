@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class TestPage extends StatelessWidget {
+class HamidContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -179,7 +179,7 @@ class TestPage extends StatelessWidget {
 
 void main() {
   runApp(MaterialApp(
-    home: TestPage(),
+    home: HamidContent(),
     debugShowCheckedModeBanner: false,
   ));
 }
