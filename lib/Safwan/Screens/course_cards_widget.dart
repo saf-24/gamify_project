@@ -92,7 +92,7 @@ class Course_home_page extends StatelessWidget {
               height: 34,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_lessons_page()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_lessons_page(title: title,)));
                 },
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(

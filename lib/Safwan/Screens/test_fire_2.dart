@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gamify_project/Safwan/Screens/course_cards_widget.dart';
 import 'package:gamify_project/Safwan/Screens/dummy_data.dart';
+import 'package:gamify_project/Safwan/Screens/frfrly.dart';
+
 import 'package:gamify_project/Safwan/Screens/new_learrn_widget.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_anas.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
+import 'package:gamify_project/Safwan/Screens/test_add_lesson.dart';
 import 'package:gamify_project/Safwan/Screens/welcom_widget.dart';
 import 'package:gamify_project/Safwan/Screens/whats_new_widget1.dart';
 import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
@@ -51,14 +54,18 @@ class St_home_page extends StatelessWidget {
             tooltip: "notifications",
             icon: const Icon(Icons.notifications_none,
                 size: 39.4, color: Color.fromARGB(197, 0, 129, 189),),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => AddClassPage()));
+            },
           ),
         ],
         leading: IconButton(
           tooltip: "Menu",
           icon: const Icon(Icons.menu,
               size: 43.4, color: Color.fromARGB(197, 0, 129, 189),),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => AddLessonPage( className: 'class 1', subjectName: 'subject 1',)));
+          },
         ),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
@@ -184,7 +191,7 @@ class St_home_page extends StatelessWidget {
                                     title: subject['title'] ?? 'N/A',
                                     disc: subject['progres'] ?? 'N/A',
                                     date: subject['lessonName'] ?? 'N/A',
-                                    percent1: subject['percent'] ?? 'N/A',
+                                    percent1: subject['percent'] ?? 0.0,
                                   );
                                 },
                               ),

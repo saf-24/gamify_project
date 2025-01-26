@@ -95,7 +95,7 @@ class Zayed_standard_navigations extends StatelessWidget {
                             title: subject['title'] ?? 'N/A',
                             disc: subject['progres'] ?? 'N/A',
                             date: subject['lessonName'] ?? 'N/A',
-                            percent1: subject['percent'] ?? 'N/A',
+                            percent1: subject['percent'] ?? 0.0,
                           );
                         },
                       ),

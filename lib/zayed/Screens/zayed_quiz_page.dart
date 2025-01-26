@@ -97,7 +97,7 @@ class Zayed_quiz_page extends StatelessWidget {
                             // Lessons button
                             TextButton(
                               onPressed: () {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Zayed_lessons_page()));
+                                
                               },
                               child: Text(
                                 "Lessons",
