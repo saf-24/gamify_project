@@ -10,12 +10,13 @@ import 'package:gamify_project/zayed/Screens/zayed_lessons_cards.dart';
 
 
 
-void main() {
-  runApp(const Zayed_lessons_page());
-}
+
 
 class Zayed_lessons_page extends StatelessWidget {
-  const Zayed_lessons_page({super.key});
+  final String title;
+  const Zayed_lessons_page({super.key,
+  required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -140,6 +141,7 @@ class Zayed_lessons_page extends StatelessWidget {
                   StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('lessons')
+                          .where('course_name', isEqualTo: title)
                           .snapshots(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {

@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         '/st_course': (context) => const Zayed_standard_navigations(),
         '/st_games_list': (context) => const Games_list(),
         '/test_fire': (context) => const Test_fire(),
-        '/lesson_page': (context) => const Zayed_lessons_page(),
+        '/lesson_page': (context) => const Zayed_lessons_page(title: '',),
         '/quiz_page': (context) => const Zayed_quiz_page(),
         '/profile_page': (context) =>  MyProfilePage(),
         '/Puzzle_Game': (context) =>  PuzzleGameScreen(),
