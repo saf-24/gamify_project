@@ -27,8 +27,8 @@ class _HintPageState extends State<HintPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   List<DocumentSnapshot> questions = [];
   int currentQuestionIndex = 0;
-  int currentHintIndex = 1; // Start with Hint1
-  int selectedAnswerIndex = -1; // Track selected answer
+  int currentHintIndex = 1;
+  int selectedAnswerIndex = -1;
   bool isAnswerCorrect = false;
   int incorrectAttempts = 0;
   int totalScore = 0;
@@ -57,11 +57,11 @@ class _HintPageState extends State<HintPage> {
 
       if (isAnswerCorrect) {
         if (incorrectAttempts == 0) {
-          totalScore += 15; // 15 points for first try
+          totalScore += 15;
         } else if (incorrectAttempts == 1) {
-          totalScore += 10; // 10 points for second try
+          totalScore += 10;
         } else if (incorrectAttempts == 2) {
-          totalScore += 5; // 5 points for third try
+          totalScore += 5;
         }
         _goToNextQuestion();
       } else {
@@ -69,9 +69,17 @@ class _HintPageState extends State<HintPage> {
         if (incorrectAttempts >= 3) {
           _goToNextQuestion();
         } else if (currentHintIndex < 3) {
-          currentHintIndex++; // Show next hint
+          currentHintIndex++;
         }
       }
+    });
+  }
+
+  void _saveScoreToFirebase(int score) async {
+    await _firestore.collection('leaderboard').add({
+      'name': 'Player',
+      'score': score,
+      'timestamp': FieldValue.serverTimestamp(),
     });
   }
 
@@ -84,6 +92,7 @@ class _HintPageState extends State<HintPage> {
         isAnswerCorrect = false;
         incorrectAttempts = 0;
       } else {
+        _saveScoreToFirebase(totalScore);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -164,36 +173,27 @@ class _HintPageState extends State<HintPage> {
                           : Color(0xFF87CEEB),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Row(
-                      children: [
-                        Text(
-                          answerText,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      answerText,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 );
               }).toList(),
               Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed: isAnswerCorrect ? _goToNextQuestion : null,
-                    style: ElevatedButton.styleFrom(
-                      shape: CircleBorder(),
-                      padding: EdgeInsets.all(16),
-                      backgroundColor:
-                          isAnswerCorrect ? Color(0xFF1D4E89) : Colors.grey,
-                    ),
-                    child: Icon(Icons.arrow_forward, color: Colors.white),
-                  ),
-                ],
+              ElevatedButton(
+                onPressed: isAnswerCorrect ? _goToNextQuestion : null,
+                style: ElevatedButton.styleFrom(
+                  shape: CircleBorder(),
+                  padding: EdgeInsets.all(16),
+                  backgroundColor:
+                      isAnswerCorrect ? Color(0xFF1D4E89) : Colors.grey,
+                ),
+                child: Icon(Icons.arrow_forward, color: Colors.white),
               ),
               SizedBox(height: 10),
               Text(
@@ -220,40 +220,19 @@ class ResultsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Results'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text('Results'), centerTitle: true),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Your Score',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
+            Text('Your Score',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
-            Text(
-              '$score',
-              style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
-            ),
-            SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                backgroundColor: Colors.blue,
-              ),
-              child: Text(
-                'Back to Home',
-                style: TextStyle(fontSize: 18, color: Colors.white),
-              ),
-            ),
+            Text('$score',
+                style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blue)),
           ],
         ),
       ),
