@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,153 +19,185 @@ class MyApp extends StatelessWidget {
 }
 
 class HintPage extends StatefulWidget {
-  const HintPage({super.key});
-
   @override
   _HintPageState createState() => _HintPageState();
 }
 
 class _HintPageState extends State<HintPage> {
-  int _selectedAnswerIndex = -1; // Track the selected answer
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<DocumentSnapshot> questions = [];
+  int currentQuestionIndex = 0;
+  int currentHintIndex = 1; // Start with Hint1
+  int selectedAnswerIndex = -1; // Track selected answer
+  bool isAnswerCorrect = false;
+  int incorrectAttempts = 0;
+  int totalScore = 0;
 
-  void _onAnswerSelected(int index) {
+  @override
+  void initState() {
+    super.initState();
+    _loadQuestions();
+  }
+
+  Future<void> _loadQuestions() async {
+    QuerySnapshot querySnapshot =
+        await _firestore.collection('Hint_game').get();
     setState(() {
-      _selectedAnswerIndex = index;
+      questions = querySnapshot.docs;
+    });
+  }
+
+  void _checkAnswer(int selectedIndex) {
+    var currentQuestion = questions[currentQuestionIndex];
+    int correctAnswer = currentQuestion['correctAnswer'];
+
+    setState(() {
+      selectedAnswerIndex = selectedIndex;
+      isAnswerCorrect = selectedIndex == correctAnswer;
+
+      if (isAnswerCorrect) {
+        if (incorrectAttempts == 0) {
+          totalScore += 15; // 15 points for first try
+        } else if (incorrectAttempts == 1) {
+          totalScore += 10; // 10 points for second try
+        } else if (incorrectAttempts == 2) {
+          totalScore += 5; // 5 points for third try
+        }
+        _goToNextQuestion();
+      } else {
+        incorrectAttempts++;
+        if (incorrectAttempts >= 3) {
+          _goToNextQuestion();
+        } else if (currentHintIndex < 3) {
+          currentHintIndex++; // Show next hint
+        }
+      }
+    });
+  }
+
+  void _goToNextQuestion() {
+    setState(() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        currentHintIndex = 1;
+        selectedAnswerIndex = -1;
+        isAnswerCorrect = false;
+        incorrectAttempts = 0;
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ResultsPage(score: totalScore),
+          ),
+        );
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (questions.isEmpty) {
+      return Scaffold(
+        backgroundColor: Color(0xFFE6F7FF),
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    var currentQuestion = questions[currentQuestionIndex];
+    String hint = currentQuestion['Hint$currentHintIndex'];
+    List<dynamic> answers = currentQuestion['answer'];
+
     return Scaffold(
-      backgroundColor:
-          Color(0xFFE6F7FF), // Updated to match the main app theme (light blue)
+      backgroundColor: Color(0xFFE6F7FF),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // Close button
               Align(
                 alignment: Alignment.topRight,
                 child: GestureDetector(
-                  onTap: () {
-                    // Handle close button action
-                  },
+                  onTap: () {},
                   child: Icon(Icons.close, color: Colors.black, size: 30),
                 ),
               ),
               SizedBox(height: 20),
-              // Hint section
               RichText(
                 text: TextSpan(
-                  text: 'first hint: ',
+                  text: 'Hint $currentHintIndex: ',
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF1D4E89), // Updated to dark blue
+                    color: Color(0xFF1D4E89),
                   ),
-                  children: const [
+                  children: [
                     TextSpan(
-                      text: '15 points',
+                      text: hint,
                       style: TextStyle(
                         fontSize: 20,
-                        color: Color(0xFFFFA500), // Orange for contrast
+                        color: Color(0xFFFFA500),
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 10),
-              Text(
-                'It is the basis of object-oriented programming in Java:',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.black, // Changed to black for readability
-                ),
-              ),
-              // Add spacing before the divider
               SizedBox(height: 30),
-              Divider(
-                color: Colors.black54,
-                thickness: 1,
-                height: 80,
-              ),
-              // Add spacing before the answers
-              SizedBox(height: 20),
-              // Answer buttons
-              AnswerButton(
-                label: 'A',
-                text: 'Object',
-                isSelected: _selectedAnswerIndex == 0,
-                onTap: () => _onAnswerSelected(0),
-              ),
-              AnswerButton(
-                label: 'B',
-                text: 'Class',
-                isSelected: _selectedAnswerIndex == 1,
-                onTap: () => _onAnswerSelected(1),
-              ),
-              AnswerButton(
-                label: 'C',
-                text: 'Interface',
-                isSelected: _selectedAnswerIndex == 2,
-                onTap: () => _onAnswerSelected(2),
-              ),
-              AnswerButton(
-                label: 'D',
-                text: 'Package',
-                isSelected: _selectedAnswerIndex == 3,
-                onTap: () => _onAnswerSelected(3),
-              ),
-              Spacer(),
-              // Footer
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // "Next hint!" button
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle next hint action
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF1D4E89), // Dark blue
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 30,
-                      ),
+              ...answers.asMap().entries.map((entry) {
+                int index = entry.key;
+                String answerText = entry.value;
+
+                return GestureDetector(
+                  onTap: () {
+                    if (!isAnswerCorrect) {
+                      _checkAnswer(index);
+                    }
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 12.0),
+                    decoration: BoxDecoration(
+                      color: selectedAnswerIndex == index
+                          ? (isAnswerCorrect ? Colors.green : Colors.red)
+                          : Color(0xFF87CEEB),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Text(
-                      'Next hint!',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                    child: Row(
+                      children: [
+                        Text(
+                          answerText,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  // Arrow button
+                );
+              }).toList(),
+              Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
                   ElevatedButton(
-                    onPressed: () {
-                      // Handle forward action
-                    },
+                    onPressed: isAnswerCorrect ? _goToNextQuestion : null,
                     style: ElevatedButton.styleFrom(
                       shape: CircleBorder(),
                       padding: EdgeInsets.all(16),
-                      backgroundColor: Color(0xFF1D4E89), // Dark blue
+                      backgroundColor:
+                          isAnswerCorrect ? Color(0xFF1D4E89) : Colors.grey,
                     ),
                     child: Icon(Icons.arrow_forward, color: Colors.white),
                   ),
                 ],
               ),
               SizedBox(height: 10),
-              // Question info
               Text(
-                '2 try left\nQuestion 1/10',
+                'Question ${currentQuestionIndex + 1}/${questions.length}',
                 style: TextStyle(
                   color: Colors.black54,
                   fontSize: 14,
@@ -178,59 +212,46 @@ class _HintPageState extends State<HintPage> {
   }
 }
 
-class AnswerButton extends StatelessWidget {
-  final String label;
-  final String text;
-  final bool isSelected;
-  final VoidCallback onTap;
+class ResultsPage extends StatelessWidget {
+  final int score;
 
-  const AnswerButton({
-    super.key,
-    required this.label,
-    required this.text,
-    required this.isSelected,
-    required this.onTap,
-  });
+  ResultsPage({required this.score});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8.0),
-        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? Color(0xFF1D88C9) // Selected button - darker blue
-              : Color(0xFF87CEEB), // Unselected button - light blue
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Results'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Label
-            Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
+            Text(
+              'Your Score',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Text(
+              '$score',
+              style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue),
+            ),
+            SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                backgroundColor: Colors.blue,
               ),
               child: Text(
-                label,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1D4E89), // Dark blue text
-                ),
-              ),
-            ),
-            SizedBox(width: 16),
-            // Answer text
-            Text(
-              text,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black, // Changed to black for readability
+                'Back to Home',
+                style: TextStyle(fontSize: 18, color: Colors.white),
               ),
             ),
           ],
