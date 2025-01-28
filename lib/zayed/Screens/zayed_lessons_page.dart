@@ -120,7 +120,7 @@ class Zayed_lessons_page extends StatelessWidget {
                             // TextButton aligned to the right
                             TextButton(
                               onPressed: () {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Zayed_quiz_page()));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Zayed_quiz_page(title: title,)));
                               },
                               child: Text(
                                 "Tests",
@@ -157,6 +157,8 @@ class Zayed_lessons_page extends StatelessWidget {
                         }
             
                         final subjects = snapshot.data!.docs;
+                        final totalles = subjects.length;
+                        
             
                         return Container(
                           margin: EdgeInsets.only(top: screenHeight * 0.02),

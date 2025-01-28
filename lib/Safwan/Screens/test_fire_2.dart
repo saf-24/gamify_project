@@ -55,7 +55,7 @@ class St_home_page extends StatelessWidget {
             icon: const Icon(Icons.notifications_none,
                 size: 39.4, color: Color.fromARGB(197, 0, 129, 189),),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => AddClassPage()));
+              
             },
           ),
         ],
@@ -64,7 +64,7 @@ class St_home_page extends StatelessWidget {
           icon: const Icon(Icons.menu,
               size: 43.4, color: Color.fromARGB(197, 0, 129, 189),),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => AddLessonPage( className: 'class 1', subjectName: 'subject 1',)));
+            
           },
         ),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
