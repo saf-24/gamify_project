@@ -47,10 +47,9 @@ class MyApp extends StatelessWidget {
         '/st_games_list': (context) => const Games_list(),
         '/test_fire': (context) => const Test_fire(),
         '/lesson_page': (context) => const Zayed_lessons_page(title: '',),
-        '/quiz_page': (context) => const Zayed_quiz_page(),
+        '/quiz_page': (context) => const Zayed_quiz_page(title: '',),
         '/profile_page': (context) =>  MyProfilePage(),
         '/Puzzle_Game': (context) =>  PuzzleGameScreen(),
-  
       },
     );
   }

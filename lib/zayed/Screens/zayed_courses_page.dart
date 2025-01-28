@@ -83,6 +83,8 @@ class Zayed_standard_navigations extends StatelessWidget {
                     }
 
                     final subjects = snapshot.data!.docs;
+                    
+
                     return SizedBox(
                       height: MediaQuery.of(context).size.height * 0.74,
                       child: ListView.builder(
@@ -93,11 +95,12 @@ class Zayed_standard_navigations extends StatelessWidget {
                               subjects[index].data() as Map<String, dynamic>;
                           return Courses_cards(
                             title: subject['title'] ?? 'N/A',
+                            
                             disc: subject['progres']?.toString() ?? 'N/A',
                             highestProgres: subject['highestProgres'] ?? 0,
                             date: subject['lessonName'] ?? '',                    
                             percent1: subject['percent'] ?? 0.0,
-                            total_lesson: subject['total_lesson'] ?? 0,
+                            total_lesson: subject['total_lessons'] ?? 0,
                             tet_name: subject['tet_name'] ?? "N/A",
                           );
                         },

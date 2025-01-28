@@ -5,14 +5,16 @@ import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
 import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
 import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
 import 'package:gamify_project/zayed/Screens/zayed_lessons_page.dart';
+
 import 'package:gamify_project/zayed/Screens/zayed_quiz_cards.dart';
 
-void main() {
-  runApp(const Zayed_quiz_page());
-}
+
 
 class Zayed_quiz_page extends StatelessWidget {
-  const Zayed_quiz_page({super.key});
+  final String title;
+  const Zayed_quiz_page({super.key,
+  required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +99,10 @@ class Zayed_quiz_page extends StatelessWidget {
                             // Lessons button
                             TextButton(
                               onPressed: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => Zayed_lessons_page(title: title,)),
+                                );
                                 
                               },
                               child: Text(
@@ -137,6 +143,7 @@ class Zayed_quiz_page extends StatelessWidget {
                   StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
                         .collection('quizes')
+                        .where('course_name', isEqualTo: title)
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -163,7 +170,7 @@ class Zayed_quiz_page extends StatelessWidget {
                             final subject =
                                 subjects[index].data() as Map<String, dynamic>;
                             return Quiz_cards(
-                              lessonTitle: subject['lesson_name'] ?? 'N/A',
+                              lessonTitle: subject['quiz_name'] ?? 'N/A',
                               chapterNumber: subject['quiz_number'] ?? 0,
                               date: subject['date'] ?? 'N/A',
                               grade: subject['grade'] ?? 0.0,
