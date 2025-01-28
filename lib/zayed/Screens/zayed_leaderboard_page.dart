@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamify_project/zayed/Screens/zayed_points_bars.dart';
 
 void main() {
   runApp(const Zayed_leaderboard_page());

@@ -28,10 +28,10 @@ class _GamifyPageState extends State<GamifyPage> {
       List.generate(3, (index) => TextEditingController());
   final List<TextEditingController> answerControllers =
       List.generate(4, (index) => TextEditingController());
-  int? selectedAnswerIndex;
+  final ValueNotifier<int?> selectedAnswerIndex = ValueNotifier<int?>(null);
 
   void saveToFirestore() {
-    if (selectedAnswerIndex == null) {
+    if (selectedAnswerIndex.value == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please select the correct answer.')),
       );
@@ -48,7 +48,7 @@ class _GamifyPageState extends State<GamifyPage> {
         answerControllers[2].text,
         answerControllers[3].text,
       ],
-      'correctAnswer': selectedAnswerIndex,
+      'correctAnswer': selectedAnswerIndex.value,
     };
 
     FirebaseFirestore.instance.collection('Hint_game').add(data).then((_) {
@@ -65,142 +65,128 @@ class _GamifyPageState extends State<GamifyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 236, 236, 236),
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: Text('Gamify'),
         centerTitle: true,
+        title: Text(
+          'Add Questions to Hint Game',
+          style: TextStyle(
+            fontSize: 18,
+            color: const Color.fromARGB(255, 26, 113, 194),
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Hint Fields
-            HintField(controller: hintControllers[0], hintText: 'First hint:'),
-            SizedBox(height: 10),
-            HintField(controller: hintControllers[1], hintText: 'Second hint:'),
-            SizedBox(height: 10),
-            HintField(controller: hintControllers[2], hintText: 'Third hint:'),
-            SizedBox(height: 20),
-
-            // Answer Text Fields
-            Expanded(
-              child: Column(
-                children: List.generate(4, (index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: TextField(
-                      controller: answerControllers[index],
-                      decoration: InputDecoration(
-                        hintText: 'Answer ${index + 1}',
-                        filled: true,
-                        fillColor: Colors.grey[300],
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide.none,
-                        ),
+            ...List.generate(3, (index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                    color: Colors.white,
+                  ),
+                  child: TextField(
+                    controller: hintControllers[index],
+                    decoration: InputDecoration(
+                      labelText: 'Hint ${index + 1}',
+                      border: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(28.0)),
                       ),
                     ),
-                  );
-                }),
+                  ),
+                ),
+              );
+            }),
+            SizedBox(height: 16),
+
+            // Answer Text Fields
+            ...List.generate(4, (index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                    color: Colors.white,
+                  ),
+                  child: TextField(
+                    controller: answerControllers[index],
+                    decoration: InputDecoration(
+                      labelText: 'Answer ${String.fromCharCode(65 + index)}',
+                      border: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }),
+
+            SizedBox(height: 16),
+
+            Center(
+              child: Text(
+                'Select the correct answer:',
+                style: TextStyle(fontSize: 17),
               ),
             ),
 
-            // Answer Selection Buttons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(4, (index) {
-                return AnswerButton(
-                  label: String.fromCharCode(65 + index), // A, B, C, D
-                  isSelected: selectedAnswerIndex == index,
-                  onTap: () {
-                    setState(() {
-                      selectedAnswerIndex = index;
-                    });
-                  },
+            SizedBox(height: 10),
+
+            ValueListenableBuilder<int?>(
+              valueListenable: selectedAnswerIndex,
+              builder: (context, value, child) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: List.generate(4, (index) {
+                    return ChoiceChip(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(17.0),
+                      ),
+                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                      label: Text(String.fromCharCode(65 + index)),
+                      selected: value == index,
+                      onSelected: (selected) {
+                        if (selected) selectedAnswerIndex.value = index;
+                      },
+                      selectedColor: const Color.fromARGB(255, 154, 206, 255),
+                    );
+                  }),
                 );
-              }),
+              },
             ),
 
-            SizedBox(height: 20),
+            SizedBox(height: 35),
 
-            // Save Button
             Center(
               child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                    const Color.fromARGB(255, 111, 185, 255),
+                  ),
+                  padding: MaterialStateProperty.all(
+                    const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28.0),
+                    ),
+                  ),
+                ),
                 onPressed: saveToFirestore,
-                child: Text('Save Question'),
+                child: Text(
+                  'Save Question',
+                  style: TextStyle(fontSize: 17),
+                ),
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class HintField extends StatelessWidget {
-  final TextEditingController controller;
-  final String hintText;
-
-  const HintField({required this.controller, required this.hintText});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          hintText,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 5),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 8),
-          decoration: BoxDecoration(
-            color: Colors.grey[300],
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: TextField(
-            controller: controller,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class AnswerButton extends StatelessWidget {
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const AnswerButton(
-      {required this.label, required this.isSelected, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: isSelected ? Colors.blue : Colors.grey[300],
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: 16,
-            color: isSelected ? Colors.white : Colors.black,
-          ),
         ),
       ),
     );

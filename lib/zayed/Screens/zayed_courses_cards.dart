@@ -7,6 +7,9 @@ class Courses_cards extends StatelessWidget {
   final String disc;
   final double percent1;
   final String date;
+  final String tet_name;
+  final int highestProgres;
+  final int total_lesson;
 
   const Courses_cards({
     super.key,
@@ -14,6 +17,9 @@ class Courses_cards extends StatelessWidget {
     required this.disc,
     required this.date,
     required this.percent1,
+    required this.tet_name,
+    required this.highestProgres,
+    required this.total_lesson,
   });
 
   @override
@@ -77,7 +83,7 @@ class Courses_cards extends StatelessWidget {
                 child: SizedBox(
                   width: 320,
                   child: Text(
-                    disc,
+                    "Lesson: $highestProgres / $total_lesson",
                     style: TextStyle(
                         fontSize: 19,
                         color: const Color.fromARGB(255, 0, 0, 0),

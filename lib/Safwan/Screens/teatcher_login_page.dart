@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_instrctor_page.dart';
 import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
 
 void main() {
@@ -174,7 +175,7 @@ class Taloginpage extends StatelessWidget {
                         left: 83,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => St_home_page()), (Route<dynamic> route) => false);
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => teatcher_page()), (Route<dynamic> route) => false);
                           },
                           child: Text("Login",
                               style: TextStyle(

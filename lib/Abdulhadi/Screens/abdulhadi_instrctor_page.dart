@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_AddHint_page.dart';
+import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_AddTest_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,17 +17,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CourseContentPage(),
+      home: teatcher_page(),
     );
   }
 }
 
-class CourseContentPage extends StatelessWidget {
-  const CourseContentPage({super.key});
+class teatcher_page extends StatelessWidget {
+  const teatcher_page({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -59,23 +62,25 @@ class CourseContentPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.blue,
+                color: const Color.fromARGB(157, 0, 0, 0),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 25),
+            
+
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey[200],
-                elevation: 0,
+                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                elevation: 6,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(28),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: EdgeInsets.symmetric(vertical: 18),
               ),
               child: Center(
                 child: Text(
-                  'Add a question bank',
+                  'Add a new course',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -83,20 +88,21 @@ class CourseContentPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            
+            SizedBox(height: 25),
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey[200],
-                elevation: 0,
+                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                elevation: 6,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(28),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: EdgeInsets.symmetric(vertical: 18),
               ),
               child: Center(
                 child: Text(
-                  'Add a Content lesson',
+                  'Add a new lesson',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -104,20 +110,22 @@ class CourseContentPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 25),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AddLessonAndQuestionsScreen()));
+              },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey[200],
-                elevation: 0,
+                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                elevation: 6,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(28),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: EdgeInsets.symmetric(vertical: 18),
               ),
               child: Center(
                 child: Text(
-                  'HINT BANK',
+                  'Add a new test',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -125,20 +133,43 @@ class CourseContentPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 25),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => GamifyPage()));
+              },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey[200],
-                elevation: 0,
+                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                elevation: 6,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(28),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: EdgeInsets.symmetric(vertical: 18),
               ),
               child: Center(
                 child: Text(
-                  'BLANK BANK',
+                  'Add a quastions to hint game',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 25),
+            ElevatedButton(
+              onPressed: () {},
+            style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                elevation: 6,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(28),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 18),
+              ),
+              child: Center(
+                child: Text(
+                  'Add a quastions to puzzle game',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -149,25 +180,7 @@ class CourseContentPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        currentIndex: 0,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu_book),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: '',
-          ),
-        ],
-      ),
+      
     );
   }
 }
