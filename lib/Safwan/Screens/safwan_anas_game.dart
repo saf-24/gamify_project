@@ -32,7 +32,8 @@ class PuzzleGameScreen extends StatefulWidget {
 class _PuzzleGameScreenState extends State<PuzzleGameScreen> {
   final List<Map<String, dynamic>> questions = [
     {
-      "text": "In Java, __ is defined using the class keyword. To create a copy of this object, we use the keyword __. The keyword __ is used to define properties that cannot be changed after they are set.",
+      "text":
+          "In Java, __ is defined using the class keyword. To create a copy of this object, we use the keyword __. The keyword __ is used to define properties that cannot be changed after they are set.",
       "correctAnswers": ["Class", "new", "final", "Constructor"],
       "options": [
         "Object",
@@ -47,7 +48,8 @@ class _PuzzleGameScreenState extends State<PuzzleGameScreen> {
       ]
     },
     {
-      "text": "In HTML, the __ tag is used to create a hyperlink. The __ tag is used to display an image. The __ tag is used to define a paragraph.",
+      "text":
+          "In HTML, the __ tag is used to create a hyperlink. The __ tag is used to display an image. The __ tag is used to define a paragraph.",
       "correctAnswers": ["<a>", "<img>", "<p>"],
       "options": [
         "<a>",
@@ -77,8 +79,8 @@ class _PuzzleGameScreenState extends State<PuzzleGameScreen> {
 
   void resetAnswers() {
     setState(() {
-      userAnswers[questionIndex] = List.filled(
-          questions[questionIndex]['correctAnswers'].length, "");
+      userAnswers[questionIndex] =
+          List.filled(questions[questionIndex]['correctAnswers'].length, "");
     });
   }
 
@@ -99,8 +101,8 @@ class _PuzzleGameScreenState extends State<PuzzleGameScreen> {
               List<String> user = entry.value;
               List<String> correct = questions[index]['correctAnswers'];
               return sum +
-                  List.generate(user.length,
-                          (i) => user[i] == correct[i] ? 1 : 0)
+                  List.generate(
+                          user.length, (i) => user[i] == correct[i] ? 1 : 0)
                       .reduce((a, b) => a + b);
             }),
           ),
@@ -132,9 +134,14 @@ class _PuzzleGameScreenState extends State<PuzzleGameScreen> {
         title: Align(
           alignment: Alignment.center,
           child: IconButton(
-            icon: Icon(Icons.close, color: Color.fromARGB(197, 0, 129, 189),size: 50,),
+            icon: Icon(
+              Icons.close,
+              color: Color.fromARGB(197, 0, 129, 189),
+              size: 50,
+            ),
             onPressed: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Games_list()));
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => Games_list()));
             },
           ),
         ),
@@ -179,7 +186,8 @@ class _PuzzleGameScreenState extends State<PuzzleGameScreen> {
                             alignment: Alignment.center,
                             child: Text(
                               userBlankAnswers[index],
-                              style: TextStyle(fontSize: 16, color: Colors.white),
+                              style:
+                                  TextStyle(fontSize: 16, color: Colors.white),
                             ),
                           );
                         },
@@ -259,7 +267,7 @@ class OptionChip extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDragging ? Colors.blue[300] : Colors.grey[200],
         borderRadius: BorderRadius.circular(25),
-        border: Border.all(color: Color.fromARGB(197, 0, 129, 189),width: 2),
+        border: Border.all(color: Color.fromARGB(197, 0, 129, 189), width: 2),
       ),
       child: Text(
         option,
@@ -318,7 +326,8 @@ class ResultScreen extends StatelessWidget {
             SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Games_list()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Games_list()));
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromARGB(197, 0, 129, 189),
