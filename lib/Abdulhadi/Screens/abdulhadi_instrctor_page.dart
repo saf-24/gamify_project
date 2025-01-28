@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_AddBlank.dart';
 import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_AddHint_page.dart';
 import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_AddTest_page.dart';
+import 'package:gamify_project/Hamid/Screens/Hamid_welcompage.dart';
+import 'package:gamify_project/Safwan/Screens/add_lesson.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_add_course.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,23 +39,50 @@ class teatcher_page extends StatelessWidget {
         title: Text(
           'Gamify',
           style: TextStyle(
-            color: Colors.blue,
-            fontSize: 20,
+            color: const Color.fromARGB(255, 70, 154, 209),
+            fontSize: 26,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.menu, color: Colors.blue),
-          onPressed: () {},
+    tooltip: "Menu",
+    icon: const Icon(Icons.logout,
+        size: 35.4, color: const Color.fromARGB(255, 70, 154, 209)),
+    onPressed: () {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Confirm logout"),
+            content: Text("Are you sure you want to log out?",style: TextStyle(fontSize: 20),),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); 
+                },
+                child: Text("No",style: TextStyle(fontSize: 18,color: Colors.black,),),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => welcome_page()),
+                    (Route<dynamic> route) => false,
+                  );
+                },
+                child: Text("Log out",style: TextStyle(fontSize: 18,color: const Color.fromARGB(255, 255, 0, 0),)),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  ),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications, color: Colors.blue),
-            onPressed: () {},
-          ),
-        ],
-      ),
+        
+      
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -69,7 +100,9 @@ class teatcher_page extends StatelessWidget {
             
 
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AddSubjectScreen()));
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                 elevation: 6,
@@ -91,7 +124,9 @@ class teatcher_page extends StatelessWidget {
             
             SizedBox(height: 25),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AddLessonScreen()));
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                 elevation: 6,
@@ -158,7 +193,10 @@ class teatcher_page extends StatelessWidget {
             ),
             SizedBox(height: 25),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CreateBlankGamePage()));
+
+              },
             style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                 elevation: 6,
