@@ -57,7 +57,7 @@ class _AddLessonAndQuestionsScreenState
     FirebaseFirestore.instance.collection('questions').add({
       'lesson_id': lessonTitle,
       'question': question,
-      'answers': answers,
+      'answer': answers,
       'correctAnswer': correctAnswer,
     }).then((value) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -78,45 +78,68 @@ class _AddLessonAndQuestionsScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 236, 236, 236),
       appBar: AppBar(
-        title: Text('Add Lesson and Questions'),
-        backgroundColor: Colors.blue,
+        centerTitle: true,
+        title: Text('Add Lesson and Questions',style: TextStyle(fontSize: 18,color: const Color.fromARGB(255, 26, 113, 194),fontWeight:FontWeight.w500 ),),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: lessonTitleController,
-              decoration: InputDecoration(
-                labelText: 'Lesson Title',
-                border: OutlineInputBorder(),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                color: Colors.white,
+              ),
+              child: TextField(
+              
+                controller: lessonTitleController,
+                decoration: InputDecoration(
+                  labelText: 'Lesson Title',
+                  
+                  border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(28.0),),),
+                ),
               ),
             ),
-            SizedBox(height: 16),
-            TextField(
-              controller: questionController,
-              decoration: InputDecoration(
-                labelText: 'Question',
-                border: OutlineInputBorder(),
+            SizedBox(height: 35),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                color: Colors.white,
+              ),
+              child: TextField(
+                controller: questionController,
+                decoration: InputDecoration(
+                  labelText: 'Question',
+                  border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(28.0))),
+                ),
               ),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 6),
             ...List.generate(4, (index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: TextField(
-                  controller: answerControllers[index],
-                  decoration: InputDecoration(
-                    labelText: 'Answer ${String.fromCharCode(65 + index)}',
-                    border: OutlineInputBorder(),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                    color: Colors.white,
+                  ),
+                  child: TextField(
+                    controller: answerControllers[index],
+                    decoration: InputDecoration(
+                      labelText: 'Answer ${String.fromCharCode(65 + index)}',
+                      border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(28.0))),
+                    ),
                   ),
                 ),
               );
             }),
             SizedBox(height: 16),
-            Text('Select the correct answer:'),
+            Center(child: Text('Select the correct answer:',style: TextStyle(fontSize: 17),)),
+            SizedBox(height: 10),
             ValueListenableBuilder<int?>(
               valueListenable: correctAnswerNotifier,
               builder: (context, value, child) {
@@ -124,21 +147,39 @@ class _AddLessonAndQuestionsScreenState
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: List.generate(4, (index) {
                     return ChoiceChip(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(17.0),
+                      ),
+                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                       label: Text(String.fromCharCode(65 + index)),
                       selected: value == index,
-                      onSelected: (selected) {
+                        onSelected: (selected) {
                         if (selected) correctAnswerNotifier.value = index;
-                      },
+                        },
+                        selectedColor: const Color.fromARGB(255, 154, 206, 255),
+                      
+                      
                     );
                   }),
                 );
               },
             ),
-            SizedBox(height: 16),
+            SizedBox(height: 35),
             Center(
               child: ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 111, 185, 255),),
+                  padding: MaterialStateProperty.all(
+                    const EdgeInsets.fromLTRB(20, 10, 20, 10),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(28.0),
+                    ),
+                  ),
+                ),
                 onPressed: saveQuestion,
-                child: Text('Save Question'),
+                child: Text('Save Question',style: TextStyle(fontSize: 17),),
               ),
             ),
           ],

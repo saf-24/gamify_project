@@ -2,6 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: CreateBlankGamePage(),
+    );
+  }
+}
+
 class CreateBlankGamePage extends StatefulWidget {
   @override
   _CreateBlankGamePageState createState() => _CreateBlankGamePageState();
@@ -18,7 +34,6 @@ class _CreateBlankGamePageState extends State<CreateBlankGamePage> {
   @override
   void initState() {
     super.initState();
-    // Initialize with default blank and options controllers
     for (int i = 0; i < blanksCount; i++) {
       _blanksControllers.add(TextEditingController());
     }
@@ -56,25 +71,18 @@ class _CreateBlankGamePageState extends State<CreateBlankGamePage> {
   }
 
   Future<void> saveQuestion() async {
-    // Collect the question, blanks, options, and correct answers
     final question = _questionController.text.trim();
     final blanks = _blanksControllers.map((c) => c.text.trim()).toList();
     final options = _optionsControllers.map((c) => c.text.trim()).toList();
 
-    // Validate input
-    if (question.isEmpty ||
-        blanks.isEmpty ||
-        options.isEmpty ||
-        _correctAnswers.isEmpty) {
+    if (question.isEmpty || blanks.isEmpty || options.isEmpty || _correctAnswers.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text("Please fill all fields and select correct answers")),
+        SnackBar(content: Text("Please fill all fields and select correct answers")),
       );
       return;
     }
 
     try {
-      // Save question to Firestore
       await FirebaseFirestore.instance.collection('Blank_game').add({
         'question': question,
         'blanks': blanks,
@@ -87,7 +95,6 @@ class _CreateBlankGamePageState extends State<CreateBlankGamePage> {
         SnackBar(content: Text("Question saved successfully!")),
       );
 
-      // Clear fields
       setState(() {
         _questionController.clear();
         _blanksControllers.forEach((controller) => controller.clear());
@@ -104,109 +111,167 @@ class _CreateBlankGamePageState extends State<CreateBlankGamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 236, 236, 236),
       appBar: AppBar(
-        title: Text("Create Blank Game"),
+        centerTitle: true,
+        title: Text(
+          'Add Blank Game Questions',
+          style: TextStyle(
+            fontSize: 18,
+            color: const Color.fromARGB(255, 26, 113, 194),
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Question input
-              TextField(
-                controller: _questionController,
-                decoration: InputDecoration(
-                  labelText: "Question",
-                  border: OutlineInputBorder(),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Question Field
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                  color: Colors.white,
                 ),
-                maxLines: 2,
-              ),
-              SizedBox(height: 20),
-              // Section for blanks
-              Text("Blanks:",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              ..._blanksControllers.asMap().entries.map((entry) {
-                int index = entry.key;
-                return TextField(
-                  controller: entry.value,
+                child: TextField(
+                  controller: _questionController,
                   decoration: InputDecoration(
-                    labelText: "Blank ${index + 1}",
-                    border: OutlineInputBorder(),
+                    labelText: 'Question',
+                    border: OutlineInputBorder(
+                      borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                    ),
                   ),
-                  maxLines: 1,
-                );
-              }).toList(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(onPressed: addBlank, child: Text("Add Blank")),
-                  ElevatedButton(
-                      onPressed: removeBlank, child: Text("Remove Blank")),
-                ],
+                  maxLines: 2,
+                ),
               ),
-              SizedBox(height: 20),
-              // Section for options
-              Text("Options:",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              ..._optionsControllers.asMap().entries.map((entry) {
-                int index = entry.key;
-                return Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: entry.value,
-                        decoration: InputDecoration(
-                          labelText: "Option ${index + 1}",
-                          border: OutlineInputBorder(),
+            ),
+            SizedBox(height: 16),
+
+            // Blanks Section
+            Text("Blanks:", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            ..._blanksControllers.asMap().entries.map((entry) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                    color: Colors.white,
+                  ),
+                  child: TextField(
+                    controller: entry.value,
+                    decoration: InputDecoration(
+                      labelText: "Blank ${entry.key + 1}",
+                      border: OutlineInputBorder(
+                        borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  
+                  style: ElevatedButton.styleFrom(
+                    elevation: 3.5,
+                    backgroundColor:  const Color.fromARGB(255, 111, 255, 135),
+                  ),
+                  onPressed: addBlank, child: Text("Add Blank",style: TextStyle(color: Colors.black),)),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 3.5,
+                    backgroundColor:  const Color.fromARGB(255, 255, 75, 75),
+                  ),
+                  onPressed: removeBlank, child: Text("Remove Blank",style: TextStyle(color: Colors.black),)),
+              ],
+            ),
+
+            SizedBox(height: 30),
+
+            // Options Section
+            Text("Options:", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            ..._optionsControllers.asMap().entries.map((entry) {
+              return Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                          color: Colors.white,
+                        ),
+                        child: TextField(
+                          controller: entry.value,
+                          decoration: InputDecoration(
+                            labelText: "Option ${entry.key + 1}",
+                            border: OutlineInputBorder(
+                              borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                    Checkbox(
-                      value: _correctAnswers.contains(index),
-                      onChanged: (value) {
-                        setState(() {
-                          if (value == true) {
-                            _correctAnswers.add(index);
-                          } else {
-                            _correctAnswers.remove(index);
-                          }
-                        });
-                      },
-                    )
-                  ],
-                );
-              }).toList(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                      onPressed: addOption, child: Text("Add Option")),
-                  ElevatedButton(
-                      onPressed: removeOption, child: Text("Remove Option")),
+                  ),
+                  Checkbox(
+                    value: _correctAnswers.contains(entry.key),
+                    onChanged: (value) {
+                      setState(() {
+                        if (value == true) {
+                          _correctAnswers.add(entry.key);
+                        } else {
+                          _correctAnswers.remove(entry.key);
+                        }
+                      });
+                    },
+                  )
                 ],
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: saveQuestion,
-                child: Text("Save Question"),
+              );
+            }).toList(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 3.5,
+                    backgroundColor:  const Color.fromARGB(255, 111, 255, 135),
+                  ),
+                  
+                  onPressed: addOption, child: Text("Add Option")),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 3.5,
+                    backgroundColor:  const Color.fromARGB(255, 255, 75, 75),
+                  ),
+                  
+                  onPressed: removeOption, child: Text("Remove Option")),
+              ],
+            ),
+
+            SizedBox(height: 30),
+
+            Center(
+              child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  padding: EdgeInsets.symmetric(vertical: 15),
+                  backgroundColor: const Color.fromARGB(255, 111, 185, 255),
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28.0),
+                  ),
                 ),
+                onPressed: saveQuestion,
+                child: Text("Save Question", style: TextStyle(fontSize: 17)),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
-}
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); // Initialize Firebase
-  runApp(MaterialApp(
-    home: CreateBlankGamePage(),
-  ));
 }

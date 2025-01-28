@@ -93,9 +93,12 @@ class Zayed_standard_navigations extends StatelessWidget {
                               subjects[index].data() as Map<String, dynamic>;
                           return Courses_cards(
                             title: subject['title'] ?? 'N/A',
-                            disc: subject['progres'] ?? 'N/A',
-                            date: subject['lessonName'] ?? 'N/A',
+                            disc: subject['progres']?.toString() ?? 'N/A',
+                            highestProgres: subject['highestProgres'] ?? 0,
+                            date: subject['lessonName'] ?? '',                    
                             percent1: subject['percent'] ?? 0.0,
+                            total_lesson: subject['total_lesson'] ?? 0,
+                            tet_name: subject['tet_name'] ?? "N/A",
                           );
                         },
                       ),
