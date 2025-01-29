@@ -75,7 +75,10 @@ class instisignup extends StatelessWidget {
                         right: 27,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => instisignup()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => instisignup()));
                           },
                           child: Text("Sign up",
                               style: TextStyle(
@@ -100,7 +103,10 @@ class instisignup extends StatelessWidget {
                         left: 33,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => In_login_page()));
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => In_login_page()));
                           },
                           child: Text("Login",
                               style: TextStyle(
