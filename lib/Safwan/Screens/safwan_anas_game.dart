@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -30,51 +34,54 @@ class PuzzleGameScreen extends StatefulWidget {
 }
 
 class _PuzzleGameScreenState extends State<PuzzleGameScreen> {
-  final List<Map<String, dynamic>> questions = [
-    {
-      "text":
-          "In Java, __ is defined using the class keyword. To create a copy of this object, we use the keyword __. The keyword __ is used to define properties that cannot be changed after they are set.",
-      "correctAnswers": ["Class", "new", "final", "Constructor"],
-      "options": [
-        "Object",
-        "Static",
-        "new",
-        "Class",
-        "final",
-        "Constructor",
-        "immutable",
-        "Inheritance",
-        "interface"
-      ]
-    },
-    {
-      "text":
-          "In HTML, the __ tag is used to create a hyperlink. The __ tag is used to display an image. The __ tag is used to define a paragraph.",
-      "correctAnswers": ["<a>", "<img>", "<p>"],
-      "options": [
-        "<a>",
-        "<img>",
-        "<p>",
-        "<div>",
-        "<span>",
-        "<h1>",
-        "<ul>",
-        "<li>",
-        "<table>"
-      ]
-    },
-  ];
-
+  List<Map<String, dynamic>> questions = [];
   int questionIndex = 0;
   List<List<String>> userAnswers = [];
+  bool isLoading = true;
+  String errorMessage = '';
 
   @override
   void initState() {
     super.initState();
-    userAnswers = List.generate(
-      questions.length,
-      (index) => List.filled(questions[index]['correctAnswers'].length, ""),
-    );
+    fetchQuestions();
+  }
+
+  Future<void> fetchQuestions() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('Blank_game').get();
+
+      List<Map<String, dynamic>> loadedQuestions = [];
+      for (var doc in querySnapshot.docs) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+        List<String> options = List<String>.from(data['options']);
+        List<int> correctIndices = List<int>.from(data['correct_answers']);
+        List<String> correctAnswers =
+            correctIndices.map((index) => options[index]).toList();
+
+        loadedQuestions.add({
+          'text': data['question'],
+          'correctAnswers': correctAnswers,
+          'options': options,
+        });
+      }
+
+      setState(() {
+        questions = loadedQuestions;
+        userAnswers = List.generate(
+          loadedQuestions.length,
+          (index) =>
+              List.filled(loadedQuestions[index]['correctAnswers'].length, ""),
+        );
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+        errorMessage = 'Failed to load questions. Please try again.';
+      });
+    }
   }
 
   void resetAnswers() {
@@ -96,15 +103,7 @@ class _PuzzleGameScreenState extends State<PuzzleGameScreen> {
           builder: (context) => ResultScreen(
             totalQuestions: questions.fold<int>(
                 0, (sum, q) => sum + (q['correctAnswers'].length as int)),
-            correctAnswers: userAnswers.asMap().entries.fold(0, (sum, entry) {
-              int index = entry.key;
-              List<String> user = entry.value;
-              List<String> correct = questions[index]['correctAnswers'];
-              return sum +
-                  List.generate(
-                          user.length, (i) => user[i] == correct[i] ? 1 : 0)
-                      .reduce((a, b) => a + b);
-            }),
+            correctAnswers: _calculateTotalScore(),
           ),
         ),
       );
@@ -119,134 +118,213 @@ class _PuzzleGameScreenState extends State<PuzzleGameScreen> {
     }
   }
 
+  int _calculateCurrentQuestionScore() {
+    int score = 0;
+    List<String> user = userAnswers[questionIndex];
+    List<String> correct = questions[questionIndex]['correctAnswers'];
+    for (int i = 0; i < user.length; i++) {
+      if (user[i] == correct[i]) score++;
+    }
+    return score;
+  }
+
+  int _calculateTotalScore() {
+    int total = 0;
+    for (int i = 0; i < questions.length; i++) {
+      List<String> user = userAnswers[i];
+      List<String> correct = questions[i]['correctAnswers'];
+      for (int j = 0; j < user.length; j++) {
+        if (user[j] == correct[j]) total++;
+      }
+    }
+    return total;
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return Scaffold(
+        appBar: _buildAppBar(),
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (errorMessage.isNotEmpty) {
+      return Scaffold(
+        appBar: _buildAppBar(),
+        body: Center(child: Text(errorMessage)),
+      );
+    }
+
+    if (questions.isEmpty) {
+      return Scaffold(
+        appBar: _buildAppBar(),
+        body: Center(child: Text('No questions available.')),
+      );
+    }
+
     final currentQuestion = questions[questionIndex];
     final blanks = currentQuestion['correctAnswers'];
     final options = currentQuestion['options'];
     final userBlankAnswers = userAnswers[questionIndex];
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Align(
-          alignment: Alignment.center,
-          child: IconButton(
-            icon: Icon(
-              Icons.close,
-              color: Color.fromARGB(197, 0, 129, 189),
-              size: 50,
-            ),
-            onPressed: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => Games_list()));
-            },
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                currentQuestion['text'],
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  blanks.length,
-                  (index) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Blank ${index + 1}",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(197, 0, 129, 189)),
-                      ),
-                      SizedBox(height: 8),
-                      DragTarget<String>(
-                        builder: (context, candidateData, rejectedData) {
-                          return Container(
-                            width: double.infinity,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: userBlankAnswers[index].isEmpty
-                                  ? Colors.grey[300]
-                                  : Color.fromARGB(197, 0, 129, 189),
-                              borderRadius: BorderRadius.circular(25),
-                              border: Border.all(color: Colors.black),
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              userBlankAnswers[index],
-                              style:
-                                  TextStyle(fontSize: 16, color: Colors.white),
-                            ),
-                          );
-                        },
-                        onAccept: (data) {
-                          setState(() {
-                            userBlankAnswers[index] = data;
-                          });
-                        },
-                      ),
-                      SizedBox(height: 20),
-                    ],
+      appBar: _buildAppBar(),
+      body: Column(
+        children: [
+          // Header with question number and score
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Question ${questionIndex + 1}/${questions.length}",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(197, 0, 129, 189),
                   ),
                 ),
-              ),
-              Divider(color: Colors.black),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: options.map<Widget>((option) {
-                  return Draggable<String>(
-                    data: option,
-                    child: OptionChip(option: option),
-                    feedback: OptionChip(option: option, isDragging: true),
-                    childWhenDragging: Opacity(
-                      opacity: 0.4,
-                      child: OptionChip(option: option),
-                    ),
-                  );
-                }).toList(),
-              ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ],
+            ),
+          ),
+
+          // Question content
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 226, 0, 0),
-                    ),
-                    onPressed: resetAnswers,
-                    child: Text("Reset", style: TextStyle(color: Colors.white)),
+                  Text(
+                    currentQuestion['text'],
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(197, 0, 129, 189),
+                  SizedBox(height: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: List.generate(
+                      blanks.length,
+                      (index) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Blank ${index + 1}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromARGB(197, 0, 129, 189),
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          DragTarget<String>(
+                            builder: (context, candidateData, rejectedData) {
+                              return Container(
+                                width: double.infinity,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: userBlankAnswers[index].isEmpty
+                                      ? Colors.grey[300]
+                                      : (userBlankAnswers[index] ==
+                                              blanks[index]
+                                          ? Colors.lightBlue
+                                          : Colors.lightBlue),
+                                  borderRadius: BorderRadius.circular(25),
+                                  border: Border.all(color: Colors.black),
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  userBlankAnswers[index],
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white),
+                                ),
+                              );
+                            },
+                            onAccept: (data) {
+                              setState(() {
+                                userBlankAnswers[index] = data;
+                              });
+                            },
+                          ),
+                          SizedBox(height: 20),
+                        ],
+                      ),
                     ),
-                    onPressed: previousQuestion,
-                    child: Text("Back", style: TextStyle(color: Colors.white)),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                    ),
-                    onPressed: nextQuestion,
-                    child: Text("Next", style: TextStyle(color: Colors.white)),
+                  Divider(color: Colors.black),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: options.map<Widget>((option) {
+                      return Draggable<String>(
+                        data: option,
+                        child: OptionChip(option: option),
+                        feedback: OptionChip(option: option, isDragging: true),
+                        childWhenDragging: Opacity(
+                          opacity: 0.4,
+                          child: OptionChip(option: option),
+                        ),
+                      );
+                    }).toList(),
                   ),
                 ],
               ),
-            ],
+            ),
           ),
+
+          // Bottom buttons
+          Container(
+            color: Colors.white,
+            padding: EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 226, 0, 0),
+                  ),
+                  onPressed: resetAnswers,
+                  child: Text("Reset", style: TextStyle(color: Colors.white)),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(197, 0, 129, 189),
+                  ),
+                  onPressed: previousQuestion,
+                  child: Text("Back", style: TextStyle(color: Colors.white)),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                  ),
+                  onPressed: nextQuestion,
+                  child: Text("Next", style: TextStyle(color: Colors.white)),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      backgroundColor: Colors.white,
+      elevation: 0,
+      automaticallyImplyLeading: false,
+      title: Align(
+        alignment: Alignment.center,
+        child: IconButton(
+          icon: Icon(
+            Icons.close,
+            color: Color.fromARGB(197, 0, 129, 189),
+            size: 50,
+          ),
+          onPressed: () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => Games_list()));
+          },
         ),
       ),
     );
@@ -316,7 +394,7 @@ class ResultScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              "$correctAnswers",
+              "$correctAnswers/$totalQuestions",
               style: TextStyle(
                 fontSize: 60,
                 fontWeight: FontWeight.bold,
