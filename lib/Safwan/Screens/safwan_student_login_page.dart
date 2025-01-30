@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,23 +50,23 @@ class Stloginpage extends StatelessWidget {
         if (userDoc.exists) {
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => St_home_page()),
+            MaterialPageRoute(builder: (context) => St_home_page2()),
             (Route<dynamic> route) => false,
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('الحساب غير موجود في قاعدة البيانات'),
+              content: Text('The account does not exist in the database'),
               backgroundColor: Colors.red,
             ),
           );
         }
       } on FirebaseAuthException catch (e) {
-        String errorMessage = 'خطأ في تسجيل الدخول';
+        String errorMessage = 'Login error';
         if (e.code == 'user-not-found') {
-          errorMessage = 'البريد الإلكتروني غير مسجل';
+          errorMessage = 'Email not registered';
         } else if (e.code == 'wrong-password') {
-          errorMessage = 'كلمة المرور غير صحيحة';
+          errorMessage = 'The password is incorrect';
         }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -76,7 +77,7 @@ class Stloginpage extends StatelessWidget {
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('حدث خطأ غير متوقع: ${e.toString()}'),
+            content: Text('An unexpected error occurred: ${e.toString()}'),
             backgroundColor: Colors.red,
           ),
         );
@@ -86,16 +87,7 @@ class Stloginpage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              size: 35.4,
-              color: Color.fromARGB(255, 54, 127, 156),
-            ),
-            onPressed: () {},
-          )
-        ],
+        
         backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       ),
       body: Stack(
@@ -127,6 +119,18 @@ class Stloginpage extends StatelessWidget {
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 11),
                 child: Container(
+                  width: 360,
+                  height: 410,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(40),
+                    ),
+                    color: const Color.fromARGB(153, 231, 231, 231),
+                    border: Border.all(
+                      color: const Color.fromARGB(94, 161, 161, 161),
+                      width: 3,
+                    ),
+                  ),
                   child: Stack(
                     children: [
                       const Positioned(
@@ -244,7 +248,7 @@ class Stloginpage extends StatelessWidget {
                                 _passwordController.text.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text('الرجاء ملء جميع الحقول'),
+                                  content: Text('Please fill out all fields'),
                                   backgroundColor: Colors.red,
                                 ),
                               );
@@ -252,14 +256,6 @@ class Stloginpage extends StatelessWidget {
                             }
                             await _loginStudent();
                           },
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(
-                              fontSize: 30,
-                              color: Color.fromARGB(255, 190, 228, 253),
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
                           style: ButtonStyle(
                             backgroundColor: WidgetStateProperty.all(
                               const Color.fromARGB(197, 0, 129, 189),
@@ -273,21 +269,17 @@ class Stloginpage extends StatelessWidget {
                               ),
                             ),
                           ),
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                              fontSize: 30,
+                              color: Color.fromARGB(255, 190, 228, 253),
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
                         ),
                       ),
                     ],
-                  ),
-                  width: 360,
-                  height: 410,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(40),
-                    ),
-                    color: const Color.fromARGB(153, 231, 231, 231),
-                    border: Border.all(
-                      color: const Color.fromARGB(94, 161, 161, 161),
-                      width: 3,
-                    ),
                   ),
                 ),
               ),
@@ -299,16 +291,4 @@ class Stloginpage extends StatelessWidget {
   }
 }
 
-class St_home_page extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('الصفحة الرئيسية للطالب'),
-      ),
-      body: const Center(
-        child: Text('مرحبا بك في الصفحة الرئيسية'),
-      ),
-    );
-  }
-}
+

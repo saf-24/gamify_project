@@ -225,7 +225,7 @@ class Zayed_quiz_page extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => St_home_page()));
+                              builder: (context) => St_home_page2()));
                     },
                   ),
                   const Text("Home",

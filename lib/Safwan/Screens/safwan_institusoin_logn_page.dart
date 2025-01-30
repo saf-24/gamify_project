@@ -31,16 +31,7 @@ class In_login_page extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              size: 35.4,
-              color: const Color.fromARGB(255, 54, 127, 156),
-            ),
-            onPressed: () {},
-          )
-        ],
+        
         backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       ),
       body: Stack(

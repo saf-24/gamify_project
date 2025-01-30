@@ -271,7 +271,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   icon: const Icon(Icons.home, size: 40.0),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page2()));
                   },
                 ),
                 const Text("Home",
