@@ -46,7 +46,7 @@ class teatcher_page extends StatelessWidget {
         ),
         centerTitle: true,
         leading: IconButton(
-    tooltip: "Menu",
+    tooltip: "Logout",
     icon: const Icon(Icons.logout,
         size: 35.4, color: const Color.fromARGB(255, 70, 154, 209)),
     onPressed: () {

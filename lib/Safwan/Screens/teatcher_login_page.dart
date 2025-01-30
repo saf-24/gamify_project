@@ -87,16 +87,7 @@ class Taloginpage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              size: 35.4,
-              color: Color.fromARGB(197, 0, 129, 189),
-            ),
-            onPressed: () {},
-          )
-        ],
+        
         backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       ),
       body: Stack(

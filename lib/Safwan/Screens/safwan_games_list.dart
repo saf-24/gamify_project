@@ -225,7 +225,7 @@ class Games_list extends StatelessWidget {
                     icon: const Icon(Icons.home, size: 40.0),
                     color: Colors.grey,
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page2()));
                     },
                   ),
                   const Text("Home", style: TextStyle(height: 0.1)),

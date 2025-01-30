@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gamify_project/Hamid/Screens/Hamid_content.dart';
 import 'package:gamify_project/Safwan/Screens/course_cards_widget.dart';
 import 'package:gamify_project/Safwan/Screens/dummy_data.dart';
 import 'package:gamify_project/Safwan/Screens/frfrly.dart';
@@ -27,13 +28,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
-      home: const St_home_page(),
+      home: const St_home_page2(),
     );
   }
 }
 
-class St_home_page extends StatelessWidget {
-  const St_home_page({super.key});
+class St_home_page2 extends StatelessWidget {
+  const St_home_page2({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,10 @@ class St_home_page extends StatelessWidget {
             icon: const Icon(Icons.notifications_none,
                 size: 39.4, color: Color.fromARGB(197, 0, 129, 189),),
             onPressed: () {
-              
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ContentPage()),
+                );
             },
           ),
         ],

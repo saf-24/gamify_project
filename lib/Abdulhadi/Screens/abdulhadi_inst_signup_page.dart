@@ -3,6 +3,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_inst_HP.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_institusoin_logn_page.dart';
 
 void main() {
@@ -29,16 +30,7 @@ class instisignup extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              size: 35.4,
-              color: Color.fromARGB(197, 0, 129, 189),
-            ),
-            onPressed: () {},
-          )
-        ],
+      
         backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       ),
       body: Stack(
@@ -167,7 +159,7 @@ class instisignup extends StatelessWidget {
                             width: 303,
                             height: 55,
                             child: TextField(
-                              obscureText: true,
+                              
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: "Institution Email Address *",
@@ -194,7 +186,7 @@ class instisignup extends StatelessWidget {
                             width: 303,
                             height: 55,
                             child: TextField(
-                              obscureText: true,
+                              
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: "Job title *",
@@ -221,7 +213,7 @@ class instisignup extends StatelessWidget {
                             width: 303,
                             height: 55,
                             child: TextField(
-                              obscureText: true,
+                              
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: "Institution name *",
@@ -237,7 +229,9 @@ class instisignup extends StatelessWidget {
                         top: 435,
                         left: 80,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => InstHomePage()), (Route<dynamic> route) => false);
+                          },
                           child: Text("Sign up",
                               style: TextStyle(
                                   fontSize: 27,
