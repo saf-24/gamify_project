@@ -126,18 +126,7 @@ class St_home_page_old extends StatelessWidget {
                           SizedBox(
                             width: 450,
                             height: 225,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: test2.length,
-                              itemBuilder: (context, index) {
-                                return Course_home_page(
-                                  title: test2[index]['title']!,
-                                  disc: test2[index]['progres']!,
-                                  date: test2[index]['lessonName']!,
-                                  percent1: test3[index]['percent']!,
-                                );
-                              },
-                            ),
+                            
                           ),
                         ],
                       ),
@@ -181,17 +170,7 @@ class St_home_page_old extends StatelessWidget {
                           SizedBox(
                             width: 450,
                             height: 240,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: test.length,
-                              itemBuilder: (context, index) {
-                                return New_learn_widget(
-                                  title: test2[0]['title']!,
-                                  disc: test2[0]['progres']!,
-
-                                );
-                              },
-                            ),
+                            
                           ),
                         ],
                       ),

@@ -2,10 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:gamify_project/zayed/Screens/zayed_lessons_page.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+
 class Courses_cards extends StatelessWidget {
   final String title;
   final String disc;
-  final double percent1;
+  
   final String date;
   final String tet_name;
   final int highestProgres;
@@ -16,7 +17,7 @@ class Courses_cards extends StatelessWidget {
     required this.title,
     required this.disc,
     required this.date,
-    required this.percent1,
+    
     required this.tet_name,
     required this.highestProgres,
     required this.total_lesson,
@@ -24,7 +25,10 @@ class Courses_cards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
+    final double percent1 = total_lesson == 0 ? 0 : highestProgres / total_lesson;
+  
+
+
     return Container(
       margin: const EdgeInsets.fromLTRB(17, 0, 18, 5),
       width: 400,
@@ -116,6 +120,7 @@ class Courses_cards extends StatelessWidget {
                 ),
               ),
             ),
+            
             Positioned(
               top: 9,
               child: LinearPercentIndicator(

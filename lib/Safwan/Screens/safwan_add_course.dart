@@ -28,10 +28,12 @@ class AddSubjectScreen extends StatefulWidget {
 class _AddSubjectScreenState extends State<AddSubjectScreen> {
   final TextEditingController subjectNameController = TextEditingController();
   final TextEditingController teacherNameController = TextEditingController();
+  final TextEditingController courseDiscController = TextEditingController();
 
   void saveSubject() {
     final subjectName = subjectNameController.text;
     final teacherName = teacherNameController.text;
+    final courseDisc = courseDiscController.text;
 
     if (subjectName.isEmpty || teacherName.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -43,12 +45,21 @@ class _AddSubjectScreenState extends State<AddSubjectScreen> {
     FirebaseFirestore.instance.collection('subjects').add({
       'title': subjectName,
       'tet_name': teacherName,
+      'course_disc': courseDisc,
+      'total_lessons': 0,
+      'highestProgres': 0,
+      'percent': 0.0,
+      'progres': " ",
+      
+       // Add this field with a default value of 0
     }).then((value) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Subject added successfully!')),
       );
       subjectNameController.clear();
       teacherNameController.clear();
+      courseDiscController.clear();
+
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to add subject: $error')),
@@ -86,6 +97,24 @@ class _AddSubjectScreenState extends State<AddSubjectScreen> {
                 controller: subjectNameController,
                 decoration: InputDecoration(
                   labelText: 'Subject Name',
+                  border: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(28.0),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 15),
+              Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                color: Colors.white,
+              ),
+              child: TextField(
+                controller: courseDiscController,
+                decoration: InputDecoration(
+                  labelText: 'Subject discrption',
                   border: OutlineInputBorder(
                     borderRadius: const BorderRadius.all(
                       Radius.circular(28.0),

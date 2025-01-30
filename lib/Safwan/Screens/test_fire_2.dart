@@ -158,6 +158,8 @@ class St_home_page extends StatelessWidget {
                   StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
                         .collection('subjects')
+                        .where('percent', isLessThan: 100 )
+                        .where('percent', isGreaterThan: 0)
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -187,11 +189,14 @@ class St_home_page extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   final subject = subjects[index].data()
                                       as Map<String, dynamic>;
-                                  return Course_home_page(
-                                    title: subject['title'] ?? 'N/A',
-                                    disc: subject['progres'] ?? 'N/A',
-                                    date: subject['lessonName'] ?? 'N/A',
-                                    percent1: subject['percent'] ?? 0.0,
+                                return Courses_cards_wid(
+                                    title: subject['title'] ?? 'N/A',                        
+                                    disc: subject['progres']?.toString() ?? 'N/A',
+                                    highestProgres: subject['highestProgres'] ?? 0,
+                                    date: subject['lessonName'] ?? '',                    
+                                    documentId: subject['documentId'] ?? '',
+                                    total_lesson: subject['total_lessons'] ?? 0,
+                                    tet_name: subject['tet_name'] ?? "N/A",
                                   );
                                 },
                               ),
@@ -233,7 +238,9 @@ class St_home_page extends StatelessWidget {
                   ),
                       StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
-                        .collection('new_learn')
+                        .collection('subjects')
+                        .where('highestProgres', isEqualTo: 0)
+
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -264,8 +271,12 @@ class St_home_page extends StatelessWidget {
                                   final subject = subjects[index].data()
                                       as Map<String, dynamic>;
                                   return New_learn_widget(
-                                    title: subject['title'] ?? 'N/A',
-                                    disc: subject['disc'] ?? 'N/A',
+                                    title: subject['title'] ?? 'N/A',                        
+                                    disc: subject['course_disc'] ?? 'N/A',
+                                    highestProgres: subject['highestProgres'] ?? 0,
+                                                        
+                                    total_lesson: subject['total_lessons'] ?? 0,
+                                    tet_name: subject['tet_name'] ?? "N/A",
                                   );
                                 },
                               ),
