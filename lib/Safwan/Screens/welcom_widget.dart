@@ -18,7 +18,7 @@ class WelcomWidget extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-              top: 20,
+              top: 25,
               left: 25,
               child: RichText(
                   text: TextSpan(
@@ -28,14 +28,14 @@ class WelcomWidget extends StatelessWidget {
                           fontWeight: FontWeight.w500),
                       children: [
                     const TextSpan(
-                      text: "Welcome, ",
+                      text: "Welcome, ",style: TextStyle(fontSize: 26),
                     ),
                     TextSpan(
                         text: username,
                         style: const TextStyle(
                             color: Color.fromARGB(197, 0, 129, 189),
                             fontWeight: FontWeight.w800,
-                            fontSize: 29))
+                            fontSize: 26))
                 ]
               )
             )

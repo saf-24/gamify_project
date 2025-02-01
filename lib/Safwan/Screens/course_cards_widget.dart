@@ -8,6 +8,7 @@ class Courses_cards_wid extends StatelessWidget {
   final String disc;
   final String date;
   final String tet_name;
+  final String course_disc;
   final int highestProgres;
   final int total_lesson;
   final String documentId; // أضف documentId لتحديث المستند الصحيح
@@ -19,6 +20,8 @@ class Courses_cards_wid extends StatelessWidget {
     required this.date,
     required this.tet_name,
     required this.highestProgres,
+    required this.course_disc,
+
 
     required this.total_lesson,
     required this.documentId, // أضف documentId كمعامل مطلوب
@@ -133,7 +136,7 @@ class Courses_cards_wid extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Zayed_lessons_page(title: title),
+                      builder: (context) => Zayed_lessons_page(title: title, cource_disc_lesson: course_disc),
                     ),
                   );
                 },

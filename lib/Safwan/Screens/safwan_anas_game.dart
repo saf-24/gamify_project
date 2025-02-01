@@ -169,6 +169,7 @@ class _PuzzleGameScreenState extends State<PuzzleGameScreen> {
     final userBlankAnswers = userAnswers[questionIndex];
 
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: _buildAppBar(),
       body: Column(
         children: [
@@ -224,7 +225,7 @@ class _PuzzleGameScreenState extends State<PuzzleGameScreen> {
                                 height: 40,
                                 decoration: BoxDecoration(
                                   color: userBlankAnswers[index].isEmpty
-                                      ? Colors.grey[300]
+                                      ? Colors.grey[100]
                                       : (userBlankAnswers[index] ==
                                               blanks[index]
                                           ? Colors.lightBlue
@@ -274,7 +275,7 @@ class _PuzzleGameScreenState extends State<PuzzleGameScreen> {
 
           // Bottom buttons
           Container(
-            color: Colors.white,
+            color: const Color.fromARGB(255, 230, 230, 230),
             padding: EdgeInsets.all(16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -310,7 +311,7 @@ class _PuzzleGameScreenState extends State<PuzzleGameScreen> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       elevation: 0,
       automaticallyImplyLeading: false,
       title: Align(
@@ -343,7 +344,7 @@ class OptionChip extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 3),
       padding: EdgeInsets.symmetric(horizontal: 17, vertical: 9),
       decoration: BoxDecoration(
-        color: isDragging ? Colors.blue[300] : Colors.grey[200],
+        color: isDragging ? Colors.blue[300] : Colors.grey[100],
         borderRadius: BorderRadius.circular(25),
         border: Border.all(color: Color.fromARGB(197, 0, 129, 189), width: 2),
       ),
@@ -364,8 +365,9 @@ class ResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color.fromARGB(255, 230, 230, 230),
         elevation: 0,
         automaticallyImplyLeading: false,
         title: Align(

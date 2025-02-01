@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Hamid/Screens/Hamid_content.dart';
 
 
 class Lessons_cards extends StatelessWidget {
@@ -25,7 +26,6 @@ class Lessons_cards extends StatelessWidget {
         height: 22,
         child: Stack(
           children: [
-            // Reposition the ElevatedButton using Positioned
             Positioned(
               top: 0,
               left: 0,
@@ -34,14 +34,16 @@ class Lessons_cards extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 9, 17, 18),
                 child: ElevatedButton(
-                  onPressed: () => {},
+                  onPressed: () => {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPage(lesson_name: lessonTitle,)))
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  child: Container(), // Add an empty container as the child
+                  child: Container(), 
                 ),
               ),
             ),

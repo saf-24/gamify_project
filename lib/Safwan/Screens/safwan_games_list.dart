@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_game_page.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_anas.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_anas_game.dart';
 import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
@@ -111,7 +112,10 @@ class Games_list extends StatelessWidget {
               width: 266,
               height: 40,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HintPage()));},
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(
                       const Color.fromARGB(255, 247, 231, 253)),
@@ -230,7 +234,7 @@ class Games_list extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => St_home_page2()));
+                            builder: (context) => St_home_page2(fullName: '',email: "",major: "",)));
                   },
                 ),
                 const Text("Home", style: TextStyle(height: 0.1)),
@@ -281,7 +285,7 @@ class Games_list extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => MyProfilePage()));
+                            builder: (context) => MyProfilePage(FirstName: "",email: "",major: "",)));
                   },
                 ),
                 const Text("Profile", style: TextStyle(height: 0.1)),

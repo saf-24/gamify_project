@@ -97,10 +97,10 @@ class Zayed_standard_navigations extends StatelessWidget {
                             title: subject['title'] ?? 'N/A',                        
                             disc: subject['progres']?.toString() ?? 'N/A',
                             highestProgres: subject['highestProgres'] ?? 0,
-                            date: subject['lessonName'] ?? '',                    
-                            
+                            date: subject['lessonName'] ?? '',                                                
                             total_lesson: subject['total_lessons'] ?? 0,
                             tet_name: subject['tet_name'] ?? "N/A",
+                            cource_disc: subject['course_disc'] ?? "N/A",                        
                           );
                         },
                       ),
@@ -127,7 +127,7 @@ class Zayed_standard_navigations extends StatelessWidget {
                   icon: const Icon(Icons.home, size: 40.0),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page2()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page2(fullName: '',email: "",major: "",)));
                   },
                 ),
                 const Text("Home",
@@ -175,7 +175,7 @@ class Zayed_standard_navigations extends StatelessWidget {
                   icon: const Icon(Icons.person, size: 43),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage(FirstName: "",email: "",major: "",)));
                   },
                 ),
                 const Text("Profile", style: TextStyle(height: 0.1)),

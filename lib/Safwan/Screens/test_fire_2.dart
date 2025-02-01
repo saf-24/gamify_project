@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gamify_project/Anas/Screens/Anas.dart';
 import 'package:gamify_project/Hamid/Screens/Hamid_content.dart';
 import 'package:gamify_project/Safwan/Screens/course_cards_widget.dart';
 import 'package:gamify_project/Safwan/Screens/dummy_data.dart';
@@ -15,7 +16,6 @@ import 'package:gamify_project/Safwan/Screens/welcom_widget.dart';
 import 'package:gamify_project/Safwan/Screens/whats_new_widget1.dart';
 import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -28,20 +28,29 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(useMaterial3: true),
-      home: const St_home_page2(),
+      
     );
   }
 }
 
 class St_home_page2 extends StatelessWidget {
-  const St_home_page2({super.key});
+  final String fullName;
+  final String email;
+  final String major;
+  const St_home_page2({
+    super.key,
+    required this.fullName,
+    required this.email,
+    required this.major,
+  
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
-    appBar: AppBar(
-      toolbarHeight: 65,
+      appBar: AppBar(
+        toolbarHeight: 65,
         title: Text(
           "Gamify",
           style: TextStyle(
@@ -53,23 +62,27 @@ class St_home_page2 extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             tooltip: "notifications",
-            icon: const Icon(Icons.notifications_none,
-                size: 39.4, color: Color.fromARGB(197, 0, 129, 189),),
+            icon: const Icon(
+              Icons.notifications_none,
+              size: 39.4,
+              color: Color.fromARGB(197, 0, 129, 189),
+            ),
             onPressed: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ContentPage()),
-                );
+                  MaterialPageRoute(
+                      builder: (context) => NotificationsScreen()));
             },
           ),
         ],
         leading: IconButton(
           tooltip: "Menu",
-          icon: const Icon(Icons.menu,
-              size: 43.4, color: Color.fromARGB(197, 0, 129, 189),),
-          onPressed: () {
-            
-          },
+          icon: const Icon(
+            Icons.menu,
+            size: 43.4,
+            color: Color.fromARGB(197, 0, 129, 189),
+          ),
+          onPressed: () {},
         ),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
@@ -77,83 +90,77 @@ class St_home_page2 extends StatelessWidget {
         scrollDirection: Axis.vertical,
         child: Column(
           children: [
-            WelcomWidget(username: username),
+            WelcomWidget(username: fullName),
+            StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('notifications')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
 
-                StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection('whats_new')
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      }
+                if (snapshot.hasError) {
+                  return Center(child: Text("Error fetching data"));
+                }
 
-                      if (snapshot.hasError) {
-                        return Center(child: Text("Error fetching data"));
-                      }
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  return Center(child: Text("No news available"));
+                }
 
-                      if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        return Center(child: Text("No subjects available"));
-                      }
+                final subjects = snapshot.data!.docs;
 
-                      final subjects = snapshot.data!.docs;
-
-                      return SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 450,
-                              height: 225,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: subjects.length,
-                                itemBuilder: (context, index) {
-                                  final subject = subjects[index].data()
-                                      as Map<String, dynamic>;
-                                  return Whats_New_Widget(
-                                    title: subject['title'] ?? 'N/A',
-                                    disc: subject['disc'] ?? 'N/A',
-                                    date: subject['date'] ?? 'N/A',
-                                    imagepath: subject['image'] ?? 'N/A',
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 450,
+                        height: 225,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: subjects.length,
+                          itemBuilder: (context, index) {
+                            final subject =
+                                subjects[index].data() as Map<String, dynamic>;
+                            return Whats_New_Widget(
+                              title: subject['title'] ?? 'N/A',
+                              disc: subject['message'] ?? 'N/A',
+                              date: subject['date'] ?? 'N/A',
+                              imagepath: subject['image'] ?? 'N/A',
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(30, 20, 6, 0),
-                      child: Row(
-                        children: [
-                          
-                          RichText(
-                              text: TextSpan(
-                                  style: const TextStyle(
-                                      fontSize: 22,
-                                      color: Color.fromARGB(255, 0, 0, 0),
-                                      fontWeight: FontWeight.w500),
-                                  children: const [
-                                TextSpan(
-                                  text: "Continue your ",
-                                ),
-                                TextSpan(
-                                    text: "Progress...",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(197, 0, 129, 189),
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 22
-                                        )
-                                      )
-                              ]
-                              )
-                              )
-                        ],
                       ),
-                    ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(30, 20, 6, 0),
+              child: Row(
+                children: [
+                  RichText(
+                      text: TextSpan(
+                          style: const TextStyle(
+                              fontSize: 22,
+                              color: Color.fromARGB(255, 0, 0, 0),
+                              fontWeight: FontWeight.w500),
+                          children: const [
+                        TextSpan(
+                          text: "Continue your ",
+                        ),
+                        TextSpan(
+                            text: "Progress...",
+                            style: TextStyle(
+                                color: Color.fromARGB(197, 0, 129, 189),
+                                fontWeight: FontWeight.w800,
+                                fontSize: 22))
+                      ]))
+                ],
+              ),
+            ),
             SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
@@ -162,7 +169,7 @@ class St_home_page2 extends StatelessWidget {
                   StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
                         .collection('subjects')
-                        .where('percent', isLessThan: 100 )
+                        .where('percent', isLessThan: 100)
                         .where('percent', isGreaterThan: 0)
                         .snapshots(),
                     builder: (context, snapshot) {
@@ -175,7 +182,13 @@ class St_home_page2 extends StatelessWidget {
                       }
 
                       if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        return Center(child: Text("No subjects available"));
+                        return Container(
+                            margin: EdgeInsets.only(top: 10),
+                            child: Center(
+                                child: Text(
+                              "you are all done!",
+                              style: TextStyle(fontSize: 20),
+                            )));
                       }
 
                       final subjects = snapshot.data!.docs;
@@ -193,14 +206,18 @@ class St_home_page2 extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   final subject = subjects[index].data()
                                       as Map<String, dynamic>;
-                                return Courses_cards_wid(
-                                    title: subject['title'] ?? 'N/A',                        
-                                    disc: subject['progres']?.toString() ?? 'N/A',
-                                    highestProgres: subject['highestProgres'] ?? 0,
-                                    date: subject['lessonName'] ?? '',                    
+                                  return Courses_cards_wid(
+                                    title: subject['title'] ?? 'N/A',
+                                    disc:
+                                        subject['progres']?.toString() ?? 'N/A',
+                                    highestProgres:
+                                        subject['highestProgres'] ?? 0,
+                                    date: subject['lessonName'] ?? '',
                                     documentId: subject['documentId'] ?? '',
                                     total_lesson: subject['total_lessons'] ?? 0,
                                     tet_name: subject['tet_name'] ?? "N/A",
+                                    course_disc:
+                                        subject['course_disc'] ?? "N/A",
                                   );
                                 },
                               ),
@@ -240,11 +257,10 @@ class St_home_page2 extends StatelessWidget {
                       ],
                     ),
                   ),
-                      StreamBuilder<QuerySnapshot>(
+                  StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
                         .collection('subjects')
                         .where('highestProgres', isEqualTo: 0)
-
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -256,7 +272,13 @@ class St_home_page2 extends StatelessWidget {
                       }
 
                       if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                        return Center(child: Text("No subjects available"));
+                        return Container(
+                            margin: EdgeInsets.only(top: 10),
+                            child: Center(
+                                child: Text(
+                              "you are all done!",
+                              style: TextStyle(fontSize: 20),
+                            )));
                       }
 
                       final subjects = snapshot.data!.docs;
@@ -275,10 +297,12 @@ class St_home_page2 extends StatelessWidget {
                                   final subject = subjects[index].data()
                                       as Map<String, dynamic>;
                                   return New_learn_widget(
-                                    title: subject['title'] ?? 'N/A',                        
+                                    title: subject['title'] ?? 'N/A',
                                     disc: subject['course_disc'] ?? 'N/A',
-                                    highestProgres: subject['highestProgres'] ?? 0,
-                                                        
+                                    highestProgres:
+                                        subject['highestProgres'] ?? 0,
+                                    course_disc:
+                                        subject['course_disc'] ?? "N/A",
                                     total_lesson: subject['total_lessons'] ?? 0,
                                     tet_name: subject['tet_name'] ?? "N/A",
                                   );
@@ -293,12 +317,9 @@ class St_home_page2 extends StatelessWidget {
                 ],
               ),
             ),
-                ],
-              ),
-          ) ,
-        
-        
-      
+          ],
+        ),
+      ),
       bottomNavigationBar: Container(
         color: Colors.white,
         padding: const EdgeInsets.only(bottom: 14.0),
@@ -313,7 +334,10 @@ class St_home_page2 extends StatelessWidget {
                   icon: const Icon(Icons.home, size: 40.0),
                   color: Color.fromARGB(197, 0, 129, 189),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => St_home_page()));
                   },
                 ),
                 const Text("Home",
@@ -330,15 +354,19 @@ class St_home_page2 extends StatelessWidget {
                   icon: const Icon(Icons.menu_book_rounded, size: 40.0),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_standard_navigations()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Zayed_standard_navigations()));
                   },
                 ),
                 const Text(
                   "Courses",
                   style: TextStyle(
-                        height: 0.1,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w700),
+                      height: 0.1,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w700),
                 ),
               ],
             ),
@@ -349,7 +377,8 @@ class St_home_page2 extends StatelessWidget {
                   icon: const Icon(Icons.videogame_asset, size: 41),
                   color: Colors.grey,
                   onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Games_list()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Games_list()));
                   },
                 ),
                 const Text("Games", style: TextStyle(height: 0.1)),
@@ -362,7 +391,10 @@ class St_home_page2 extends StatelessWidget {
                   icon: const Icon(Icons.person, size: 43),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyProfilePage(FirstName: fullName,email: email,major: major,)));
                   },
                 ),
                 const Text("Profile", style: TextStyle(height: 0.1)),

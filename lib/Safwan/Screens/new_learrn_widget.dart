@@ -8,6 +8,7 @@ class New_learn_widget extends StatelessWidget {
   final String disc;
 
   final String tet_name;
+  final String course_disc;
   final int highestProgres;
   final int total_lesson;
 
@@ -15,6 +16,7 @@ class New_learn_widget extends StatelessWidget {
     super.key,
     required this.title,
     required this.disc,
+    required this.course_disc,
 
     required this.tet_name,
     required this.highestProgres,
@@ -116,7 +118,7 @@ class New_learn_widget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Zayed_lessons_page(title: title),
+                      builder: (context) => Zayed_lessons_page(title: title,cource_disc_lesson: course_disc,),
                     ),
                   );
                 },

@@ -47,10 +47,14 @@ class Stloginpage extends StatelessWidget {
             .doc(userCredential.user!.uid)
             .get();
 
+            final String fullName = userDoc.get('full_name');
+            final String email = userDoc.get('email');
+            final String major = userDoc.get('major');
+
         if (userDoc.exists) {
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => St_home_page2()),
+            MaterialPageRoute(builder: (context) => St_home_page2(fullName: fullName,email: email, major: major,)),
             (Route<dynamic> route) => false,
           );
         } else {
