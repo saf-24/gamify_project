@@ -1,4 +1,3 @@
-  
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
@@ -6,7 +5,6 @@ import 'package:gamify_project/Safwan/Screens/safwan_anas.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_anas_game.dart';
 import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
 import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
-
 
 void main() {
   runApp(const MyApp());
@@ -31,10 +29,10 @@ class Games_list extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color(0xFFe4e4e4),
-        // appbar ://------------------------------------------//
-        appBar: AppBar(
-      toolbarHeight: 65,
+      backgroundColor: const Color(0xFFe4e4e4),
+      // appbar ://------------------------------------------//
+      appBar: AppBar(
+        toolbarHeight: 65,
         title: Text(
           "Gamify",
           style: TextStyle(
@@ -46,64 +44,65 @@ class Games_list extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             tooltip: "notifications",
-            icon: const Icon(Icons.notifications_none,
-                size: 39.4, color: Color.fromARGB(197, 0, 129, 189),),
+            icon: const Icon(
+              Icons.notifications_none,
+              size: 39.4,
+              color: Color.fromARGB(197, 0, 129, 189),
+            ),
             onPressed: () {},
           ),
         ],
         leading: IconButton(
           tooltip: "Menu",
-          icon: const Icon(Icons.menu,
-              size: 43.4, color: Color.fromARGB(197, 0, 129, 189),),
+          icon: const Icon(
+            Icons.menu,
+            size: 43.4,
+            color: Color.fromARGB(197, 0, 129, 189),
+          ),
           onPressed: () {},
         ),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
-        
-        body:
-        Center(
-          child: Stack(
-            children: [
-              Column(
+
+      body: Center(
+        child: Stack(
+          children: [
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                width: 350,
-                height: 215,
-                
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(28),
-                    color: const Color.fromARGB(255, 151, 80, 218),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 7,
-                        offset: const Offset(2, 7),
-                      )
-                    ]),
+                  width: 350,
+                  height: 215,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(28),
+                      color: const Color.fromARGB(255, 151, 80, 218),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 2,
+                          blurRadius: 7,
+                          offset: const Offset(2, 7),
+                        )
+                      ]),
                 ),
-                
                 SizedBox(height: 30),
                 Container(
-                width: 350,
-                height: 215,
-                
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(28),
-                    color: const Color.fromARGB(255, 59, 201, 118),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 7,
-                        offset: const Offset(2, 7),
-                      )
-                    ]),
+                  width: 350,
+                  height: 215,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(28),
+                      color: const Color.fromARGB(255, 59, 201, 118),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 2,
+                          blurRadius: 7,
+                          offset: const Offset(2, 7),
+                        )
+                      ]),
                 ),
                 SizedBox(height: 30),
-                
               ],
             ),
             Positioned(
@@ -112,7 +111,6 @@ class Games_list extends StatelessWidget {
               width: 266,
               height: 40,
               child: ElevatedButton(
-                
                 onPressed: () {},
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(
@@ -131,7 +129,8 @@ class Games_list extends StatelessWidget {
             Positioned(
               top: 90,
               left: 26,
-              child: Text("Hints game",
+              child: Text(
+                "Hints game",
                 style: TextStyle(
                   fontSize: 33,
                   color: const Color.fromARGB(255, 245, 219, 255),
@@ -139,13 +138,14 @@ class Games_list extends StatelessWidget {
                   letterSpacing: 3,
                 ),
               ),
-              ),
-              Positioned(
+            ),
+            Positioned(
               top: 157,
               left: 26,
               child: SizedBox(
                 width: 300,
-                child: Text("Choose thw correct answer through the hints given",
+                child: Text(
+                  "Choose thw correct answer through the hints given",
                   style: TextStyle(
                     fontSize: 14,
                     color: const Color.fromARGB(255, 245, 219, 255),
@@ -154,16 +154,18 @@ class Games_list extends StatelessWidget {
                   ),
                 ),
               ),
-              ),
-              Positioned(
+            ),
+            Positioned(
               top: 483,
               right: 41,
               width: 266,
               height: 40,
               child: ElevatedButton(
-                
                 onPressed: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PuzzleGameScreen()));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PuzzleGameScreen()));
                 },
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(
@@ -182,7 +184,8 @@ class Games_list extends StatelessWidget {
             Positioned(
               top: 330,
               left: 26,
-              child: Text("puzzle words",
+              child: Text(
+                "puzzle words",
                 style: TextStyle(
                   fontSize: 33,
                   color: const Color.fromARGB(255, 226, 248, 238),
@@ -190,13 +193,14 @@ class Games_list extends StatelessWidget {
                   letterSpacing: 3,
                 ),
               ),
-              ),
-              Positioned(
+            ),
+            Positioned(
               top: 394,
               left: 26,
               child: SizedBox(
                 width: 300,
-                child: Text("Drag and place the crrect choice in the correct space",
+                child: Text(
+                  "Drag and place the crrect choice in the correct space",
                   style: TextStyle(
                     fontSize: 14,
                     color: const Color.fromARGB(255, 236, 248, 243),
@@ -205,79 +209,87 @@ class Games_list extends StatelessWidget {
                   ),
                 ),
               ),
-              ),
-              
-            ],
-          ),
+            ),
+          ],
         ),
-        bottomNavigationBar: Container(
-          color: Colors.white,
-          padding: const EdgeInsets.only(bottom: 14.0),
-          height: 96,
-
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.home, size: 40.0),
-                    color: Colors.grey,
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page2()));
-                    },
-                  ),
-                  const Text("Home", style: TextStyle(height: 0.1)),
-                ],
-              ),
-              
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.menu_book_rounded, size: 40.0),
-                    color: Colors.grey,
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_standard_navigations()));
-                    },
-                  ),
-                  const Text("Courses", style: TextStyle(height: 0.1, )),
-                ],
-              ),
-
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.videogame_asset, size: 41),
-                    color: Color.fromARGB(197, 0, 129, 189),
-                    onPressed: () {
-                    },
-                  ),
-                  const Text("Games", style: TextStyle(height: 0.1,color: Color.fromARGB(197, 0, 129, 189),fontWeight: FontWeight.w700)),
-                ],
-              ),
-
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.person, size: 43),
-                    color: Colors.grey,
-                    onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage()));
-                    },
-                  ),
-                  const Text("Profile", style: TextStyle(height: 0.1)),
-                ],
-              ),
-            ],
-          ),
-          
+      ),
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.only(bottom: 14.0),
+        height: 96,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.home, size: 40.0),
+                  color: Colors.grey,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => St_home_page2()));
+                  },
+                ),
+                const Text("Home", style: TextStyle(height: 0.1)),
+              ],
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.menu_book_rounded, size: 40.0),
+                  color: Colors.grey,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Zayed_standard_navigations()));
+                  },
+                ),
+                const Text("Courses",
+                    style: TextStyle(
+                      height: 0.1,
+                    )),
+              ],
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.videogame_asset, size: 41),
+                  color: Color.fromARGB(197, 0, 129, 189),
+                  onPressed: () {},
+                ),
+                const Text("Games",
+                    style: TextStyle(
+                        height: 0.1,
+                        color: Color.fromARGB(197, 0, 129, 189),
+                        fontWeight: FontWeight.w700)),
+              ],
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.person, size: 43),
+                  color: Colors.grey,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyProfilePage()));
+                  },
+                ),
+                const Text("Profile", style: TextStyle(height: 0.1)),
+              ],
+            ),
+          ],
         ),
-        );
+      ),
+    );
   }
 }
-
-
