@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:gamify_project/zayed/Screens/zayed_lessons_page.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -6,35 +5,34 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 class Courses_cards extends StatelessWidget {
   final String title;
   final String disc;
-  
+
   final String date;
   final String tet_name;
   final int highestProgres;
   final int total_lesson;
+  final String cource_disc;
 
   const Courses_cards({
     super.key,
     required this.title,
     required this.disc,
     required this.date,
-    
     required this.tet_name,
     required this.highestProgres,
     required this.total_lesson,
+    required this.cource_disc,
   });
 
   @override
   Widget build(BuildContext context) {
-    final double percent1 = total_lesson == 0 ? 0 : highestProgres / total_lesson;
-  
-
+    final double percent1 =
+        total_lesson == 0 ? 0 : highestProgres / total_lesson;
 
     return Container(
       margin: const EdgeInsets.fromLTRB(17, 0, 18, 5),
       width: 400,
       height: 220,
       child: SizedBox(
-        
         width: 323,
         height: 22,
         child: Stack(
@@ -66,7 +64,6 @@ class Courses_cards extends StatelessWidget {
                       fontSize: 26,
                       color: const Color.fromARGB(255, 0, 0, 0),
                       fontWeight: FontWeight.w700,
-                      
                       letterSpacing: 3),
                 )),
             Positioned(
@@ -95,8 +92,7 @@ class Courses_cards extends StatelessWidget {
                         letterSpacing: 1,
                         fontWeight: FontWeight.w400),
                   ),
-                )
-                ),
+                )),
             Positioned(
               top: 155,
               right: 30,
@@ -104,7 +100,15 @@ class Courses_cards extends StatelessWidget {
               height: 34,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_lessons_page( title: title,)));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Zayed_lessons_page(
+                                title: title,
+                                cource_disc_lesson: cource_disc
+                              )
+                              )
+                              );
                 },
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(
@@ -113,31 +117,33 @@ class Courses_cards extends StatelessWidget {
                 child: Text(
                   "Explore",
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 17,
                       fontWeight: FontWeight.w800,
                       letterSpacing: 1,
                       color: const Color.fromARGB(197, 0, 129, 189)),
                 ),
               ),
             ),
-            
             Positioned(
-              top: 9,
-              child: LinearPercentIndicator(
-              width: MediaQuery.of(context).size.width - 35,
-              
-              animation: true,
-              lineHeight: 52.0,
-              
-              animationDuration: 1000,
-              percent: percent1,
-              center: Text('${(percent1 * 100).toStringAsFixed(1)}%', style: TextStyle(fontSize: 35, color: const Color.fromARGB(255, 255, 255, 255), fontWeight: FontWeight.w700),),
-              linearStrokeCap: LinearStrokeCap.roundAll,
-              progressColor: const Color.fromARGB(197, 19, 161, 226),
-              backgroundColor: const Color.fromARGB(255, 0, 71, 91),
-              barRadius: Radius.circular(28),
-            )
-            )
+                top: 9,
+                child: LinearPercentIndicator(
+                  width: MediaQuery.of(context).size.width - 35,
+                  animation: true,
+                  lineHeight: 52.0,
+                  animationDuration: 1000,
+                  percent: percent1,
+                  center: Text(
+                    '${(percent1 * 100).toStringAsFixed(1)}%',
+                    style: TextStyle(
+                        fontSize: 35,
+                        color: const Color.fromARGB(255, 255, 255, 255),
+                        fontWeight: FontWeight.w700),
+                  ),
+                  linearStrokeCap: LinearStrokeCap.roundAll,
+                  progressColor: const Color.fromARGB(197, 19, 161, 226),
+                  backgroundColor: const Color.fromARGB(255, 0, 71, 91),
+                  barRadius: Radius.circular(28),
+                ))
           ],
         ),
       ),

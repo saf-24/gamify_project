@@ -1,21 +1,5 @@
-// Anas_home page
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: NotificationsScreen(),
-    );
-  }
-}
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -23,62 +7,117 @@ class NotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.menu, color: Colors.teal),
-          onPressed: () {},
-        ),
+        toolbarHeight: 65,
         title: const Text(
-          'Notifications',
+          "Gamify",
           style: TextStyle(
-            color: Colors.teal,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+              fontSize: 32,
+              color: Color.fromARGB(197, 0, 129, 189),
+              fontWeight: FontWeight.w600),
         ),
         centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(16.0),
-              children: const [
-                NotificationCard(
-                  title: "New lesson added",
-                  highlightColor: Colors.blue,
-                ),
-                SizedBox(height: 16),
-                NotificationCard(
-                  title: "Leaderboard update\nThe 1st is safwan!!",
-                  highlightColor: Colors.purple,
-                ),
-              ],
-            ),
+        leading: IconButton(
+          tooltip: "Bach",
+          icon: const Icon(
+            Icons.arrow_back,
+            size: 38.4,
+            color: Color.fromARGB(197, 0, 129, 189),
           ),
-          const BottomNavBar(),
-        ],
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
+      body: StreamBuilder<QuerySnapshot>(
+        stream:
+            FirebaseFirestore.instance.collection('notifications').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return const Center(child: Text("Error fetching data"));
+          }
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return const Center(child: Text("No notifications available"));
+          }
+
+          final notifications = snapshot.data!.docs;
+
+          return ListView.builder(
+            padding: const EdgeInsets.all(16.0),
+            itemCount: notifications.length,
+            itemBuilder: (context, index) {
+              final title = notifications[index].data() as Map<String, dynamic>;
+              final massege =
+                  notifications[index].data() as Map<String, dynamic>;
+              return NotificationCard(
+                title: title['title'] ?? 'New Notification',
+                massege: massege['message'] ?? 'New Notification',
+              );
+            },
+          );
+        },
+      ),
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.only(bottom: 14.0),
+        height: 96,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            _buildNavItem(Icons.home, "Home", true),
+            _buildNavItem(Icons.menu_book_rounded, "Courses", false),
+            _buildNavItem(Icons.videogame_asset, "Games", false),
+            _buildNavItem(Icons.person, "Profile", false),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(IconData icon, String label, bool isActive) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          icon: Icon(icon, size: 40.0),
+          color:
+              isActive ? const Color.fromARGB(197, 0, 129, 189) : Colors.grey,
+          onPressed: () {},
+        ),
+        Text(
+          label,
+          style: TextStyle(
+            height: 0.1,
+            color:
+                isActive ? const Color.fromARGB(197, 0, 129, 189) : Colors.grey,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
     );
   }
 }
 
 class NotificationCard extends StatelessWidget {
   final String title;
-  final Color highlightColor;
+  final String massege;
 
   const NotificationCard({
     super.key,
     required this.title,
-    required this.highlightColor,
+    required this.massege,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: 16),
+      padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
@@ -92,73 +131,26 @@ class NotificationCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(
-            child: RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: '${title.split(' ')[0]} ',
-                    style: TextStyle(
-                      color: highlightColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  TextSpan(
-                    text: title.substring(title.split(' ')[0].length),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                    width: 349,
+                    child: Text(
+                      massege,
+                      style: TextStyle(fontSize: 18),
+                    )),
+              ],
             ),
-          ),
-          const SizedBox(width: 8),
-          const CircleAvatar(
-            radius: 6,
-            backgroundColor: Colors.red,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        border: Border(
-          top: BorderSide(color: Colors.grey, width: 0.5),
-        ),
-      ),
-      child: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.teal,
-        unselectedItemColor: Colors.black54,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu_book),
-            label: 'courses',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sports_esports),
-            label: 'games',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'account',
           ),
         ],
       ),

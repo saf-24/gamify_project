@@ -85,137 +85,139 @@ class teatcher_page extends StatelessWidget {
       
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Course content',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: const Color.fromARGB(157, 0, 0, 0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Course content',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: const Color.fromARGB(157, 0, 0, 0),
+                ),
               ),
-            ),
-            SizedBox(height: 25),
-            
-
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AddSubjectScreen()));
-              },
+              SizedBox(height: 25),
+              
+          
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddSubjectScreen()));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                  elevation: 6,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 18),
+                ),
+                child: Center(
+                  child: Text(
+                    'Add a new course',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+              
+              SizedBox(height: 25),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddLessonScreen()));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                  elevation: 6,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 18),
+                ),
+                child: Center(
+                  child: Text(
+                    'Add a new lesson',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 25),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddLessonAndQuestionsScreen()));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                  elevation: 6,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 18),
+                ),
+                child: Center(
+                  child: Text(
+                    'Add a new test',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 25),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => GamifyPage()));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                  elevation: 6,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 18),
+                ),
+                child: Center(
+                  child: Text(
+                    'Add a quastions to hint game',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 25),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => CreateBlankGamePage()));
+          
+                },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                elevation: 6,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(28),
+                  backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                  elevation: 6,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 18),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 18),
-              ),
-              child: Center(
-                child: Text(
-                  'Add a new course',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
+                child: Center(
+                  child: Text(
+                    'Add a quastions to puzzle game',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
-            ),
-            
-            SizedBox(height: 25),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AddLessonScreen()));
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                elevation: 6,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(28),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 18),
-              ),
-              child: Center(
-                child: Text(
-                  'Add a new lesson',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 25),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AddLessonAndQuestionsScreen()));
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                elevation: 6,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(28),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 18),
-              ),
-              child: Center(
-                child: Text(
-                  'Add a new test',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 25),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => GamifyPage()));
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                elevation: 6,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(28),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 18),
-              ),
-              child: Center(
-                child: Text(
-                  'Add a quastions to hint game',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 25),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CreateBlankGamePage()));
-
-              },
-            style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                elevation: 6,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(28),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 18),
-              ),
-              child: Center(
-                child: Text(
-                  'Add a quastions to puzzle game',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       

@@ -1,24 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gamify_project/Safwan/Screens/add_lesson_content.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(AddLessonScreen());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: AddLessonScreen(),
-    );
-  }
-}
 
 class AddLessonScreen extends StatefulWidget {
   @override
@@ -56,8 +47,14 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
         'Chapter_number': int.parse(chapterNumber),
         'date': date,
         'course_name': selectedCourse,
+  
       });
-
+        FirebaseFirestore.instance.collection('notifications').add({
+        'title': lessonName,
+        'message': "New course has benn added in $selectedCourse ",
+        'image': "assets/img/download.jpg",
+        'date': date,
+      });
       // Update total_lessons in the corresponding subject
       QuerySnapshot subjectSnapshot = await FirebaseFirestore.instance
           .collection('subjects')
@@ -201,8 +198,21 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                   padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 10, horizontal: 20)),
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(28.0))),
                 ),
-                onPressed: saveLesson,
-                child: Text('Save Lesson', style: TextStyle(fontSize: 17, color: Colors.black)),
+                
+                onPressed: () {
+                  if (lessonNameController.text.isNotEmpty && chapterNumberController.text.isNotEmpty && selectedCourse != null) {
+                    saveLesson();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddLessonContentScreen()),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Please fill out all fields!')),
+                    );
+                  }
+                },
+                child: Text('Add content', style: TextStyle(fontSize: 17, color: Colors.black)),
               ),
             ),
           ],

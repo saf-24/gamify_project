@@ -9,10 +9,7 @@ import 'package:gamify_project/Safwan/Screens/safwan_institusoin_logn_page.dart'
 import 'package:gamify_project/Safwan/Screens/safwan_student_login_page.dart';
 import 'package:gamify_project/Safwan/Screens/teatcher_login_page.dart';
 import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
-
-
 import 'package:gamify_project/Safwan/Screens/test_firebace.dart';
-
 import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
 import 'package:gamify_project/zayed/Screens/zayed_quiz_page.dart';
 import 'package:gamify_project/zayed/Screens/zayed_lessons_page.dart';
@@ -21,11 +18,11 @@ import 'package:gamify_project/zayed/Screens/zayed_lessons_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
-    await Firebase.initializeApp(); // تهيئة Firebase
-    print("Firebase Initialized Successfully"); // طباعة رسالة نجاح
+    await Firebase.initializeApp(); 
+    print("Firebase Initialized Successfully"); 
     runApp(const MyApp());
   } catch (e) {
-    print("Error initializing Firebase: $e"); // طباعة الخطأ
+    print("Error initializing Firebase: $e"); 
   }
 }
 
@@ -46,13 +43,13 @@ class MyApp extends StatelessWidget {
         '/ta_login': (context) => const Taloginpage(),
         '/in_sign': (context) => const instisignup(),
         '/in_login': (context) => const In_login_page(),
-        '/st_home': (context) => const St_home_page2(),
+        '/st_home': (context) => const St_home_page2(fullName: '',email: "",major: "",),
         '/st_course': (context) => const Zayed_standard_navigations(),
         '/st_games_list': (context) => const Games_list(),
         '/test_fire': (context) => const Test_fire(),
-        '/lesson_page': (context) => const Zayed_lessons_page(title: '',),
-        '/quiz_page': (context) => const Zayed_quiz_page(title: '',),
-        '/profile_page': (context) =>  MyProfilePage(),
+        '/lesson_page': (context) => const Zayed_lessons_page(title: '',cource_disc_lesson: ''),
+        '/quiz_page': (context) => const Zayed_quiz_page(title: '', course_disc: '',),
+        '/profile_page': (context) =>  MyProfilePage(FirstName: "",email: "",major: "",),
         '/Puzzle_Game': (context) =>  PuzzleGameScreen(),
       },
     );

@@ -11,9 +11,13 @@ import 'package:gamify_project/zayed/Screens/zayed_quiz_cards.dart';
 
 
 class Zayed_quiz_page extends StatelessWidget {
-  final String title;
+  final String title;  
+  final String course_disc;
+
   const Zayed_quiz_page({super.key,
   required this.title,
+  required this.course_disc,
+
   });
 
   @override
@@ -101,7 +105,7 @@ class Zayed_quiz_page extends StatelessWidget {
                               onPressed: () {
                                 Navigator.pushReplacement(
                                   context,
-                                  MaterialPageRoute(builder: (context) => Zayed_lessons_page(title: title,)),
+                                  MaterialPageRoute(builder: (context) => Zayed_lessons_page(title: title, cource_disc_lesson: course_disc,)),
                                 );
                                 
                               },
@@ -225,7 +229,7 @@ class Zayed_quiz_page extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => St_home_page2()));
+                              builder: (context) => St_home_page2(fullName: '', email: "",major: "",)));
                     },
                   ),
                   const Text("Home",
@@ -284,7 +288,7 @@ class Zayed_quiz_page extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MyProfilePage()));
+                              builder: (context) => MyProfilePage(FirstName: "",email: "",major: "",)));
                     },
                   ),
                   const Text("Profile", style: TextStyle(height: 0.1)),

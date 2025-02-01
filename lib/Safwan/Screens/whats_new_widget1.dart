@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamify_project/Anas/Screens/Anas.dart';
+import 'package:gamify_project/Hamid/Screens/Hamid_content.dart';
+import 'package:gamify_project/zayed/Screens/zayed_lessons_page.dart';
 
 class Whats_New_Widget extends StatelessWidget {
   final String title;
@@ -50,7 +52,7 @@ class Whats_New_Widget extends StatelessWidget {
                     letterSpacing: 3),
               )),
           Positioned(
-              bottom: 28,
+              bottom: 23,
               left: 25,
               child: Text(
                 date,
@@ -77,19 +79,26 @@ class Whats_New_Widget extends StatelessWidget {
                 ),
               )),
           Positioned(
-            bottom: 23,
-            right: 23,
+            bottom: 20,
+            right: 20,
             width: 116,
             height: 34,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationsScreen()));
+                Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ContentPage(
+                                lesson_name: title,                          
+                              )
+                              )
+                              );
               },
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.all(
                     const Color.fromARGB(255, 228, 228, 228)),
               ),
-              child: Text("Explore",style: TextStyle(fontSize: 18, fontWeight:FontWeight.w800,letterSpacing: 1,color: const Color.fromARGB(255, 45, 110, 153) ),),
+              child: Text("Explore",style: TextStyle(fontSize: 17, fontWeight:FontWeight.w800,letterSpacing: 1,color: const Color.fromARGB(255, 45, 110, 153) ),),
             ),
           ),
         ],

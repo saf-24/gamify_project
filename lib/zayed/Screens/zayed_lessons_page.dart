@@ -14,8 +14,10 @@ import 'package:gamify_project/zayed/Screens/zayed_lessons_cards.dart';
 
 class Zayed_lessons_page extends StatelessWidget {
   final String title;
+  final String cource_disc_lesson;
   const Zayed_lessons_page({super.key,
   required this.title,
+  required this.cource_disc_lesson,
   });
 
   @override
@@ -120,7 +122,7 @@ class Zayed_lessons_page extends StatelessWidget {
                             // TextButton aligned to the right
                             TextButton(
                               onPressed: () {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Zayed_quiz_page(title: title,)));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Zayed_quiz_page(title: title,course_disc: cource_disc_lesson,)));
                               },
                               child: Text(
                                 "Tests",
@@ -186,13 +188,16 @@ class Zayed_lessons_page extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(15, 13, 15, 15),
               width: 360,
               height: 170,
-              alignment: Alignment.center,
+              
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 218, 218, 218),
                       borderRadius: BorderRadius.circular(25),
                     ),
               child: Text(
-                      "Java is a programming language and computing platform first released by Sun Microsystems in 1995. It has evolved from humble beginnings to power a large share of today’s digital", textAlign: TextAlign.center,
+                cource_disc_lesson,
+                textAlign: TextAlign.center,
+                maxLines: 6,
+                overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                       
                         fontSize: 15.5,
@@ -220,7 +225,7 @@ class Zayed_lessons_page extends StatelessWidget {
                   icon: const Icon(Icons.home, size: 40.0),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page2()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page2(fullName: '',email: "",major: "",)));
                   },
                 ),
                 const Text("Home",
@@ -269,7 +274,7 @@ class Zayed_lessons_page extends StatelessWidget {
                   icon: const Icon(Icons.person, size: 43),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage(FirstName: "",email: "",major: "",)));
                   },
                 ),
                 const Text("Profile", style: TextStyle(height: 0.1)),

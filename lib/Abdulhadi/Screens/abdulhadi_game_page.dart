@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HintPage(),
+      
     );
   }
 }
@@ -107,7 +109,7 @@ class _HintPageState extends State<HintPage> {
   Widget build(BuildContext context) {
     if (questions.isEmpty) {
       return Scaffold(
-        backgroundColor: Color(0xFFE6F7FF),
+        backgroundColor: const Color.fromARGB(255, 230, 230, 230),
         body: Center(child: CircularProgressIndicator()),
       );
     }
@@ -117,7 +119,7 @@ class _HintPageState extends State<HintPage> {
     List<dynamic> answers = currentQuestion['answer'];
 
     return Scaffold(
-      backgroundColor: Color(0xFFE6F7FF),
+      backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -125,14 +127,21 @@ class _HintPageState extends State<HintPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Align(
-                alignment: Alignment.topRight,
+                alignment: Alignment.center,
+                
                 child: GestureDetector(
-                  onTap: () {},
-                  child: Icon(Icons.close, color: Colors.black, size: 30),
+                  onTap: () {
+                Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => Games_list()));
+          },
+                  child: Icon(Icons.close, color: Color.fromARGB(197, 0, 129, 189), size: 45),
+                  
                 ),
+                
               ),
               SizedBox(height: 20),
               RichText(
+                
                 text: TextSpan(
                   text: 'Hint $currentHintIndex: ',
                   style: TextStyle(
@@ -220,7 +229,8 @@ class ResultsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Results'), centerTitle: true),
+      backgroundColor: const Color.fromARGB(255, 231, 231, 231),
+      appBar: AppBar(title: Text('Results'), centerTitle: true,backgroundColor: const Color.fromARGB(255, 255, 255, 255),),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

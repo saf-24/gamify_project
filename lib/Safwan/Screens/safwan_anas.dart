@@ -15,25 +15,32 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyProfilePage(),
+      
     );
   }
 }
 
 class MyProfilePage extends StatefulWidget {
+  final String FirstName;
+  final String email;
+  final String major;
+  const MyProfilePage({
+    super.key,    
+    required this.FirstName,
+    required this.email,
+    required this.major,
+
+    }
+    );
   @override
   _MyProfilePageState createState() => _MyProfilePageState();
 }
 
 class _MyProfilePageState extends State<MyProfilePage> {
-  String FirstName = "Safwan";
-  String FullName = "Safwan Alghamdi";
-  String Magor = "information system";
+
 
   String profilePictureUrl = "";
-  int xp = 1500;
-  int level = 3;
-  int nextLevelXP = 2000;
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +67,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                 Container(
                         margin: EdgeInsets.only(top: 50),
                         child: Text(
-                          FirstName,
+                          widget.FirstName,
                           style: TextStyle(
                             fontSize: 24,
                             color: const Color.fromARGB(255, 248, 248, 248),
@@ -135,7 +142,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                         size: 31.4, color:Color.fromARGB(255, 10, 100, 136),),
                         onPressed: () {},
             ),
-                      Text(FullName,style: TextStyle(
+                      Text(widget.FirstName,style: TextStyle(
                         fontSize: 18,
                         color: const Color.fromARGB(255, 0, 0, 0),
                         fontWeight: FontWeight.w500,
@@ -166,7 +173,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                         size: 25.4, color:Color.fromARGB(255, 10, 100, 136),),
                         onPressed: () {},
             ),
-                      Text("safwanalgha@gmail.com",style: TextStyle(
+                      Text(widget.email,style: TextStyle(
                         fontSize: 18,
                         color: const Color.fromARGB(255, 0, 0, 0),
                         fontWeight: FontWeight.w500,
@@ -195,7 +202,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                         size: 29.4, color:Color.fromARGB(255, 10, 100, 136),),
                         onPressed: () {},
             ),
-                      Text(Magor,style: TextStyle(
+                      Text(widget.major,style: TextStyle(
                         fontSize: 18,
                         color: const Color.fromARGB(255, 0, 0, 0),
                         fontWeight: FontWeight.w500,
@@ -271,7 +278,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   icon: const Icon(Icons.home, size: 40.0),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page2()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page2(fullName: '',email: "",major: "",)));
                   },
                 ),
                 const Text("Home",
