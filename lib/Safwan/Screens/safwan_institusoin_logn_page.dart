@@ -31,7 +31,6 @@ class In_login_page extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: AppBar(
-        
         backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       ),
       body: Stack(
@@ -69,7 +68,10 @@ class In_login_page extends StatelessWidget {
                         right: 27,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => instisignup()));
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => instisignup()));
                           },
                           child: Text("Sign up",
                               style: TextStyle(
@@ -136,10 +138,11 @@ class In_login_page extends StatelessWidget {
                                   hintStyle: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(255, 54, 127, 156)),
+                                      color: const Color.fromARGB(
+                                          255, 54, 127, 156)),
                                   contentPadding: EdgeInsets.only(left: 20)),
                             )),
-                      ), 
+                      ),
                       Positioned(
                         top: 191,
                         left: 28,
@@ -162,7 +165,8 @@ class In_login_page extends StatelessWidget {
                                   hintStyle: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(255, 54, 127, 156)),
+                                      color: const Color.fromARGB(
+                                          255, 54, 127, 156)),
                                   contentPadding: EdgeInsets.only(left: 20)),
                             )),
                       ),
@@ -208,7 +212,8 @@ class In_login_page extends StatelessWidget {
                                   fontSize: 30,
                                   color:
                                       const Color.fromARGB(255, 190, 228, 253),
-                                  fontWeight: FontWeight.w800,letterSpacing: 1)),
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 1)),
                           style: ButtonStyle(
                               backgroundColor: WidgetStateProperty.all(
                                 const Color.fromARGB(197, 0, 129, 189),
