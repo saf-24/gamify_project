@@ -5,7 +5,9 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 class Courses_cards extends StatelessWidget {
   final String title;
   final String disc;
-
+  final String fullName;
+  final String email;
+  final String major;
   final String date;
   final String tet_name;
   final int highestProgres;
@@ -21,6 +23,9 @@ class Courses_cards extends StatelessWidget {
     required this.highestProgres,
     required this.total_lesson,
     required this.cource_disc,
+    required this.fullName,
+    required this.email,
+    required this.major,
   });
 
   @override
@@ -105,7 +110,9 @@ class Courses_cards extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => Zayed_lessons_page(
                                 title: title,
-                                cource_disc_lesson: cource_disc
+                                cource_disc_lesson: cource_disc,
+                                fullName: fullName,email: email,major: major,
+
                               )
                               )
                               );

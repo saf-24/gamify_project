@@ -8,6 +8,9 @@ class Whats_New_Widget extends StatelessWidget {
   final String disc;
   final String imagepath;
   final String date;
+  final String fullName;
+  final String email;
+  final String major;
 
   const Whats_New_Widget({
     super.key,
@@ -15,6 +18,9 @@ class Whats_New_Widget extends StatelessWidget {
     required this.disc,
     required this.imagepath,
     required this.date,
+    required this.fullName,
+    required this.email,
+    required this.major,
   });
 
   @override
@@ -89,7 +95,8 @@ class Whats_New_Widget extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                           builder: (context) => ContentPage(
-                                lesson_name: title,                          
+                                lesson_name: title,                
+                                fullName: fullName,email: email,major: major,
                               )
                               )
                               );

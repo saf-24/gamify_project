@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gamify_project/Abdulhadi/Screens/brbrly.dart';
 import 'package:gamify_project/Anas/Screens/Anas.dart';
 import 'package:gamify_project/Hamid/Screens/Hamid_content.dart';
+import 'package:gamify_project/Hamid/Screens/Hamid_welcompage.dart';
 import 'package:gamify_project/Safwan/Screens/course_cards_widget.dart';
 import 'package:gamify_project/Safwan/Screens/dummy_data.dart';
 import 'package:gamify_project/Safwan/Screens/frfrly.dart';
@@ -75,17 +77,108 @@ class St_home_page2 extends StatelessWidget {
             },
           ),
         ],
-        leading: IconButton(
-          tooltip: "Menu",
-          icon: const Icon(
-            Icons.menu,
-            size: 43.4,
-            color: Color.fromARGB(197, 0, 129, 189),
+        leading: Builder( // استخدم Builder لإتاحة الوصول إلى Scaffold
+          builder: (context) => IconButton(
+            tooltip: "Menu",
+            icon: const Icon(
+              Icons.menu,
+              size: 43.4,
+              color: Color.fromARGB(197, 0, 129, 189),
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer(); // يفتح القائمة الجانبية
+            },
           ),
-          onPressed: () {},
         ),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
+
+      drawer: Drawer( // القائمة الجانبية
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            SizedBox(
+              height: 120,
+              child: DrawerHeader(
+              
+                decoration: BoxDecoration(color: Color.fromARGB(197, 0, 129, 189),),
+                child: Text("Menu", textAlign:TextAlign.center , style: TextStyle(color: Colors.white, fontSize: 24)),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.question_mark,size: 29,),
+              title: Text("About us",style: TextStyle(fontSize: 20,)),
+              onTap: () {
+              
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.phone,size: 27,),
+              title: Text("Contact us",style: TextStyle(fontSize: 20,)),
+              onTap: () {
+                
+              },
+              
+            ),
+            Center(
+              child: Container(
+                width: 164,
+                margin: EdgeInsets.fromLTRB(17, 550, 0, 0),
+                child: ListTile(
+                
+                   leading:  Icon(Icons.logout,
+                        size: 35.4, color: Color.fromARGB(255, 223, 0, 0)),
+                        title: Text("Logout",style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 223, 0, 0),fontWeight: FontWeight.w700),),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Confirm logout"),
+                            content: Text(
+                              "Are you sure you want to log out?",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context); // إغلاق الرسالة
+                                },
+                                child: Text(
+                                  "No",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => welcome_page()),
+                                    (Route<dynamic> route) => false,
+                                  );
+                                },
+                                child: Text("Log out",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: const Color.fromARGB(255, 255, 0, 0),
+                                    )),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
+              ),
+            )
+          ],
+        ),
+      ),
+      
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
@@ -128,6 +221,7 @@ class St_home_page2 extends StatelessWidget {
                               disc: subject['message'] ?? 'N/A',
                               date: subject['date'] ?? 'N/A',
                               imagepath: subject['image'] ?? 'N/A',
+                              fullName: fullName,email: email,major: major,
                             );
                           },
                         ),
@@ -218,6 +312,7 @@ class St_home_page2 extends StatelessWidget {
                                     tet_name: subject['tet_name'] ?? "N/A",
                                     course_disc:
                                         subject['course_disc'] ?? "N/A",
+                                        fullName: fullName,email: email,major: major,
                                   );
                                 },
                               ),
@@ -305,6 +400,7 @@ class St_home_page2 extends StatelessWidget {
                                         subject['course_disc'] ?? "N/A",
                                     total_lesson: subject['total_lessons'] ?? 0,
                                     tet_name: subject['tet_name'] ?? "N/A",
+                                    fullName: fullName,email: email,major: major,
                                   );
                                 },
                               ),
@@ -358,7 +454,7 @@ class St_home_page2 extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                Zayed_standard_navigations()));
+                                Zayed_standard_navigations(fullName: fullName,email: email,major: major,)));
                   },
                 ),
                 const Text(
@@ -378,7 +474,7 @@ class St_home_page2 extends StatelessWidget {
                   color: Colors.grey,
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Games_list()));
+                        MaterialPageRoute(builder: (context) => GamifyScreen(fullName: fullName,email: email,major: major,)));
                   },
                 ),
                 const Text("Games", style: TextStyle(height: 0.1)),

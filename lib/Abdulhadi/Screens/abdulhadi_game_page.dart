@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gamify_project/Abdulhadi/Screens/brbrly.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
 
 void main() async {
@@ -14,12 +15,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HintPage(),
+      
     );
   }
 }
 
 class HintPage extends StatefulWidget {
+  final String fullName;
+  final String email;
+  final String major;
+
+
+  HintPage({
+    required this.fullName,
+    required this.email,
+    required this.major,
+  });
+
   @override
   _HintPageState createState() => _HintPageState();
 }
@@ -114,7 +126,7 @@ class _HintPageState extends State<HintPage> {
     }
 
     var currentQuestion = questions[currentQuestionIndex];
-    String hint = currentQuestion['Hint$currentHintIndex'];
+    String hint = currentQuestion['hints$currentHintIndex'];
     List<dynamic> answers = currentQuestion['answer'];
 
     return Scaffold(
@@ -130,7 +142,7 @@ class _HintPageState extends State<HintPage> {
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Games_list()));
+                        MaterialPageRoute(builder: (context) => GamifyScreen(fullName: widget.fullName,email: widget.email,major: widget.major,)));
                   },
                   child: Icon(Icons.close,
                       color: Color.fromARGB(197, 0, 129, 189), size: 45),

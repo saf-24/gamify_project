@@ -7,12 +7,18 @@ class Lessons_cards extends StatelessWidget {
   final String lessonTitle;
   final int chapterNumber;
   final String date;
+  final String fullName;
+  final String email;
+  final String major;
 
   const Lessons_cards({
     super.key,
     required this.lessonTitle,
     required this.chapterNumber,
     required this.date,
+    required this.fullName,
+    required this.email,
+    required this.major,
   });
 
   @override
@@ -35,7 +41,7 @@ class Lessons_cards extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(10, 9, 17, 18),
                 child: ElevatedButton(
                   onPressed: () => {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPage(lesson_name: lessonTitle,)))
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ContentPage(lesson_name: lessonTitle,fullName: fullName,email: email,major: major,)))
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color.fromARGB(255, 255, 255, 255),
