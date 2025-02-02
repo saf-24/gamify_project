@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:gamify_project/Abdulhadi/Screens/brbrly.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // إضافة استيراد FirebaseAuth
 import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
 
 void main() async {
@@ -46,12 +46,51 @@ class _HintPageState extends State<HintPage> {
   int incorrectAttempts = 0;
   int totalScore = 0;
 
+  String playerUID = "playerUID"; // استبدل هذا بـ UID الحقيقي
+  String playerName = "Unknown Player";
+
   @override
   void initState() {
     super.initState();
+    _initializePlayerData(); // استدعاء دالة تهيئة البيانات
     _loadQuestions();
   }
 
+  // دالة تهيئة بيانات اللاعب
+  Future<void> _initializePlayerData() async {
+    // الحصول على UID للمستخدم الحالي
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String uid = user.uid; // الحصول على الـ UID للمستخدم الحالي
+      String fetchedName = await _fetchPlayerName(uid);
+      setState(() {
+        playerName = fetchedName; // تحديث اسم اللاعب
+      });
+    }
+  }
+
+  // دالة لجلب اسم اللاعب باستخدام UID
+  Future<String> _fetchPlayerName(String uid) async {
+    try {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('Login_info')
+          .doc(uid)
+          .get();
+
+      if (userDoc.exists && userDoc.data() != null) {
+        print("Fetched player name: ${userDoc['full_name']}");
+        return userDoc['full_name']; // تأكد أن الحقل مطابق لقاعدة البيانات
+      } else {
+        print("Player not found or data is missing.");
+        return 'Unknown Player';
+      }
+    } catch (e) {
+      print("Error fetching player name: $e");
+      return 'Unknown Player';
+    }
+  }
+
+  // دالة لتحميل الأسئلة من Firebase
   Future<void> _loadQuestions() async {
     QuerySnapshot querySnapshot =
         await _firestore.collection('Hint_game').get();
@@ -60,6 +99,7 @@ class _HintPageState extends State<HintPage> {
     });
   }
 
+  // دالة للتحقق من الإجابة
   void _checkAnswer(int selectedIndex) {
     var currentQuestion = questions[currentQuestionIndex];
     int correctAnswer = currentQuestion['correctAnswer'];
@@ -88,14 +128,21 @@ class _HintPageState extends State<HintPage> {
     });
   }
 
+  // دالة لحفظ النقاط في Firebase
   void _saveScoreToFirebase(int score) async {
-    await _firestore.collection('leaderboard').add({
-      'name': 'Player',
-      'score': score,
-      'timestamp': FieldValue.serverTimestamp(),
-    });
+    try {
+      await _firestore.collection('Leaderboard').add({
+        'name': playerName,
+        'score': score,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+      print("Score saved successfully!");
+    } catch (e) {
+      print("Error saving score: $e");
+    }
   }
 
+  // دالة للانتقال إلى السؤال التالي
   void _goToNextQuestion() {
     setState(() {
       if (currentQuestionIndex < questions.length - 1) {

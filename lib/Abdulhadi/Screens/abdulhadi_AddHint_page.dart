@@ -50,11 +50,16 @@ class _GamifyPageState extends State<GamifyPage> {
     final data = {
       'subject_id': selectedSubjectId,
       'subject_title': selectedSubjectTitle,
-      'hints': hintControllers.map((controller) => controller.text).toList(),
-      'answers':
-          answerControllers.map((controller) => controller.text).toList(),
-      'correct_answer': selectedAnswerIndex.value,
-      'timestamp': FieldValue.serverTimestamp(),
+      'Hint1': hintControllers[0].text,
+      'Hint2': hintControllers[1].text,
+      'Hint3': hintControllers[2].text,
+      'answer': [
+        answerControllers[0].text,
+        answerControllers[1].text,
+        answerControllers[2].text,
+        answerControllers[3].text,
+      ],
+      'correctAnswer': selectedAnswerIndex.value,
     };
 
     try {
