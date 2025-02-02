@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  print(Firebase.apps);
   runApp(MyApp());
 }
 
@@ -24,252 +25,310 @@ class CreateBlankGamePage extends StatefulWidget {
 }
 
 class _CreateBlankGamePageState extends State<CreateBlankGamePage> {
+  String? _selectedSubjectId;
+  String? _selectedSubjectTitle;
   final TextEditingController _questionController = TextEditingController();
-  final _blanksControllers = <TextEditingController>[];
-  final _optionsControllers = <TextEditingController>[];
-  final _correctAnswers = <int>[];
-  int blanksCount = 3;
-  int optionsCount = 4;
+  final List<TextEditingController> _blanksControllers = [];
+  final List<TextEditingController> _optionsControllers = [];
+  final List<int> _correctAnswers = [];
+  final int _initialBlanksCount = 3;
+  final int _initialOptionsCount = 4;
 
   @override
   void initState() {
     super.initState();
-    for (int i = 0; i < blanksCount; i++) {
+    _initializeControllers();
+  }
+
+  void _initializeControllers() {
+    for (int i = 0; i < _initialBlanksCount; i++) {
       _blanksControllers.add(TextEditingController());
     }
-    for (int i = 0; i < optionsCount; i++) {
+    for (int i = 0; i < _initialOptionsCount; i++) {
       _optionsControllers.add(TextEditingController());
     }
   }
 
-  void addBlank() {
-    setState(() {
-      _blanksControllers.add(TextEditingController());
-    });
+  void _addBlank() {
+    setState(() => _blanksControllers.add(TextEditingController()));
   }
 
-  void addOption() {
-    setState(() {
-      _optionsControllers.add(TextEditingController());
-    });
-  }
-
-  void removeBlank() {
-    if (_blanksControllers.isNotEmpty) {
-      setState(() {
-        _blanksControllers.removeLast();
-      });
+  void _removeBlank() {
+    if (_blanksControllers.length > 1) {
+      setState(() => _blanksControllers.removeLast());
     }
   }
 
-  void removeOption() {
-    if (_optionsControllers.isNotEmpty) {
-      setState(() {
-        _optionsControllers.removeLast();
-      });
+  void _addOption() {
+    setState(() => _optionsControllers.add(TextEditingController()));
+  }
+
+  void _removeOption() {
+    if (_optionsControllers.length > 1) {
+      setState(() => _optionsControllers.removeLast());
     }
   }
 
-  Future<void> saveQuestion() async {
-    final question = _questionController.text.trim();
-    final blanks = _blanksControllers.map((c) => c.text.trim()).toList();
-    final options = _optionsControllers.map((c) => c.text.trim()).toList();
+  Future<void> _saveQuestion() async {
+    if (_selectedSubjectId == null) {
+      _showSnackBar('Please select a subject first');
+      return;
+    }
 
-    if (question.isEmpty || blanks.isEmpty || options.isEmpty || _correctAnswers.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please fill all fields and select correct answers")),
-      );
+    if (!_validateForm()) {
+      _showSnackBar('Please fill all required fields');
       return;
     }
 
     try {
       await FirebaseFirestore.instance.collection('Blank_game').add({
-        'question': question,
-        'blanks': blanks,
-        'options': options,
+        'subject_id': _selectedSubjectId,
+        'subject_title': _selectedSubjectTitle,
+        'question': _questionController.text.trim(),
+        'blanks': _blanksControllers.map((c) => c.text.trim()).toList(),
+        'options': _optionsControllers.map((c) => c.text.trim()).toList(),
         'correct_answers': _correctAnswers,
-        'created_at': Timestamp.now(),
+        'timestamp': FieldValue.serverTimestamp(),
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Question saved successfully!")),
-      );
-
-      setState(() {
-        _questionController.clear();
-        _blanksControllers.forEach((controller) => controller.clear());
-        _optionsControllers.forEach((controller) => controller.clear());
-        _correctAnswers.clear();
-      });
+      _showSnackBar('Question saved successfully!');
+      _resetForm();
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error saving question: $e")),
-      );
+      _showSnackBar('Error saving question: $e');
     }
+  }
+
+  bool _validateForm() {
+    return _questionController.text.trim().isNotEmpty &&
+        _blanksControllers.every((c) => c.text.trim().isNotEmpty) &&
+        _optionsControllers.every((c) => c.text.trim().isNotEmpty) &&
+        _correctAnswers.isNotEmpty;
+  }
+
+  void _resetForm() {
+    _questionController.clear();
+    _blanksControllers.forEach((c) => c.clear());
+    _optionsControllers.forEach((c) => c.clear());
+    _correctAnswers.clear();
+    setState(() {
+      _selectedSubjectId = null;
+      _selectedSubjectTitle = null;
+    });
+  }
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 236, 236, 236),
+      backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
+        title: const Text('Create Blank Game',
+            style: TextStyle(color: Colors.blue)),
         centerTitle: true,
-        title: Text(
-          'Add Blank Game Questions',
-          style: TextStyle(
-            fontSize: 18,
-            color: const Color.fromARGB(255, 26, 113, 194),
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Question Field
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(28.0)),
-                  color: Colors.white,
-                ),
-                child: TextField(
-                  controller: _questionController,
-                  decoration: InputDecoration(
-                    labelText: 'Question',
-                    border: OutlineInputBorder(
-                      borderRadius: const BorderRadius.all(Radius.circular(28.0)),
-                    ),
-                  ),
-                  maxLines: 2,
-                ),
-              ),
-            ),
-            SizedBox(height: 16),
+            // Subject Selection Dropdown
+            _buildSubjectDropdown(),
+            const SizedBox(height: 20),
+
+            // Question Input
+            _buildQuestionField(),
+            const SizedBox(height: 20),
 
             // Blanks Section
-            Text("Blanks:", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ..._blanksControllers.asMap().entries.map((entry) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(28.0)),
-                    color: Colors.white,
-                  ),
-                  child: TextField(
-                    controller: entry.value,
-                    decoration: InputDecoration(
-                      labelText: "Blank ${entry.key + 1}",
-                      border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(28.0)),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }).toList(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  
-                  style: ElevatedButton.styleFrom(
-                    elevation: 3.5,
-                    backgroundColor:  const Color.fromARGB(255, 111, 255, 135),
-                  ),
-                  onPressed: addBlank, child: Text("Add Blank",style: TextStyle(color: Colors.black),)),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 3.5,
-                    backgroundColor:  const Color.fromARGB(255, 255, 75, 75),
-                  ),
-                  onPressed: removeBlank, child: Text("Remove Blank",style: TextStyle(color: Colors.black),)),
-              ],
-            ),
-
-            SizedBox(height: 30),
+            _buildSectionHeader('Blanks'),
+            ..._buildBlanksFields(),
+            _buildAddRemoveButtons(
+                _addBlank, _removeBlank, 'Add Blank', 'Remove Blank'),
+            const SizedBox(height: 20),
 
             // Options Section
-            Text("Options:", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ..._optionsControllers.asMap().entries.map((entry) {
-              return Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(Radius.circular(28.0)),
-                          color: Colors.white,
-                        ),
-                        child: TextField(
-                          controller: entry.value,
-                          decoration: InputDecoration(
-                            labelText: "Option ${entry.key + 1}",
-                            border: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(Radius.circular(28.0)),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Checkbox(
-                    value: _correctAnswers.contains(entry.key),
-                    onChanged: (value) {
-                      setState(() {
-                        if (value == true) {
-                          _correctAnswers.add(entry.key);
-                        } else {
-                          _correctAnswers.remove(entry.key);
-                        }
-                      });
-                    },
-                  )
-                ],
+            _buildSectionHeader('Options'),
+            ..._buildOptionsFields(),
+            _buildAddRemoveButtons(
+                _addOption, _removeOption, 'Add Option', 'Remove Option'),
+            const SizedBox(height: 30),
+
+            // Save Button
+            _buildSaveButton(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSubjectDropdown() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('subjects').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) return const Text('Error loading subjects');
+        if (!snapshot.hasData) return const CircularProgressIndicator();
+
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: DropdownButton<String>(
+            isExpanded: true,
+            value: _selectedSubjectId,
+            hint: const Text('Select Subject'),
+            items: snapshot.data!.docs.map((doc) {
+              final data = doc.data() as Map<String, dynamic>;
+              return DropdownMenuItem<String>(
+                value: doc.id,
+                child: Text(data['title'] ?? 'Untitled Subject'),
+                onTap: () => _selectedSubjectTitle = data['title'],
               );
             }).toList(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 3.5,
-                    backgroundColor:  const Color.fromARGB(255, 111, 255, 135),
-                  ),
-                  
-                  onPressed: addOption, child: Text("Add Option")),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 3.5,
-                    backgroundColor:  const Color.fromARGB(255, 255, 75, 75),
-                  ),
-                  
-                  onPressed: removeOption, child: Text("Remove Option")),
-              ],
-            ),
+            onChanged: (value) => setState(() => _selectedSubjectId = value),
+          ),
+        );
+      },
+    );
+  }
 
-            SizedBox(height: 30),
+  Widget _buildQuestionField() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: TextField(
+        controller: _questionController,
+        decoration: const InputDecoration(
+          labelText: 'Question',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+        ),
+        maxLines: 3,
+      ),
+    );
+  }
 
-            Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 111, 185, 255),
-                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(28.0),
-                  ),
-                ),
-                onPressed: saveQuestion,
-                child: Text("Save Question", style: TextStyle(fontSize: 17)),
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Text(title,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+    );
+  }
+
+  List<Widget> _buildBlanksFields() {
+    return _blanksControllers.asMap().entries.map((entry) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: TextField(
+            controller: entry.value,
+            decoration: InputDecoration(
+              labelText: 'Blank ${entry.key + 1}',
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
               ),
             ),
-          ],
+          ),
+        ),
+      );
+    }).toList();
+  }
+
+  List<Widget> _buildOptionsFields() {
+    return _optionsControllers.asMap().entries.map((entry) {
+      return Row(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: TextField(
+                  controller: entry.value,
+                  decoration: InputDecoration(
+                    labelText: 'Option ${String.fromCharCode(65 + entry.key)}',
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Checkbox(
+            value: _correctAnswers.contains(entry.key),
+            onChanged: (value) => setState(() {
+              value!
+                  ? _correctAnswers.add(entry.key)
+                  : _correctAnswers.remove(entry.key);
+            }),
+          )
+        ],
+      );
+    }).toList();
+  }
+
+  Widget _buildAddRemoveButtons(
+    VoidCallback addAction,
+    VoidCallback removeAction,
+    String addText,
+    String removeText,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green[100],
+            foregroundColor: Colors.black,
+          ),
+          onPressed: addAction,
+          child: Text(addText),
+        ),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red[100],
+            foregroundColor: Colors.black,
+          ),
+          onPressed: removeAction,
+          child: Text(removeText),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSaveButton() {
+    return Center(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.blue,
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+        ),
+        onPressed: _saveQuestion,
+        child: const Text(
+          'Save Question',
+          style: TextStyle(color: Colors.white, fontSize: 16),
         ),
       ),
     );
