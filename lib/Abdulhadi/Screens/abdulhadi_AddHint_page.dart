@@ -24,72 +24,134 @@ class GamifyPage extends StatefulWidget {
 }
 
 class _GamifyPageState extends State<GamifyPage> {
+  String? selectedSubjectId;
+  String? selectedSubjectTitle;
   final List<TextEditingController> hintControllers =
       List.generate(3, (index) => TextEditingController());
   final List<TextEditingController> answerControllers =
       List.generate(4, (index) => TextEditingController());
   final ValueNotifier<int?> selectedAnswerIndex = ValueNotifier<int?>(null);
 
-  void saveToFirestore() {
+  Future<void> saveToFirestore() async {
+    if (selectedSubjectId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please select the subject first")),
+      );
+      return;
+    }
+
     if (selectedAnswerIndex.value == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please select the correct answer.')),
+        const SnackBar(content: Text("Please select the correct answer")),
       );
       return;
     }
 
     final data = {
-      'Hint1': hintControllers[0].text,
-      'Hint2': hintControllers[1].text,
-      'Hint3': hintControllers[2].text,
-      'answer': [
-        answerControllers[0].text,
-        answerControllers[1].text,
-        answerControllers[2].text,
-        answerControllers[3].text,
-      ],
-      'correctAnswer': selectedAnswerIndex.value,
+      'subject_id': selectedSubjectId,
+      'subject_title': selectedSubjectTitle,
+      'hints': hintControllers.map((controller) => controller.text).toList(),
+      'answers':
+          answerControllers.map((controller) => controller.text).toList(),
+      'correct_answer': selectedAnswerIndex.value,
+      'timestamp': FieldValue.serverTimestamp(),
     };
 
-    FirebaseFirestore.instance.collection('Hint_game').add(data).then((_) {
+    try {
+      await FirebaseFirestore.instance.collection('Hint_game').add(data);
+      clearForm();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Question saved successfully!')),
+        const SnackBar(content: Text('Question saved successfully')),
       );
-    }).catchError((error) {
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to save question: $error')),
+        SnackBar(content: Text('Save error: $e')),
       );
+    }
+  }
+
+  void clearForm() {
+    for (var controller in hintControllers) {
+      controller.clear();
+    }
+    for (var controller in answerControllers) {
+      controller.clear();
+    }
+    selectedAnswerIndex.value = null;
+    setState(() {
+      selectedSubjectId = null;
+      selectedSubjectTitle = null;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 236, 236, 236),
+      backgroundColor: const Color(0xFFECECEC),
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          'Add Questions to Hint Game',
+        title: const Text(
+          "Add Questions to Hint Game",
           style: TextStyle(
             fontSize: 18,
-            color: const Color.fromARGB(255, 26, 113, 194),
+            color: Color(0xFF1A71C2),
             fontWeight: FontWeight.w500,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Hint Fields
+            StreamBuilder<QuerySnapshot>(
+              stream:
+                  FirebaseFirestore.instance.collection('subjects').snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return const Text("There was an error loading the material");
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                final subjects = snapshot.data!.docs;
+
+                return Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(28),
+                    color: Colors.white,
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: selectedSubjectId,
+                    hint: const Text("Select subject"),
+                    items: subjects.map((doc) {
+                      final data = doc.data() as Map<String, dynamic>;
+                      return DropdownMenuItem<String>(
+                        value: doc.id,
+                        child: Text(data['title'] ?? "no title"),
+                        onTap: () => selectedSubjectTitle = data['title'],
+                      );
+                    }).toList(),
+                    onChanged: (value) =>
+                        setState(() => selectedSubjectId = value),
+                  ),
+                );
+              },
+            ),
+
+            const SizedBox(height: 20),
+
             ...List.generate(3, (index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                    borderRadius: BorderRadius.circular(28),
                     color: Colors.white,
                   ),
                   child: TextField(
@@ -97,22 +159,23 @@ class _GamifyPageState extends State<GamifyPage> {
                     decoration: InputDecoration(
                       labelText: 'Hint ${index + 1}',
                       border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                        borderRadius: BorderRadius.circular(28),
                       ),
                     ),
                   ),
                 ),
               );
             }),
-            SizedBox(height: 16),
 
-            // Answer Text Fields
+            const SizedBox(height: 20),
+
+            // Answer field
             ...List.generate(4, (index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                    borderRadius: BorderRadius.circular(28),
                     color: Colors.white,
                   ),
                   child: TextField(
@@ -120,7 +183,7 @@ class _GamifyPageState extends State<GamifyPage> {
                     decoration: InputDecoration(
                       labelText: 'Answer ${String.fromCharCode(65 + index)}',
                       border: OutlineInputBorder(
-                        borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                        borderRadius: BorderRadius.circular(28),
                       ),
                     ),
                   ),
@@ -128,16 +191,15 @@ class _GamifyPageState extends State<GamifyPage> {
               );
             }),
 
-            SizedBox(height: 16),
-
-            Center(
+            const SizedBox(height: 20),
+            const Center(
               child: Text(
-                'Select the correct answer:',
+                "Select the correct answer:",
                 style: TextStyle(fontSize: 17),
               ),
             ),
 
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             ValueListenableBuilder<int?>(
               valueListenable: selectedAnswerIndex,
@@ -147,42 +209,37 @@ class _GamifyPageState extends State<GamifyPage> {
                   children: List.generate(4, (index) {
                     return ChoiceChip(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(17.0),
+                        borderRadius: BorderRadius.circular(17),
                       ),
-                      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                      backgroundColor: Colors.white,
                       label: Text(String.fromCharCode(65 + index)),
                       selected: value == index,
                       onSelected: (selected) {
                         if (selected) selectedAnswerIndex.value = index;
                       },
-                      selectedColor: const Color.fromARGB(255, 154, 206, 255),
+                      selectedColor: const Color(0xFF9ACDFF),
                     );
                   }),
                 );
               },
             ),
 
-            SizedBox(height: 35),
+            const SizedBox(height: 30),
 
             Center(
               child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    const Color.fromARGB(255, 111, 185, 255),
-                  ),
-                  padding: MaterialStateProperty.all(
-                    const EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  ),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28.0),
-                    ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF6FB9FF),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(28),
                   ),
                 ),
                 onPressed: saveToFirestore,
-                child: Text(
-                  'Save Question',
-                  style: TextStyle(fontSize: 17),
+                child: const Text(
+                  "Save Question",
+                  style: TextStyle(fontSize: 17, color: Colors.black),
                 ),
               ),
             ),

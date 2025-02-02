@@ -15,7 +15,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HintPage(),
-      
     );
   }
 }
@@ -128,20 +127,17 @@ class _HintPageState extends State<HintPage> {
             children: [
               Align(
                 alignment: Alignment.center,
-                
                 child: GestureDetector(
                   onTap: () {
-                Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => Games_list()));
-          },
-                  child: Icon(Icons.close, color: Color.fromARGB(197, 0, 129, 189), size: 45),
-                  
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => Games_list()));
+                  },
+                  child: Icon(Icons.close,
+                      color: Color.fromARGB(197, 0, 129, 189), size: 45),
                 ),
-                
               ),
               SizedBox(height: 20),
               RichText(
-                
                 text: TextSpan(
                   text: 'Hint $currentHintIndex: ',
                   style: TextStyle(
@@ -230,7 +226,11 @@ class ResultsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 231, 231, 231),
-      appBar: AppBar(title: Text('Results'), centerTitle: true,backgroundColor: const Color.fromARGB(255, 255, 255, 255),),
+      appBar: AppBar(
+        title: Text('Results'),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
