@@ -1,5 +1,6 @@
 //THE SECOND PAGE MY PROFILE;
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Abdulhadi/Screens/brbrly.dart';
 import 'package:gamify_project/Anas/Screens/Anas.dart';
 import 'package:gamify_project/Hamid/Screens/Hamid_welcompage.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
@@ -344,7 +345,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   color: Colors.grey,
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Games_list(fullName: widget.FirstName,email: widget.email,major: widget.major,)));
+                        MaterialPageRoute(builder: (context) => GamifyScreen(fullName: widget.FirstName,email: widget.email,major: widget.major,)));
                   },
                 ),
                 const Text("Games", style: TextStyle(height: 0.1)),

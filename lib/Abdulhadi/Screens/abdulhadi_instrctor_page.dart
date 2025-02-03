@@ -6,6 +6,7 @@ import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_AddHint_page.dart';
 import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_AddTest_page.dart';
 import 'package:gamify_project/Hamid/Screens/Hamid_welcompage.dart';
 import 'package:gamify_project/Safwan/Screens/add_lesson.dart';
+import 'package:gamify_project/Safwan/Screens/add_lesson_content.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_add_course.dart';
 
 void main() async {
@@ -149,7 +150,7 @@ class teatcher_page extends StatelessWidget {
               SizedBox(height: 25),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddLessonAndQuestionsScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => AddLessonContentScreen()));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 255, 255, 255),
@@ -161,7 +162,7 @@ class teatcher_page extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    'Add a new test',
+                    'Add a content to lesson',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,

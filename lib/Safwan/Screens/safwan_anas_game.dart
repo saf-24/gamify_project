@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gamify_project/Abdulhadi/Screens/brbrly.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
+import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
+import 'package:gamify_project/zayed/Screens/zayed_leaderboard_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,11 +36,14 @@ class PuzzleGameScreen extends StatefulWidget {
   final String fullName;
   final String email;
   final String major;
+  final String course_name;
+  
 
   PuzzleGameScreen({
     required this.fullName,
     required this.email,
     required this.major,
+    required this.course_name,
   });
   @override
   _PuzzleGameScreenState createState() => _PuzzleGameScreenState();
@@ -59,7 +65,7 @@ class _PuzzleGameScreenState extends State<PuzzleGameScreen> {
   Future<void> fetchQuestions() async {
     try {
       QuerySnapshot querySnapshot =
-          await FirebaseFirestore.instance.collection('Blank_game').get();
+          await FirebaseFirestore.instance.collection('Blank_game').where('subject_title',isEqualTo: widget.course_name).get();
 
       List<Map<String, dynamic>> loadedQuestions = [];
       for (var doc in querySnapshot.docs) {
@@ -372,17 +378,48 @@ class OptionChip extends StatelessWidget {
 class ResultScreen extends StatelessWidget {
   final int totalQuestions;
   final int correctAnswers;
-
   final String fullName;
   final String email;
   final String major;
 
-  ResultScreen({required this.totalQuestions, required this.correctAnswers,required this.fullName,
+  ResultScreen({
+    required this.totalQuestions,
+    required this.correctAnswers,
+    required this.fullName,
     required this.email,
-    required this.major,});
+    required this.major,
+  });
+
+  // إضافة دالة لحفظ النقاط
+  void _saveScoreToFirebase(int score) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('Login_info')
+            .doc(user.uid)
+            .get();
+
+        String playerName = 'Unknown Player';
+        if (userDoc.exists && userDoc.data() != null) {
+          playerName = userDoc['full_name'];
+        }
+
+        await FirebaseFirestore.instance.collection('Leaderboard').add({
+          'name': playerName,
+          'score': score,
+          'timestamp': FieldValue.serverTimestamp(),
+        });
+      }
+    } catch (e) {
+      print("Error saving score: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    _saveScoreToFirebase(correctAnswers); // حفظ النتيجة عند عرض الشاشة
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: AppBar(
@@ -422,24 +459,48 @@ class ResultScreen extends StatelessWidget {
                 color: Color.fromARGB(197, 0, 129, 189),
               ),
             ),
-            SizedBox(height: 40),
+            SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      
+                      children: [
+                        ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => ZayedLeaderboardPage(fullName:fullName,email: email,major: major,)));
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Color.fromARGB(197, 0, 129, 189),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(25),
+                                        ),
+                                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                      ),
+                                      child: Text(
+                                        "Leaderboard",
+                                        style: TextStyle(fontSize: 18, color: Colors.white),
+                                      ),
+                                    ),
+                                    SizedBox(width: 20,),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Games_list(fullName: fullName,email: email,major: major,)));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => St_home_page2(fullName:fullName,email: email,major: major,)));
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromARGB(197, 0, 129, 189),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
               child: Text(
-                "Back to Home",
-                style: TextStyle(fontSize: 16, color: Colors.white),
+                "back to home",
+                style: TextStyle(fontSize: 18, color: Colors.white),
               ),
             ),
+                      ],
+                    ),
           ],
         ),
       ),

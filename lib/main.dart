@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
         '/lesson_page': (context) => const Zayed_lessons_page(title: '',cource_disc_lesson: '',fullName: '',email: "",major: "",),
         '/quiz_page': (context) => const Zayed_quiz_page(title: '', course_disc: '',fullName: '',email: "",major: "",),
         '/profile_page': (context) =>  MyProfilePage(FirstName: "",email: "",major: "",),
-        '/Puzzle_Game': (context) =>  PuzzleGameScreen(fullName: '',email: "",major: "",),
+  
       },
     );
   }

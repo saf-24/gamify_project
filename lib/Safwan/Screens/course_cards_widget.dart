@@ -46,7 +46,7 @@ class Courses_cards_wid extends StatelessWidget {
           'percent': percent1 * 100,  
         });
       }
-      print('Percent updated successfully in Firebase!');
+      print('Percent updated successfully in Firebase! $highestProgres and ');
     } catch (error) {
       print('Failed to update percent: $error');
     }
@@ -55,7 +55,7 @@ class Courses_cards_wid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-   final double percent1 = total_lesson == 0 ? 0 : highestProgres / total_lesson;
+  final double percent1 = highestProgres / total_lesson;
        
     // استدعاء الدالة لتحديث الحقل percent في Firebase
     updatePercentInFirebase(percent1);
@@ -154,7 +154,7 @@ class Courses_cards_wid extends StatelessWidget {
                 child: Text(
                   "Continue",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 17,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1,
                     color: const Color.fromARGB(197, 0, 129, 189),

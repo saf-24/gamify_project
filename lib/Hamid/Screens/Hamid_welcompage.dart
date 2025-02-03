@@ -38,9 +38,10 @@ class welcome_page extends StatelessWidget {
         children: [
           Positioned(
             top: 30,
-            left: 115,
+            left: 135,
             child: Text(
               "Gamify",
+              
               style: TextStyle(
                 fontSize: 47,
                 color: const Color.fromARGB(255, 54, 127, 156),

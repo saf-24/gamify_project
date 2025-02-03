@@ -280,7 +280,7 @@ class St_home_page2 extends StatelessWidget {
                             margin: EdgeInsets.only(top: 10),
                             child: Center(
                                 child: Text(
-                              "you are all done!",
+                              "go learn something new!",
                               style: TextStyle(fontSize: 20),
                             )));
                       }

@@ -6,6 +6,8 @@ import 'package:gamify_project/Anas/Screens/Anas.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_anas_game.dart';
 import 'package:gamify_project/Hamid/Screens/Hamid_welcompage.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_anas.dart';
+import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
+import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -224,7 +226,7 @@ class _GamifyScreenState extends State<GamifyScreen> {
                                 fullName: widget.fullName,
                                 email: widget.email,
                                 major: widget.major,
-                                
+                                course_name: selectedCourseHints!,
                               )));
                 }
               },
@@ -250,9 +252,11 @@ class _GamifyScreenState extends State<GamifyScreen> {
                           builder: (context) => PuzzleGameScreen(
                                 fullName: widget.fullName,
                                 email: widget.email,
-                                major: widget.major,
-                                
-                              )));
+                                major: widget.major,                
+                                course_name: selectedCoursePuzzle!,                
+                      )
+                    )
+                  );
                 }
               },
             ),
@@ -273,7 +277,7 @@ class _GamifyScreenState extends State<GamifyScreen> {
                   icon: const Icon(Icons.home, size: 40.0),
                   color: Colors.grey,
                   onPressed: () {
-                    // Navigation logic for Home
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page2(fullName:widget.fullName,email: widget.email,major: widget.major,)));
                   },
                 ),
                 const Text("Home",
@@ -288,16 +292,20 @@ class _GamifyScreenState extends State<GamifyScreen> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.menu_book_rounded, size: 40.0),
-                  color: Color.fromARGB(197, 0, 129, 189),
+                  color: Colors.grey,
                   onPressed: () {
-                    // Navigation logic for Courses
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Zayed_standard_navigations(fullName: widget.fullName,email: widget.email,major: widget.major,)));
                   },
                 ),
                 const Text(
                   "Courses",
                   style: TextStyle(
                       height: 0.1,
-                      color: Color.fromARGB(197, 0, 129, 189),
+                      color: Colors.grey,
                       fontWeight: FontWeight.w700),
                 ),
               ],
@@ -307,12 +315,12 @@ class _GamifyScreenState extends State<GamifyScreen> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.videogame_asset, size: 41),
-                  color: Colors.grey,
+                  color: Color.fromARGB(197, 0, 129, 189),
                   onPressed: () {
                     // Navigation logic for Games
                   },
                 ),
-                const Text("Games", style: TextStyle(height: 0.1)),
+                const Text("Games", style: TextStyle(height: 0.1,color: Color.fromARGB(197, 0, 129, 189),fontWeight: FontWeight.w700)),
               ],
             ),
             Column(

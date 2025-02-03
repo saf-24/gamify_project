@@ -98,7 +98,7 @@ class Stloginpage extends StatelessWidget {
         children: [
           Positioned(
             top: 30,
-            left: 115,
+            left: 135,
             child: Container(
               child: const Text(
                 "Gamify",
@@ -124,7 +124,7 @@ class Stloginpage extends StatelessWidget {
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 11),
                 child: Container(
                   width: 360,
-                  height: 410,
+                  height: 390,
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(
                       Radius.circular(40),
@@ -138,8 +138,8 @@ class Stloginpage extends StatelessWidget {
                   child: Stack(
                     children: [
                       const Positioned(
-                        top: 25,
-                        left: 34,
+                        top: 35,
+                        left: 64,
                         child: Text(
                           "Login as a Student",
                           style: TextStyle(
@@ -210,42 +210,10 @@ class Stloginpage extends StatelessWidget {
                           ),
                         ),
                       ),
+                    
                       Positioned(
-                        top: 240,
-                        left: 24,
-                        child: Row(
-                          children: [
-                            ValueListenableBuilder<bool>(
-                              valueListenable: ischecked,
-                              builder: (context, value, child) {
-                                return Checkbox(
-                                  activeColor:
-                                      const Color.fromARGB(255, 54, 127, 156),
-                                  value: value,
-                                  onChanged: (bool? newValue) {
-                                    ischecked.value = newValue ?? false;
-                                  },
-                                  side: const BorderSide(
-                                    color: Color.fromARGB(255, 0, 87, 145),
-                                    width: 2,
-                                  ),
-                                );
-                              },
-                            ),
-                            const Text(
-                              "remember me",
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Color.fromARGB(255, 0, 54, 90),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        top: 300,
-                        left: 83,
+                        top: 280,
+                        left: 93,
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_emailController.text.isEmpty ||

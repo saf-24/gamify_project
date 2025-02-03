@@ -37,7 +37,7 @@ class In_login_page extends StatelessWidget {
         children: [
           Positioned(
             top: 30,
-            left: 115,
+            left: 135,
             child: Container(
               child: Text(
                 "Gamify",

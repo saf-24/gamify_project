@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamify_project/Anas/Screens/Anas.dart';
 import 'package:gamify_project/Hamid/Screens/Hamid_content.dart';
+import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
 import 'package:gamify_project/zayed/Screens/zayed_lessons_page.dart';
 
 class Whats_New_Widget extends StatelessWidget {
@@ -94,8 +95,8 @@ class Whats_New_Widget extends StatelessWidget {
                 Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ContentPage(
-                                lesson_name: title,                
+                          builder: (context) => Zayed_standard_navigations(
+                                               
                                 fullName: fullName,email: email,major: major,
                               )
                               )

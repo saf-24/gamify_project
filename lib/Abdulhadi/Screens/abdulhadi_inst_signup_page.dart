@@ -79,7 +79,7 @@ class _instisignupState extends State<instisignup> {
       body: Stack(
         children: [
           Positioned(
-            left: 115,
+            left: 135,
             child: Container(
               child: Text(
                 "Gamify",

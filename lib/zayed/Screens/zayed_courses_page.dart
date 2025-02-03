@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Abdulhadi/Screens/brbrly.dart';
 import 'package:gamify_project/Anas/Screens/Anas.dart';
 import 'package:gamify_project/Hamid/Screens/Hamid_welcompage.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_anas.dart';
@@ -269,7 +270,7 @@ class Zayed_standard_navigations extends StatelessWidget {
                   icon: const Icon(Icons.videogame_asset, size: 41),
                   color: Colors.grey,
                   onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Games_list(fullName: fullName,email: email,major: major,)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => GamifyScreen(fullName: fullName,email: email,major: major,)));
                   },
                 ),
                 const Text("Games", style: TextStyle(height: 0.1)),

@@ -263,10 +263,7 @@ class Games_list extends StatelessWidget {
               height: 40,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PuzzleGameScreen(fullName: fullName,email: email,major: major,)));
+                
                 },
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.all(
