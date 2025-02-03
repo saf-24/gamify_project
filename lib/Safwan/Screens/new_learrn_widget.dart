@@ -6,7 +6,9 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 class New_learn_widget extends StatelessWidget {
   final String title;
   final String disc;
-
+  final String fullName;
+  final String email;
+  final String major;
   final String tet_name;
   final String course_disc;
   final int highestProgres;
@@ -17,6 +19,9 @@ class New_learn_widget extends StatelessWidget {
     required this.title,
     required this.disc,
     required this.course_disc,
+    required this.fullName,
+    required this.email,
+    required this.major,
 
     required this.tet_name,
     required this.highestProgres,
@@ -118,7 +123,7 @@ class New_learn_widget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Zayed_lessons_page(title: title,cource_disc_lesson: course_disc,),
+                      builder: (context) => Zayed_lessons_page(title: title,cource_disc_lesson: course_disc,fullName: fullName,email: email,major: major,),
                     ),
                   );
                 },

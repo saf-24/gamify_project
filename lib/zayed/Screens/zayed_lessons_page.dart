@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Abdulhadi/Screens/brbrly.dart';
+import 'package:gamify_project/Anas/Screens/Anas.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_anas.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
 import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
@@ -15,9 +17,15 @@ import 'package:gamify_project/zayed/Screens/zayed_lessons_cards.dart';
 class Zayed_lessons_page extends StatelessWidget {
   final String title;
   final String cource_disc_lesson;
+  final String fullName;
+  final String email;
+  final String major;
   const Zayed_lessons_page({super.key,
   required this.title,
   required this.cource_disc_lesson,
+  required this.fullName,
+    required this.email,
+    required this.major,
   });
 
   @override
@@ -49,7 +57,10 @@ class Zayed_lessons_page extends StatelessWidget {
                 size: 39.4,
                 color: Color.fromARGB(197, 0, 129, 189),
               ),
-              onPressed: () {},
+              onPressed: () {Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NotificationsScreen()));},
             ),
           ],
           leading: IconButton(
@@ -92,8 +103,8 @@ class Zayed_lessons_page extends StatelessWidget {
                         color: Color(0xFFffffff),
                         padding: EdgeInsets.only(
                           top: screenHeight * 0.22,
-                          left: screenHeight * 0.06,
-                          right: screenHeight * 0.09,
+                          left: screenHeight * 0.05,
+                          right: screenHeight * 0.06,
                           bottom: screenHeight * 0.02,
                         ),
                         
@@ -119,13 +130,14 @@ class Zayed_lessons_page extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            SizedBox(width: 10,),
                             // TextButton aligned to the right
                             TextButton(
                               onPressed: () {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Zayed_quiz_page(title: title,course_disc: cource_disc_lesson,)));
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Games_list(fullName: fullName,email: email,major: major,)));
                               },
                               child: Text(
-                                "Tests",
+                                "Games",
                                 style: TextStyle(
                                   fontSize: screenHeight * 0.03, // Responsive font size
                                   color: const Color.fromARGB(197, 0, 129, 189),
@@ -175,6 +187,7 @@ class Zayed_lessons_page extends StatelessWidget {
                                 lessonTitle: subject['lesson_name'] ?? 'N/A',
                                 chapterNumber: int.tryParse(subject['Chapter_number'].toString()) ?? 0,
                                 date: subject['date'] ?? 'N/A',
+                                fullName: fullName,email: email,major: major,
                               );
                             },
                           ),
@@ -225,7 +238,7 @@ class Zayed_lessons_page extends StatelessWidget {
                   icon: const Icon(Icons.home, size: 40.0),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page2(fullName: '',email: "",major: "",)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page2(fullName: fullName,email: email,major: major,)));
                   },
                 ),
                 const Text("Home",
@@ -242,7 +255,7 @@ class Zayed_lessons_page extends StatelessWidget {
                   icon: const Icon(Icons.menu_book_rounded, size: 40.0),
                   color: Color.fromARGB(197, 0, 129, 189),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_standard_navigations()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_standard_navigations(fullName: fullName,email: email,major: major,)));
                   },
                 ),
                 const Text(
@@ -261,7 +274,7 @@ class Zayed_lessons_page extends StatelessWidget {
                   icon: const Icon(Icons.videogame_asset, size: 41),
                   color: Colors.grey,
                   onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Games_list()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => GamifyScreen(fullName: fullName,email: email,major: major,)));
                   },
                 ),
                 const Text("Games", style: TextStyle(height: 0.1)),
@@ -274,7 +287,7 @@ class Zayed_lessons_page extends StatelessWidget {
                   icon: const Icon(Icons.person, size: 43),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage(FirstName: "",email: "",major: "",)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage(FirstName: fullName,email: email,major: major,)));
                   },
                 ),
                 const Text("Profile", style: TextStyle(height: 0.1)),

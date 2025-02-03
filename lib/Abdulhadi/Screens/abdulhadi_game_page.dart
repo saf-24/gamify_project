@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // إضافة استيراد FirebaseAuth
+import 'package:gamify_project/Abdulhadi/Screens/brbrly.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
+import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
+import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
+import 'package:gamify_project/zayed/Screens/zayed_leaderboard_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,12 +19,25 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HintPage(),
+      
     );
   }
 }
 
 class HintPage extends StatefulWidget {
+  final String fullName;
+  final String email;
+  final String major;
+  final String course_name;
+  
+
+  HintPage({
+    required this.fullName,
+    required this.email,
+    required this.major,
+    required this.course_name,
+  });
+
   @override
   _HintPageState createState() => _HintPageState();
 }
@@ -82,7 +99,7 @@ class _HintPageState extends State<HintPage> {
   // دالة لتحميل الأسئلة من Firebase
   Future<void> _loadQuestions() async {
     QuerySnapshot querySnapshot =
-        await _firestore.collection('Hint_game').get();
+        await _firestore.collection('Hint_game').where('subject_title',isEqualTo: widget.course_name).get();
     setState(() {
       questions = querySnapshot.docs;
     });
@@ -142,10 +159,10 @@ class _HintPageState extends State<HintPage> {
         incorrectAttempts = 0;
       } else {
         _saveScoreToFirebase(totalScore);
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => ResultsPage(score: totalScore),
+            builder: (context) => ResultsPage(score: totalScore,fullName:widget.fullName,email: widget.email,major: widget.major,),
           ),
         );
       }
@@ -178,7 +195,7 @@ class _HintPageState extends State<HintPage> {
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Games_list()));
+                        MaterialPageRoute(builder: (context) => GamifyScreen(fullName: widget.fullName,email: widget.email,major: widget.major,)));
                   },
                   child: Icon(Icons.close,
                       color: Color.fromARGB(197, 0, 129, 189), size: 45),
@@ -267,8 +284,14 @@ class _HintPageState extends State<HintPage> {
 
 class ResultsPage extends StatelessWidget {
   final int score;
+  final String fullName;
+  final String email;
+  final String major;
+  
 
-  ResultsPage({required this.score});
+  ResultsPage({required this.score,required this.fullName,
+    required this.email,
+    required this.major,});
 
   @override
   Widget build(BuildContext context) {
@@ -291,6 +314,48 @@ class ResultsPage extends StatelessWidget {
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
                     color: Colors.blue)),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      
+                      children: [
+                        ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => ZayedLeaderboardPage(fullName:fullName,email: email,major: major,)));
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Color.fromARGB(197, 0, 129, 189),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(25),
+                                        ),
+                                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                      ),
+                                      child: Text(
+                                        "Leaderboard",
+                                        style: TextStyle(fontSize: 18, color: Colors.white),
+                                      ),
+                                    ),
+                                    SizedBox(width: 20,),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => St_home_page2(fullName:fullName,email: email,major: major,)));
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(197, 0, 129, 189),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              ),
+              child: Text(
+                "back to home",
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+            ),
+                      ],
+                    ),
           ],
         ),
       ),

@@ -11,6 +11,9 @@ class Courses_cards_wid extends StatelessWidget {
   final String course_disc;
   final int highestProgres;
   final int total_lesson;
+  final String fullName;
+  final String email;
+  final String major;
   final String documentId; // أضف documentId لتحديث المستند الصحيح
 
   const Courses_cards_wid({
@@ -21,6 +24,9 @@ class Courses_cards_wid extends StatelessWidget {
     required this.tet_name,
     required this.highestProgres,
     required this.course_disc,
+    required this.fullName,
+    required this.email,
+    required this.major,
 
 
     required this.total_lesson,
@@ -40,7 +46,7 @@ class Courses_cards_wid extends StatelessWidget {
           'percent': percent1 * 100,  
         });
       }
-      print('Percent updated successfully in Firebase!');
+      print('Percent updated successfully in Firebase! $highestProgres and ');
     } catch (error) {
       print('Failed to update percent: $error');
     }
@@ -49,7 +55,7 @@ class Courses_cards_wid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
-   final double percent1 = total_lesson == 0 ? 0 : highestProgres / total_lesson;
+  final double percent1 = highestProgres / total_lesson;
        
     // استدعاء الدالة لتحديث الحقل percent في Firebase
     updatePercentInFirebase(percent1);
@@ -136,7 +142,7 @@ class Courses_cards_wid extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Zayed_lessons_page(title: title, cource_disc_lesson: course_disc),
+                      builder: (context) => Zayed_lessons_page(title: title, cource_disc_lesson: course_disc,fullName: fullName,email: email,major: major,),
                     ),
                   );
                 },
@@ -148,7 +154,7 @@ class Courses_cards_wid extends StatelessWidget {
                 child: Text(
                   "Continue",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 17,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1,
                     color: const Color.fromARGB(197, 0, 129, 189),

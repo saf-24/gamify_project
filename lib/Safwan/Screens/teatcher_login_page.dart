@@ -56,17 +56,17 @@ class Taloginpage extends StatelessWidget {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('الحساب غير مسجل للنظام التعليمي'),
+              content: Text('The account does not exist in the database'),
               backgroundColor: Colors.red,
             ),
           );
         }
       } on FirebaseAuthException catch (e) {
-        String errorMessage = 'خطأ في تسجيل الدخول';
+        String errorMessage = 'Login error';
         if (e.code == 'user-not-found') {
-          errorMessage = 'البريد الإلكتروني غير مسجل';
+          errorMessage = 'Email not registered';
         } else if (e.code == 'wrong-password') {
-          errorMessage = 'كلمة المرور غير صحيحة';
+          errorMessage = 'The password is incorrect';
         }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -77,7 +77,7 @@ class Taloginpage extends StatelessWidget {
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('حدث خطأ غير متوقع: ${e.toString()}'),
+            content: Text('An unexpected error occurred: ${e.toString()}'),
             backgroundColor: Colors.red,
           ),
         );
@@ -94,7 +94,7 @@ class Taloginpage extends StatelessWidget {
         children: [
           Positioned(
             top: 30,
-            left: 115,
+            left: 135,
             child: Container(
               child: const Text(
                 "Gamify",
@@ -119,11 +119,23 @@ class Taloginpage extends StatelessWidget {
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 11),
                 child: Container(
+                  width: 360,
+                  height: 390,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(40),
+                    ),
+                    color: const Color.fromARGB(153, 231, 231, 231),
+                    border: Border.all(
+                      color: const Color.fromARGB(94, 161, 161, 161),
+                      width: 3,
+                    ),
+                  ),
                   child: Stack(
                     children: [
                       const Positioned(
-                        top: 25,
-                        left: 35,
+                        top: 35,
+                        left: 65,
                         child: Text(
                           "Login as a Teacher",
                           style: TextStyle(
@@ -194,49 +206,17 @@ class Taloginpage extends StatelessWidget {
                           ),
                         ),
                       ),
+                      
                       Positioned(
-                        top: 240,
-                        left: 24,
-                        child: Row(
-                          children: [
-                            ValueListenableBuilder<bool>(
-                              valueListenable: ischecked,
-                              builder: (context, value, child) {
-                                return Checkbox(
-                                  activeColor:
-                                      const Color.fromARGB(255, 54, 127, 156),
-                                  value: value,
-                                  onChanged: (bool? newValue) {
-                                    ischecked.value = newValue ?? false;
-                                  },
-                                  side: const BorderSide(
-                                    color: Color.fromARGB(255, 0, 87, 145),
-                                    width: 2,
-                                  ),
-                                );
-                              },
-                            ),
-                            const Text(
-                              "remember me",
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Color.fromARGB(255, 0, 54, 90),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        top: 300,
-                        left: 83,
+                        top: 280,
+                        left: 93,
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_emailController.text.isEmpty ||
                                 _passwordController.text.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                  content: Text('الرجاء تعبئة جميع الحقول'),
+                                  content: Text('Please fill out all fields'),
                                   backgroundColor: Colors.red,
                                 ),
                               );
@@ -244,14 +224,6 @@ class Taloginpage extends StatelessWidget {
                             }
                             await _loginTeacher();
                           },
-                          child: const Text(
-                            "Login",
-                            style: TextStyle(
-                              fontSize: 30,
-                              color: Color.fromARGB(255, 190, 228, 253),
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
                           style: ButtonStyle(
                             backgroundColor: WidgetStateProperty.all(
                               const Color.fromARGB(197, 0, 129, 189),
@@ -265,21 +237,17 @@ class Taloginpage extends StatelessWidget {
                               ),
                             ),
                           ),
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                              fontSize: 30,
+                              color: Color.fromARGB(255, 190, 228, 253),
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
                         ),
                       ),
                     ],
-                  ),
-                  width: 360,
-                  height: 410,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(40),
-                    ),
-                    color: const Color.fromARGB(153, 231, 231, 231),
-                    border: Border.all(
-                      color: const Color.fromARGB(94, 161, 161, 161),
-                      width: 3,
-                    ),
                   ),
                 ),
               ),

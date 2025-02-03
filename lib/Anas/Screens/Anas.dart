@@ -62,20 +62,7 @@ class NotificationsScreen extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar: Container(
-        color: Colors.white,
-        padding: const EdgeInsets.only(bottom: 14.0),
-        height: 96,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            _buildNavItem(Icons.home, "Home", true),
-            _buildNavItem(Icons.menu_book_rounded, "Courses", false),
-            _buildNavItem(Icons.videogame_asset, "Games", false),
-            _buildNavItem(Icons.person, "Profile", false),
-          ],
-        ),
-      ),
+
     );
   }
 

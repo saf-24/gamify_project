@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gamify_project/Anas/Screens/Anas.dart';
 import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ContentPage extends StatefulWidget {
   final String lesson_name;
+  final String fullName;
+  final String email;
+  final String major;
 
   const ContentPage({
     super.key,
     required this.lesson_name,
+    required this.fullName,
+    required this.email,
+    required this.major,
   });
 
   @override
@@ -116,7 +123,10 @@ class _ContentPageState extends State<ContentPage> {
               size: 39.4,
               color: Color.fromARGB(197, 0, 129, 189),
             ),
-            onPressed: () {},
+            onPressed: () {Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NotificationsScreen()));},
           ),
         ],
         leading: IconButton(
@@ -160,7 +170,7 @@ class _ContentPageState extends State<ContentPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => Zayed_standard_navigations(),
+                        builder: (context) => Zayed_standard_navigations(fullName: widget.fullName,email: widget.email,major: widget.major,),
                       ),
                     );
                   },
