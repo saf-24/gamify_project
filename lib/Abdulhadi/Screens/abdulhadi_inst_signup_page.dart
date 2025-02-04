@@ -40,35 +40,86 @@ class _instisignupState extends State<instisignup> {
       TextEditingController();
 
   Future<void> signUp() async {
-    try {
-      // Create user in Firebase Authentication
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-
-      // Send email verification
-      await userCredential.user?.sendEmailVerification();
-
-      // Save user data to Firestore
-      await FirebaseFirestore.instance.collection('Signup').add({
-        'full_name': fullNameController.text,
-        'email': emailController.text,
-        'institution_name': institutionNameController.text,
-      });
-
-      // Navigate to home page or show success
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => InstHomePage()),
-          (Route<dynamic> route) => false);
-    } on FirebaseAuthException catch (e) {
-      // Handle errors
-      print("Error: ${e.message}");
-    }
+  // Validate all fields are filled
+  if (fullNameController.text.isEmpty ||
+      emailController.text.isEmpty ||
+      passwordController.text.isEmpty ||
+      institutionNameController.text.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Please fill all required fields.'),
+        backgroundColor: Colors.red,
+      ),
+    );
+    return;
   }
 
+  try {
+    // Create user in Firebase Authentication
+    UserCredential userCredential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+
+    // Send email verification
+    await userCredential.user?.sendEmailVerification();
+
+    // Save user data to Firestore
+    await FirebaseFirestore.instance.collection('Signup').add({
+      'full_name': fullNameController.text,
+      'email': emailController.text,
+      'institution_name': institutionNameController.text,
+    });
+
+    // Navigate to login page after successful signup
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => In_login_page()),
+      (Route<dynamic> route) => false,
+    );
+
+    // Show success message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Registration successful! Please login.'),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+  } on FirebaseAuthException catch (e) {
+    // Handle specific authentication errors
+    String errorMessage;
+    switch (e.code) {
+      case 'weak-password':
+        errorMessage = 'Password is too weak (min 6 characters)';
+        break;
+      case 'email-already-in-use':
+        errorMessage = 'Account already exists for this email';
+        break;
+      case 'invalid-email':
+        errorMessage = 'Invalid email address format';
+        break;
+      default:
+        errorMessage = 'Registration failed: ${e.message}';
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(errorMessage),
+        backgroundColor: Colors.red,
+      ),
+    );
+  } catch (e) {
+    // Handle general errors
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('An unexpected error occurred'),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,9 +219,8 @@ class _instisignupState extends State<instisignup> {
                                 borderRadius: BorderRadius.circular(28),
                                 color: const Color.fromARGB(141, 241, 241, 241),
                                 border: Border.all(
-                                    color:
-                                        const Color.fromARGB(255, 64, 157, 194),
-                                    width: 3)),
+                                    color: const Color.fromARGB(255, 54, 127, 156),
+                              width: 3,)),
                             width: 303,
                             height: 55,
                             child: TextField(
@@ -195,9 +245,8 @@ class _instisignupState extends State<instisignup> {
                                 borderRadius: BorderRadius.circular(28),
                                 color: const Color.fromARGB(141, 241, 241, 241),
                                 border: Border.all(
-                                    color:
-                                        const Color.fromARGB(255, 64, 157, 194),
-                                    width: 3)),
+                                    color: const Color.fromARGB(255, 54, 127, 156),
+                              width: 3,)),
                             width: 303,
                             height: 55,
                             child: TextField(
@@ -222,9 +271,8 @@ class _instisignupState extends State<instisignup> {
                                 borderRadius: BorderRadius.circular(28),
                                 color: const Color.fromARGB(141, 241, 241, 241),
                                 border: Border.all(
-                                    color:
-                                        const Color.fromARGB(255, 64, 157, 194),
-                                    width: 3)),
+                                    color: const Color.fromARGB(255, 54, 127, 156),
+                              width: 3,)),
                             width: 303,
                             height: 55,
                             child: TextField(
@@ -250,9 +298,8 @@ class _instisignupState extends State<instisignup> {
                                 borderRadius: BorderRadius.circular(28),
                                 color: const Color.fromARGB(141, 241, 241, 241),
                                 border: Border.all(
-                                    color:
-                                        const Color.fromARGB(255, 64, 157, 194),
-                                    width: 3)),
+                                    color: const Color.fromARGB(255, 54, 127, 156),
+                              width: 3,)),
                             width: 303,
                             height: 55,
                             child: TextField(
@@ -270,7 +317,7 @@ class _instisignupState extends State<instisignup> {
                       ),
                       Positioned(
                         top: 435,
-                        left: 80,
+                        left: 90,
                         child: ElevatedButton(
                             onPressed: signUp,
                             child: Text("Sign up",
