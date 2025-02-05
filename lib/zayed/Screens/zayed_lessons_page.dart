@@ -7,15 +7,11 @@ import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
 import 'package:gamify_project/zayed/Screens/zayed_quiz_page.dart';
 import 'package:gamify_project/zayed/Screens/zayed_lessons_cards.dart';
 
-
-
-
-
-
 class Zayed_lessons_page extends StatelessWidget {
   final String title;
-  const Zayed_lessons_page({super.key,
-  required this.title,
+  const Zayed_lessons_page({
+    super.key,
+    required this.title,
   });
 
   @override
@@ -69,215 +65,236 @@ class Zayed_lessons_page extends StatelessWidget {
           child: Stack(
             children: [
               Container(
-                
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Material widget to apply elevation and shadow
-                  Material(
-                    elevation: 4.0,
-                    shadowColor: Colors.grey.withOpacity(0.5),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(
-                        bottom: Radius.circular(25),
-                      ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.vertical(
-                        bottom: Radius.circular(25),
-                      ),
-                      child: Container(
-                        color: Color(0xFFffffff),
-                        padding: EdgeInsets.only(
-                          top: screenHeight * 0.22,
-                          left: screenHeight * 0.06,
-                          right: screenHeight * 0.09,
-                          bottom: screenHeight * 0.02,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Material widget to apply elevation and shadow
+                    Material(
+                      elevation: 4.0,
+                      shadowColor: Colors.grey.withOpacity(0.5),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(25),
                         ),
-                        
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // Lessons button
-                            ElevatedButton(
-                              onPressed: () {
-                                // Add functionality here when the button is pressed
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color.fromARGB(197, 0, 129, 189),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                              ),
-                              child: Text(
-                                "Lessons",
-                                style: TextStyle(
-                                  fontSize: screenHeight * 0.03, // Responsive font size
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                            // TextButton aligned to the right
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Zayed_quiz_page()));
-                              },
-                              child: Text(
-                                "Tests",
-                                style: TextStyle(
-                                  fontSize: screenHeight * 0.03, // Responsive font size
-                                  color: const Color.fromARGB(197, 0, 129, 189),
-                                ),
-                              ),
-                            ),
-                            
-                          ],
-                        ),
-                        
                       ),
-                    
-                    ),
-                  ),
-                  StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('lessons')
-                          .where('course_name', isEqualTo: title)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        }
-            
-                        if (snapshot.hasError) {
-                          return Center(child: Text("Error fetching data"));
-                        }
-            
-                        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                          return Center(child: Text("No subjects available"));
-                        }
-            
-                        final subjects = snapshot.data!.docs;
-            
-                        return Container(
-                          margin: EdgeInsets.only(top: screenHeight * 0.02),
-                          height: screenHeight * 0.477, // Responsive height
-                          child: ListView.builder(
-                            scrollDirection: Axis.vertical,
-                            itemCount: subjects.length,
-                            itemBuilder: (context, index) {
-                              final subject = subjects[index].data()
-                                  as Map<String, dynamic>;
-                              return Lessons_cards(
-                                lessonTitle: subject['lesson_name'] ?? 'N/A',
-                                chapterNumber: int.tryParse(subject['Chapter_number'].toString()) ?? 0,
-                                date: subject['date'] ?? 'N/A',
-                              );
-                            },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(25),
+                        ),
+                        child: Container(
+                          color: Color(0xFFffffff),
+                          padding: EdgeInsets.only(
+                            top: screenHeight * 0.22,
+                            left: screenHeight * 0.06,
+                            right: screenHeight * 0.09,
+                            bottom: screenHeight * 0.02,
                           ),
-                        );
-                      }),
-                ],
-              ),
-            ),
-              Container(              
-              margin: EdgeInsets.fromLTRB(25, 10, 0, 0),
-              padding: EdgeInsets.fromLTRB(15, 13, 15, 15),
-              width: 360,
-              height: 170,
-              alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 218, 218, 218),
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-              child: Text(
-                      "Java is a programming language and computing platform first released by Sun Microsystems in 1995. It has evolved from humble beginnings to power a large share of today’s digital", textAlign: TextAlign.center,
-                      style: TextStyle(
-                      
-                        fontSize: 15.5,
-                        color: const Color.fromARGB(255, 0, 59, 99),
-                        fontWeight: FontWeight.bold,
+                          child: Row(
+                            
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // Lessons button
+                              ElevatedButton(
+                                onPressed: () {
+                                  // Add functionality here when the button is pressed
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(197, 0, 129, 189),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                child: Text(
+                                  "Lessons",
+                                  style: TextStyle(
+                                    fontSize: screenHeight *
+                                        0.03, // Responsive font size
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              // TextButton aligned to the right
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              Zayed_quiz_page()));
+                                },
+                                child: Text(
+                                  "Tests",
+                                  style: TextStyle(
+                                    fontSize: screenHeight *
+                                        0.03, // Responsive font size
+                                    color:
+                                        const Color.fromARGB(197, 0, 129, 189),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-            ),
+                    StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('lessons')
+                            .where('course_name', isEqualTo: title)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          }
+
+                          if (snapshot.hasError) {
+                            return Center(child: Text("Error fetching data"));
+                          }
+
+                          if (!snapshot.hasData ||
+                              snapshot.data!.docs.isEmpty) {
+                            return Center(child: Text("No subjects available"));
+                          }
+
+                          final subjects = snapshot.data!.docs;
+
+                          return Container(
+                            margin: EdgeInsets.only(top: screenHeight * 0.02),
+                            height: screenHeight * 0.477, // Responsive height
+                            child: ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: subjects.length,
+                              itemBuilder: (context, index) {
+                                final subject = subjects[index].data()
+                                    as Map<String, dynamic>;
+                                return Lessons_cards(
+                                  lessonTitle: subject['lesson_name'] ?? 'N/A',
+                                  chapterNumber: int.tryParse(
+                                          subject['Chapter_number']
+                                              .toString()) ??
+                                      0,
+                                  date: subject['date'] ?? 'N/A',
+                                );
+                              },
+                            ),
+                          );
+                        }),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.fromLTRB(25, 10, 0, 0),
+                padding: EdgeInsets.fromLTRB(15, 13, 15, 15),
+                width: 360,
+                height: 170,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 218, 218, 218),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: Text(
+                  "Java is a programming language and computing platform first released by Sun Microsystems in 1995. It has evolved from humble beginnings to power a large share of today’s digital",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 15.5,
+                    color: const Color.fromARGB(255, 0, 59, 99),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
 
-        // Bottom Navigation Bar 
-          bottomNavigationBar: Container(
-        color: Colors.white,
-        padding: const EdgeInsets.only(bottom: 14.0),
-        height: 96,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.home, size: 40.0),
-                  color: Colors.grey,
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page()));
-                  },
-                ),
-                const Text("Home",
+        // Bottom Navigation Bar
+        bottomNavigationBar: Container(
+          color: Colors.white,
+          padding: const EdgeInsets.only(bottom: 14.0),
+          height: 96,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.home, size: 40.0),
+                    color: Colors.grey,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => St_home_page()));
+                    },
+                  ),
+                  const Text("Home",
+                      style: TextStyle(
+                          height: 0.1,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w700)),
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.menu_book_rounded, size: 40.0),
+                    color: Color.fromARGB(197, 0, 129, 189),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Zayed_standard_navigations()));
+                    },
+                  ),
+                  const Text(
+                    "Courses",
                     style: TextStyle(
-                        height: 0.1,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w700)),
-              ],
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.menu_book_rounded, size: 40.0),
-                  color: Color.fromARGB(197, 0, 129, 189),
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Zayed_standard_navigations()));
-                  },
-                ),
-                const Text(
-                  "Courses",
-                  style: TextStyle(
                         height: 0.1,
                         color: Color.fromARGB(197, 0, 129, 189),
                         fontWeight: FontWeight.w700),
-                ),
-              ],
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.videogame_asset, size: 41),
-                  color: Colors.grey,
-                  onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Games_list()));
-                  },
-                ),
-                const Text("Games", style: TextStyle(height: 0.1)),
-              ],
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.person, size: 43),
-                  color: Colors.grey,
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage()));
-                  },
-                ),
-                const Text("Profile", style: TextStyle(height: 0.1)),
-              ],
-            ),
-          ],
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.videogame_asset, size: 41),
+                    color: Colors.grey,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Games_list()));
+                    },
+                  ),
+                  const Text("Games", style: TextStyle(height: 0.1)),
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.person, size: 43),
+                    color: Colors.grey,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MyProfilePage()));
+                    },
+                  ),
+                  const Text("Profile", style: TextStyle(height: 0.1)),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
-
 }
