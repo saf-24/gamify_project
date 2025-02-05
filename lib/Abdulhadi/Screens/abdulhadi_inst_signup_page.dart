@@ -1,11 +1,15 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
-
 import 'dart:ui';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_inst_HP.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_institusoin_logn_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -21,30 +25,112 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class instisignup extends StatelessWidget {
+class instisignup extends StatefulWidget {
   const instisignup({super.key});
 
+  @override
+  State<instisignup> createState() => _instisignupState();
+}
+
+class _instisignupState extends State<instisignup> {
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController institutionNameController =
+      TextEditingController();
+
+  Future<void> signUp() async {
+  // Validate all fields are filled
+  if (fullNameController.text.isEmpty ||
+      emailController.text.isEmpty ||
+      passwordController.text.isEmpty ||
+      institutionNameController.text.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Please fill all required fields.'),
+        backgroundColor: Colors.red,
+      ),
+    );
+    return;
+  }
+
+  try {
+    // Create user in Firebase Authentication
+    UserCredential userCredential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+
+    // Send email verification
+    await userCredential.user?.sendEmailVerification();
+
+    // Save user data to Firestore
+    await FirebaseFirestore.instance.collection('Signup').add({
+      'full_name': fullNameController.text,
+      'email': emailController.text,
+      'institution_name': institutionNameController.text,
+    });
+
+    // Navigate to login page after successful signup
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => In_login_page()),
+      (Route<dynamic> route) => false,
+    );
+
+    // Show success message
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Registration successful! Please login.'),
+        backgroundColor: Colors.green,
+      ),
+    );
+
+  } on FirebaseAuthException catch (e) {
+    // Handle specific authentication errors
+    String errorMessage;
+    switch (e.code) {
+      case 'weak-password':
+        errorMessage = 'Password is too weak (min 6 characters)';
+        break;
+      case 'email-already-in-use':
+        errorMessage = 'Account already exists for this email';
+        break;
+      case 'invalid-email':
+        errorMessage = 'Invalid email address format';
+        break;
+      default:
+        errorMessage = 'Registration failed: ${e.message}';
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(errorMessage),
+        backgroundColor: Colors.red,
+      ),
+    );
+  } catch (e) {
+    // Handle general errors
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('An unexpected error occurred'),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              size: 35.4,
-              color: Color.fromARGB(197, 0, 129, 189),
-            ),
-            onPressed: () {},
-          )
-        ],
         backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       ),
       body: Stack(
         children: [
           Positioned(
-            left: 115,
+            left: 135,
             child: Container(
               child: Text(
                 "Gamify",
@@ -74,51 +160,55 @@ class instisignup extends StatelessWidget {
                         top: 30,
                         right: 27,
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => instisignup()));
-                          },
-                          child: Text("Sign up",
-                              style: TextStyle(
-                                  fontSize: 22,
-                                  color:
-                                      const Color.fromARGB(255, 190, 228, 253),
-                                  fontWeight: FontWeight.w900)),
-                          style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all(
-                                const Color.fromARGB(197, 0, 129, 189),
-                              ),
-                              padding: WidgetStateProperty.all(
-                                  EdgeInsets.fromLTRB(24, 11, 24, 12)),
-                              shape: WidgetStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(28)))),
-                        ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => instisignup()));
+                            },
+                            child: Text("Sign up",
+                                style: TextStyle(
+                                    fontSize: 22,
+                                    color: const Color.fromARGB(
+                                        255, 190, 228, 253),
+                                    fontWeight: FontWeight.w900)),
+                            style: ButtonStyle(
+                                backgroundColor: WidgetStateProperty.all(
+                                  const Color.fromARGB(197, 0, 129, 189),
+                                ),
+                                padding: WidgetStateProperty.all(
+                                    EdgeInsets.fromLTRB(24, 11, 24, 12)),
+                                shape: WidgetStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(28))))),
                       ),
                       Positioned(
                         top: 30,
                         left: 33,
                         child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => In_login_page()));
-                          },
-                          child: Text("Login",
-                              style: TextStyle(
-                                  fontSize: 22,
-                                  color:
-                                      const Color.fromARGB(255, 27, 111, 167),
-                                  fontWeight: FontWeight.w900)),
-                          style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all(
-                                const Color.fromARGB(244, 255, 255, 255),
-                              ),
-                              padding: WidgetStateProperty.all(
-                                  EdgeInsets.fromLTRB(35, 12, 35, 12)),
-                              shape: WidgetStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(28)))),
-                        ),
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => In_login_page()));
+                            },
+                            child: Text("Login",
+                                style: TextStyle(
+                                    fontSize: 22,
+                                    color:
+                                        const Color.fromARGB(255, 27, 111, 167),
+                                    fontWeight: FontWeight.w900)),
+                            style: ButtonStyle(
+                                backgroundColor: WidgetStateProperty.all(
+                                  const Color.fromARGB(244, 255, 255, 255),
+                                ),
+                                padding: WidgetStateProperty.all(
+                                    EdgeInsets.fromLTRB(35, 12, 35, 12)),
+                                shape: WidgetStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(28))))),
                       ),
                       Positioned(
                         top: 125,
@@ -129,12 +219,12 @@ class instisignup extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(28),
                                 color: const Color.fromARGB(141, 241, 241, 241),
                                 border: Border.all(
-                                    color:
-                                        const Color.fromARGB(255, 64, 157, 194),
-                                    width: 3)),
+                                    color: const Color.fromARGB(255, 54, 127, 156),
+                              width: 3,)),
                             width: 303,
                             height: 55,
                             child: TextField(
+                              controller: fullNameController,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: "Full name *",
@@ -155,13 +245,12 @@ class instisignup extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(28),
                                 color: const Color.fromARGB(141, 241, 241, 241),
                                 border: Border.all(
-                                    color:
-                                        const Color.fromARGB(255, 64, 157, 194),
-                                    width: 3)),
+                                    color: const Color.fromARGB(255, 54, 127, 156),
+                              width: 3,)),
                             width: 303,
                             height: 55,
                             child: TextField(
-                              obscureText: true,
+                              controller: emailController,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: "Institution Email Address *",
@@ -182,16 +271,16 @@ class instisignup extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(28),
                                 color: const Color.fromARGB(141, 241, 241, 241),
                                 border: Border.all(
-                                    color:
-                                        const Color.fromARGB(255, 64, 157, 194),
-                                    width: 3)),
+                                    color: const Color.fromARGB(255, 54, 127, 156),
+                              width: 3,)),
                             width: 303,
                             height: 55,
                             child: TextField(
+                              controller: passwordController,
                               obscureText: true,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "Job title *",
+                                  hintText: "Password *",
                                   hintStyle: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
@@ -209,13 +298,12 @@ class instisignup extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(28),
                                 color: const Color.fromARGB(141, 241, 241, 241),
                                 border: Border.all(
-                                    color:
-                                        const Color.fromARGB(255, 64, 157, 194),
-                                    width: 3)),
+                                    color: const Color.fromARGB(255, 54, 127, 156),
+                              width: 3,)),
                             width: 303,
                             height: 55,
                             child: TextField(
-                              obscureText: true,
+                              controller: institutionNameController,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: "Institution name *",
@@ -229,26 +317,25 @@ class instisignup extends StatelessWidget {
                       ),
                       Positioned(
                         top: 435,
-                        left: 80,
+                        left: 90,
                         child: ElevatedButton(
-                          onPressed: () {},
-                          child: Text("Sign up",
-                              style: TextStyle(
-                                  fontSize: 27,
-                                  color:
-                                      const Color.fromARGB(255, 212, 238, 255),
-                                  fontWeight: FontWeight.w900)),
-                          style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all(
-                                const Color.fromARGB(197, 0, 129, 189),
-                              ),
-                              padding: WidgetStateProperty.all(
-                                  EdgeInsets.fromLTRB(40, 10, 40, 10)),
-                              shape: WidgetStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(28)))),
-                        ),
+                            onPressed: signUp,
+                            child: Text("Sign up",
+                                style: TextStyle(
+                                    fontSize: 27,
+                                    color: const Color.fromARGB(
+                                        255, 212, 238, 255),
+                                    fontWeight: FontWeight.w900)),
+                            style: ButtonStyle(
+                                backgroundColor: WidgetStateProperty.all(
+                                  const Color.fromARGB(197, 0, 129, 189),
+                                ),
+                                padding: WidgetStateProperty.all(
+                                    EdgeInsets.fromLTRB(40, 10, 40, 10)),
+                                shape: WidgetStateProperty.all(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(28))))),
                       ),
                     ],
                   ),

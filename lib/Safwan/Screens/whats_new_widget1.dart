@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gamify_project/Anas/Screens/Anas.dart';
+import 'package:gamify_project/Hamid/Screens/Hamid_content.dart';
+import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
+import 'package:gamify_project/zayed/Screens/zayed_lessons_page.dart';
 
 class Whats_New_Widget extends StatelessWidget {
   final String title;
   final String disc;
   final String imagepath;
   final String date;
+  final String fullName;
+  final String email;
+  final String major;
 
   const Whats_New_Widget({
     super.key,
@@ -13,6 +19,9 @@ class Whats_New_Widget extends StatelessWidget {
     required this.disc,
     required this.imagepath,
     required this.date,
+    required this.fullName,
+    required this.email,
+    required this.major,
   });
 
   @override
@@ -50,7 +59,7 @@ class Whats_New_Widget extends StatelessWidget {
                     letterSpacing: 3),
               )),
           Positioned(
-              bottom: 28,
+              bottom: 23,
               left: 25,
               child: Text(
                 date,
@@ -77,19 +86,27 @@ class Whats_New_Widget extends StatelessWidget {
                 ),
               )),
           Positioned(
-            bottom: 23,
-            right: 23,
+            bottom: 20,
+            right: 20,
             width: 116,
             height: 34,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationsScreen()));
+                Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Zayed_standard_navigations(
+                                               
+                                fullName: fullName,email: email,major: major,
+                              )
+                              )
+                              );
               },
               style: ButtonStyle(
                 backgroundColor: WidgetStateProperty.all(
                     const Color.fromARGB(255, 228, 228, 228)),
               ),
-              child: Text("Explore",style: TextStyle(fontSize: 18, fontWeight:FontWeight.w800,letterSpacing: 1,color: const Color.fromARGB(255, 45, 110, 153) ),),
+              child: Text("Explore",style: TextStyle(fontSize: 17, fontWeight:FontWeight.w800,letterSpacing: 1,color: const Color.fromARGB(255, 45, 110, 153) ),),
             ),
           ),
         ],

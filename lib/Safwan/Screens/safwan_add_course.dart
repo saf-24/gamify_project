@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gamify_project/Safwan/Screens/add_lesson.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,15 +24,29 @@ class MyApp extends StatelessWidget {
 class AddSubjectScreen extends StatefulWidget {
   @override
   _AddSubjectScreenState createState() => _AddSubjectScreenState();
+  
 }
 
+  
 class _AddSubjectScreenState extends State<AddSubjectScreen> {
   final TextEditingController subjectNameController = TextEditingController();
   final TextEditingController teacherNameController = TextEditingController();
+  final TextEditingController courseDiscController = TextEditingController();
+  final TextEditingController dateController = TextEditingController();
+
+  
 
   void saveSubject() {
     final subjectName = subjectNameController.text;
     final teacherName = teacherNameController.text;
+    final courseDisc = courseDiscController.text;
+    final date = dateController.text;
+    
+      @override
+  void initState() {
+    super.initState();
+    dateController.text = DateTime.now().toLocal().toString().split(' ')[0];
+  }
 
     if (subjectName.isEmpty || teacherName.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -43,17 +58,33 @@ class _AddSubjectScreenState extends State<AddSubjectScreen> {
     FirebaseFirestore.instance.collection('subjects').add({
       'title': subjectName,
       'tet_name': teacherName,
+      'course_disc': courseDisc,
+      'total_lessons': 0,
+      'highestProgres': 0,
+      'percent': 0.0,
+      'progres': " ",
+      
+       // Add this field with a default value of 0
     }).then((value) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Subject added successfully!')),
       );
       subjectNameController.clear();
       teacherNameController.clear();
+      courseDiscController.clear();
+
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to add subject: $error')),
       );
     });
+  
+       FirebaseFirestore.instance.collection('notifications').add({
+        'title': subjectName,
+        'message': "New course has benn added by $teacherName",
+        'image': "assets/img/download.jpg",
+        'date': date
+      });
   }
 
   @override
@@ -86,6 +117,24 @@ class _AddSubjectScreenState extends State<AddSubjectScreen> {
                 controller: subjectNameController,
                 decoration: InputDecoration(
                   labelText: 'Subject Name',
+                  border: OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(28.0),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 15),
+              Container(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(28.0)),
+                color: Colors.white,
+              ),
+              child: TextField(
+                controller: courseDiscController,
+                decoration: InputDecoration(
+                  labelText: 'Subject discrption',
                   border: OutlineInputBorder(
                     borderRadius: const BorderRadius.all(
                       Radius.circular(28.0),
@@ -128,10 +177,23 @@ class _AddSubjectScreenState extends State<AddSubjectScreen> {
                     ),
                   ),
                 ),
-                onPressed: saveSubject,
+                
+                onPressed: () {
+                  if (subjectNameController.text.isNotEmpty && teacherNameController.text.isNotEmpty && courseDiscController.text.isNotEmpty) {
+                  saveSubject();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddLessonScreen()),
+                  );
+                  } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Please fill out all fields!')),
+                  );
+                  }
+                },
                 child: Text(
-                  'Save Subject',
-                  style: TextStyle(fontSize: 17),
+                  'Add new lesson',
+                  style: TextStyle(fontSize: 19,color: Colors.black),
                 ),
               ),
             ),

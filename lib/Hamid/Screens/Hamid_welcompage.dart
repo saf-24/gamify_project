@@ -30,16 +30,7 @@ class welcome_page extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              size: 35.4,
-              color: Color.fromARGB(197, 0, 129, 189),
-            ),
-            onPressed: () {},
-          )
-        ],
+        
         backgroundColor: const Color.fromARGB(255, 230, 230, 230),
         elevation: 0,
       ),
@@ -47,9 +38,10 @@ class welcome_page extends StatelessWidget {
         children: [
           Positioned(
             top: 30,
-            left: 115,
+            left: 135,
             child: Text(
               "Gamify",
+              
               style: TextStyle(
                 fontSize: 47,
                 color: const Color.fromARGB(255, 54, 127, 156),

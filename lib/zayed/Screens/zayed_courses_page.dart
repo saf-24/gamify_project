@@ -1,16 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Abdulhadi/Screens/brbrly.dart';
+import 'package:gamify_project/Anas/Screens/Anas.dart';
+import 'package:gamify_project/Hamid/Screens/Hamid_welcompage.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_anas.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
 import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
 import 'package:gamify_project/zayed/Screens/zayed_courses_cards.dart';
 
-void main() {
-  runApp(const Zayed_standard_navigations());
-}
+
 
 class Zayed_standard_navigations extends StatelessWidget {
-  const Zayed_standard_navigations({super.key});
+  final String fullName;
+  final String email;
+  final String major;
+  const Zayed_standard_navigations({super.key,
+  required this.fullName,
+    required this.email,
+    required this.major,});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +28,7 @@ class Zayed_standard_navigations extends StatelessWidget {
         backgroundColor: const Color(0xFFe4e4e4),
         // appbar ://------------------------------------------//
         appBar: AppBar(
-      toolbarHeight: 65,
+        toolbarHeight: 65,
         title: Text(
           "Gamify",
           style: TextStyle(
@@ -33,18 +40,118 @@ class Zayed_standard_navigations extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             tooltip: "notifications",
-            icon: const Icon(Icons.notifications_none,
-                size: 39.4, color: Color.fromARGB(197, 0, 129, 189),),
-            onPressed: () {},
+            icon: const Icon(
+              Icons.notifications_none,
+              size: 39.4,
+              color: Color.fromARGB(197, 0, 129, 189),
+            ),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NotificationsScreen()));
+            },
           ),
         ],
-        leading: IconButton(
-          tooltip: "Menu",
-          icon: const Icon(Icons.menu,
-              size: 43.4, color: Color.fromARGB(197, 0, 129, 189),),
-          onPressed: () {},
+        leading: Builder( // استخدم Builder لإتاحة الوصول إلى Scaffold
+          builder: (context) => IconButton(
+            tooltip: "Menu",
+            icon: const Icon(
+              Icons.menu,
+              size: 43.4,
+              color: Color.fromARGB(197, 0, 129, 189),
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer(); // يفتح القائمة الجانبية
+            },
+          ),
         ),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      ),
+
+      drawer: Drawer( // القائمة الجانبية
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            SizedBox(
+              height: 120,
+              child: DrawerHeader(
+              
+                decoration: BoxDecoration(color: Color.fromARGB(197, 0, 129, 189),),
+                child: Text("Menu", textAlign:TextAlign.center , style: TextStyle(color: Colors.white, fontSize: 24)),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.question_mark,size: 29,),
+              title: Text("About us",style: TextStyle(fontSize: 20,)),
+              onTap: () {
+              
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.phone,size: 27,),
+              title: Text("Contact us",style: TextStyle(fontSize: 20,)),
+              onTap: () {
+                
+              },
+              
+            ),
+            Center(
+              child: Container(
+                margin: EdgeInsets.fromLTRB(75, 550, 0, 0),
+                child: ListTile(
+                
+                   leading:  Icon(Icons.logout,
+                        size: 35.4, color: Color.fromARGB(255, 223, 0, 0)),
+                        title: Text("Logout",style: TextStyle(fontSize: 20,color: Color.fromARGB(255, 223, 0, 0),fontWeight: FontWeight.w700),),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text("Confirm logout"),
+                            content: Text(
+                              "Are you sure you want to log out?",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context); // إغلاق الرسالة
+                                },
+                                child: Text(
+                                  "No",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => welcome_page()),
+                                    (Route<dynamic> route) => false,
+                                  );
+                                },
+                                child: Text("Log out",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: const Color.fromARGB(255, 255, 0, 0),
+                                    )),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                  ),
+              ),
+            )
+          ],
+        ),
       ),
 
         // Main content of the page better be here : ////////////-----------//////////------
@@ -83,6 +190,8 @@ class Zayed_standard_navigations extends StatelessWidget {
                     }
 
                     final subjects = snapshot.data!.docs;
+                    
+
                     return SizedBox(
                       height: MediaQuery.of(context).size.height * 0.74,
                       child: ListView.builder(
@@ -92,13 +201,14 @@ class Zayed_standard_navigations extends StatelessWidget {
                           final subject =
                               subjects[index].data() as Map<String, dynamic>;
                           return Courses_cards(
-                            title: subject['title'] ?? 'N/A',
+                            title: subject['title'] ?? 'N/A',                        
                             disc: subject['progres']?.toString() ?? 'N/A',
                             highestProgres: subject['highestProgres'] ?? 0,
-                            date: subject['lessonName'] ?? '',                    
-                            percent1: subject['percent'] ?? 0.0,
-                            total_lesson: subject['total_lesson'] ?? 0,
+                            date: subject['lessonName'] ?? '',                                                
+                            total_lesson: subject['total_lessons'] ?? 0,
                             tet_name: subject['tet_name'] ?? "N/A",
+                            cource_disc: subject['course_disc'] ?? "N/A",  
+                            fullName: fullName,email: email,major: major,                
                           );
                         },
                       ),
@@ -125,7 +235,7 @@ class Zayed_standard_navigations extends StatelessWidget {
                   icon: const Icon(Icons.home, size: 40.0),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => St_home_page2(fullName: fullName,email: email,major: major,)));
                   },
                 ),
                 const Text("Home",
@@ -160,7 +270,7 @@ class Zayed_standard_navigations extends StatelessWidget {
                   icon: const Icon(Icons.videogame_asset, size: 41),
                   color: Colors.grey,
                   onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Games_list()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => GamifyScreen(fullName: fullName,email: email,major: major,)));
                   },
                 ),
                 const Text("Games", style: TextStyle(height: 0.1)),
@@ -173,7 +283,7 @@ class Zayed_standard_navigations extends StatelessWidget {
                   icon: const Icon(Icons.person, size: 43),
                   color: Colors.grey,
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MyProfilePage(FirstName: fullName,email: email,major: major,)));
                   },
                 ),
                 const Text("Profile", style: TextStyle(height: 0.1)),

@@ -1,11 +1,15 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'dart:ui';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_inst_signup_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:gamify_project/Abdulhadi/Screens/abdulhadi_inst_HP.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -22,32 +26,85 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class In_login_page extends StatelessWidget {
+class In_login_page extends StatefulWidget {
   const In_login_page({super.key});
 
   @override
+  State<In_login_page> createState() => _In_login_pageState();
+}
+
+class _In_login_pageState extends State<In_login_page> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final ValueNotifier<bool> ischecked = ValueNotifier(false);
+
+  Future<void> signIn() async {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please fill all required fields'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => InstHomePage()),
+        (Route<dynamic> route) => false,
+      );
+
+    } on FirebaseAuthException catch (e) {
+      String errorMessage;
+      switch (e.code) {
+        case 'user-not-found':
+          errorMessage = 'No user found with this email';
+          break;
+        case 'wrong-password':
+          errorMessage = 'Incorrect password';
+          break;
+        case 'invalid-email':
+          errorMessage = 'Invalid email format';
+          break;
+        default:
+          errorMessage = 'Login failed: ${e.message}';
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(errorMessage),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An unexpected error occurred'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final ValueNotifier<bool> ischecked = ValueNotifier(false);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              size: 35.4,
-              color: const Color.fromARGB(255, 54, 127, 156),
-            ),
-            onPressed: () {},
-          )
-        ],
         backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       ),
       body: Stack(
         children: [
           Positioned(
             top: 30,
-            left: 115,
+            left: 135,
             child: Container(
               child: Text(
                 "Gamify",
@@ -78,7 +135,10 @@ class In_login_page extends StatelessWidget {
                         right: 27,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => instisignup()));
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => instisignup()));
                           },
                           child: Text("Sign up",
                               style: TextStyle(
@@ -139,16 +199,18 @@ class In_login_page extends StatelessWidget {
                             width: 303,
                             height: 55,
                             child: TextField(
+                              controller: emailController,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "ID",
+                                  hintText: "Institution Email",
                                   hintStyle: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(255, 54, 127, 156)),
+                                      color: const Color.fromARGB(
+                                          255, 54, 127, 156)),
                                   contentPadding: EdgeInsets.only(left: 20)),
                             )),
-                      ), 
+                      ),
                       Positioned(
                         top: 191,
                         left: 28,
@@ -164,6 +226,7 @@ class In_login_page extends StatelessWidget {
                             width: 303,
                             height: 55,
                             child: TextField(
+                              controller: passwordController,
                               obscureText: true,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -171,53 +234,24 @@ class In_login_page extends StatelessWidget {
                                   hintStyle: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w400,
-                                      color: const Color.fromARGB(255, 54, 127, 156)),
+                                      color: const Color.fromARGB(
+                                          255, 54, 127, 156)),
                                   contentPadding: EdgeInsets.only(left: 20)),
                             )),
                       ),
+                      
                       Positioned(
-                        top: 250,
-                        left: 24,
-                        child: Row(
-                          children: [
-                            ValueListenableBuilder<bool>(
-                              valueListenable: ischecked,
-                              builder: (context, value, child) {
-                                return Checkbox(
-                                  activeColor:
-                                      const Color.fromARGB(255, 54, 127, 156),
-                                  value: value,
-                                  onChanged: (bool? newValue) {
-                                    ischecked.value = newValue ?? false;
-                                  },
-                                  side: BorderSide(
-                                      color:
-                                          const Color.fromARGB(255, 0, 87, 145),
-                                      width: 2),
-                                );
-                              },
-                            ),
-                            Text(
-                              "remember me",
-                              style: TextStyle(
-                                  fontSize: 17,
-                                  color: const Color.fromARGB(255, 0, 54, 90),
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        top: 310,
-                        left: 89,
+                        top: 280,
+                        left: 93,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: signIn,
                           child: Text("Login",
                               style: TextStyle(
                                   fontSize: 30,
                                   color:
                                       const Color.fromARGB(255, 190, 228, 253),
-                                  fontWeight: FontWeight.w800,letterSpacing: 1)),
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 1)),
                           style: ButtonStyle(
                               backgroundColor: WidgetStateProperty.all(
                                 const Color.fromARGB(197, 0, 129, 189),
@@ -233,7 +267,7 @@ class In_login_page extends StatelessWidget {
                     ],
                   ),
                   width: 360,
-                  height: 424,
+                  height: 390,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(40),

@@ -1,25 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:gamify_project/Safwan/Screens/add_lesson_content.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(AddLessonScreen());
+  runApp(MyApp());
 }
 
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-
-class AddLessonScreen extends StatefulWidget {
   @override
-  _AddLessonScreenState createState() => _AddLessonScreenState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: AddQuizScreen(),
+    );
+  }
 }
 
-class _AddLessonScreenState extends State<AddLessonScreen> {
-  final TextEditingController lessonNameController = TextEditingController();
-  final TextEditingController chapterNumberController = TextEditingController();
+class AddQuizScreen extends StatefulWidget {
+  @override
+  _AddQuizScreenState createState() => _AddQuizScreenState();
+}
+
+class _AddQuizScreenState extends State<AddQuizScreen> {
+  final TextEditingController quizNameController = TextEditingController();
+  final TextEditingController qNumberController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
+  final TextEditingController chapterNumberController = TextEditingController(); // Controller for chapter number
   String? selectedCourse;
 
   @override
@@ -28,12 +38,13 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
     dateController.text = DateTime.now().toLocal().toString().split(' ')[0];
   }
 
-  void saveLesson() async {
-    final lessonName = lessonNameController.text;
-    final chapterNumber = chapterNumberController.text;
+  void saveQuiz() async {
+    final quizName = quizNameController.text;
+    final qNumber = qNumberController.text;
     final date = dateController.text;
+    final chapterNumber = chapterNumberController.text; // Get chapter number
 
-    if (lessonName.isEmpty || chapterNumber.isEmpty || selectedCourse == null) {
+    if (quizName.isEmpty || qNumber.isEmpty || selectedCourse == null || chapterNumber.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please fill out all fields!')),
       );
@@ -41,61 +52,39 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
     }
 
     try {
-      // Save the lesson
-      await FirebaseFirestore.instance.collection('lessons').add({
-        'lesson_name': lessonName,
-        'Chapter_number': int.parse(chapterNumber),
+      // Save the quiz
+      await FirebaseFirestore.instance.collection('quizes').add({
+        'quiz_name': quizName,
+        'Qnumber': int.parse(qNumber),
         'date': date,
         'course_name': selectedCourse,
-  
+        'chapter_number': int.parse(chapterNumber), // Add chapter number to Firestore
       });
-        FirebaseFirestore.instance.collection('notifications').add({
-        'title': lessonName,
-        'message': "New course has benn added in $selectedCourse ",
-        'image': "assets/img/download.jpg",
-        'date': date,
-      });
-      // Update total_lessons in the corresponding subject
-      QuerySnapshot subjectSnapshot = await FirebaseFirestore.instance
-          .collection('subjects')
-          .where('title', isEqualTo: selectedCourse)
-          .get();
-
-      if (subjectSnapshot.docs.isNotEmpty) {
-        String subjectId = subjectSnapshot.docs.first.id;
-        int currentTotalLessons = subjectSnapshot.docs.first['total_lessons'] ?? 0;
-
-        await FirebaseFirestore.instance
-            .collection('subjects')
-            .doc(subjectId)
-            .update({
-          'total_lessons': currentTotalLessons + 1,
-        });
-      }
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Lesson saved successfully!')),
+        SnackBar(content: Text('Quiz saved successfully!')),
       );
 
       // Clear the form
-      lessonNameController.clear();
+      quizNameController.clear();
+      qNumberController.clear();
       chapterNumberController.clear();
       selectedCourse = null;
       setState(() {});
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to add lesson: $error')),
+        SnackBar(content: Text('Failed to add quiz: $error')),
       );
     }
   }
 
-  Future<List<String>> fetchSubjects() async {
+  Future<List<String>> fetchCourses() async {
     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('subjects').get();
     return snapshot.docs.map((doc) => doc['title'] as String).toList();
   }
 
-  void showSubjectsDialog() async {
-    List<String> subjects = await fetchSubjects();
+  void showCoursesDialog() async {
+    List<String> courses = await fetchCourses();
     showDialog(
       context: context,
       builder: (context) {
@@ -105,17 +94,17 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
             width: double.maxFinite,
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: subjects.length,
+              itemCount: courses.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(subjects[index], style: TextStyle(fontSize: 16)),
+                  title: Text(courses[index], style: TextStyle(fontSize: 16)),
                   onTap: () {
                     setState(() {
-                      selectedCourse = subjects[index];
+                      selectedCourse = courses[index];
                     });
                     Navigator.pop(context);
                   },
-                  tileColor: selectedCourse == subjects[index] ? Colors.blue[100] : null,
+                  tileColor: selectedCourse == courses[index] ? Colors.blue[100] : null,
                 );
               },
             ),
@@ -125,25 +114,13 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
     );
   }
 
-  Future<int> getTotalLessons(String courseName) async {
-    QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection('subjects')
-        .where('title', isEqualTo: courseName)
-        .get();
-
-    if (snapshot.docs.isNotEmpty) {
-      return snapshot.docs.first['total_lessons'] ?? 0;
-    }
-    return 0;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFECECEC),
       appBar: AppBar(
         centerTitle: true,
-        title: Text(' Add new lesson ',
+        title: Text(' Add new quiz ',
             style: TextStyle(fontSize: 18, color: Color(0xFF1A71C2), fontWeight: FontWeight.w500)),
         backgroundColor: Colors.white,
       ),
@@ -152,14 +129,16 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildTextField('Lesson name', lessonNameController),
+            buildTextField('Quiz name', quizNameController),
             SizedBox(height: 16),
-            buildTextField('Lesson number', chapterNumberController, isNumber: true),
+            buildTextField('Number of questions', qNumberController, isNumber: true),
+            SizedBox(height: 16),
+            buildTextField('Chapter number', chapterNumberController, isNumber: true), // Add chapter number field
             SizedBox(height: 16),
             buildTextField('Date', dateController, isReadOnly: true),
             SizedBox(height: 16),
             GestureDetector(
-              onTap: showSubjectsDialog,
+              onTap: showCoursesDialog,
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 decoration: BoxDecoration(
@@ -176,20 +155,6 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
-            if (selectedCourse != null)
-              FutureBuilder<int>(
-                future: getTotalLessons(selectedCourse!),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    return Text('Total Lessons: ${snapshot.data}');
-                  }
-                },
-              ),
             SizedBox(height: 35),
             Center(
               child: ElevatedButton(
@@ -198,21 +163,8 @@ class _AddLessonScreenState extends State<AddLessonScreen> {
                   padding: MaterialStateProperty.all(EdgeInsets.symmetric(vertical: 10, horizontal: 20)),
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(28.0))),
                 ),
-                
-                onPressed: () {
-                  if (lessonNameController.text.isNotEmpty && chapterNumberController.text.isNotEmpty && selectedCourse != null) {
-                    saveLesson();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AddLessonContentScreen()),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Please fill out all fields!')),
-                    );
-                  }
-                },
-                child: Text('Add content', style: TextStyle(fontSize: 17, color: Colors.black)),
+                onPressed: saveQuiz,
+                child: Text('Save Quiz', style: TextStyle(fontSize: 17, color: Colors.black)),
               ),
             ),
           ],

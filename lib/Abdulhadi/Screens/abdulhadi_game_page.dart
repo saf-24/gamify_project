@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // إضافة استيراد FirebaseAuth
+import 'package:gamify_project/Abdulhadi/Screens/brbrly.dart';
+import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
+import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
+import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
+import 'package:gamify_project/zayed/Screens/zayed_leaderboard_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,12 +19,25 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HintPage(),
+      
     );
   }
 }
 
 class HintPage extends StatefulWidget {
+  final String fullName;
+  final String email;
+  final String major;
+  final String course_name;
+  
+
+  HintPage({
+    required this.fullName,
+    required this.email,
+    required this.major,
+    required this.course_name,
+  });
+
   @override
   _HintPageState createState() => _HintPageState();
 }
@@ -33,20 +52,60 @@ class _HintPageState extends State<HintPage> {
   int incorrectAttempts = 0;
   int totalScore = 0;
 
+  String playerUID = "playerUID"; // استبدل هذا بـ UID الحقيقي
+  String playerName = "Unknown Player";
+
   @override
   void initState() {
     super.initState();
+    _initializePlayerData(); // استدعاء دالة تهيئة البيانات
     _loadQuestions();
   }
 
+  // دالة تهيئة بيانات اللاعب
+  Future<void> _initializePlayerData() async {
+    // الحصول على UID للمستخدم الحالي
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      String uid = user.uid; // الحصول على الـ UID للمستخدم الحالي
+      String fetchedName = await _fetchPlayerName(uid);
+      setState(() {
+        playerName = fetchedName; // تحديث اسم اللاعب
+      });
+    }
+  }
+
+  // دالة لجلب اسم اللاعب باستخدام UID
+  Future<String> _fetchPlayerName(String uid) async {
+    try {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('Login_info')
+          .doc(uid)
+          .get();
+
+      if (userDoc.exists && userDoc.data() != null) {
+        print("Fetched player name: ${userDoc['full_name']}");
+        return userDoc['full_name']; // تأكد أن الحقل مطابق لقاعدة البيانات
+      } else {
+        print("Player not found or data is missing.");
+        return 'Unknown Player';
+      }
+    } catch (e) {
+      print("Error fetching player name: $e");
+      return 'Unknown Player';
+    }
+  }
+
+  // دالة لتحميل الأسئلة من Firebase
   Future<void> _loadQuestions() async {
     QuerySnapshot querySnapshot =
-        await _firestore.collection('Hint_game').get();
+        await _firestore.collection('Hint_game').where('subject_title',isEqualTo: widget.course_name).get();
     setState(() {
       questions = querySnapshot.docs;
     });
   }
 
+  // دالة للتحقق من الإجابة
   void _checkAnswer(int selectedIndex) {
     var currentQuestion = questions[currentQuestionIndex];
     int correctAnswer = currentQuestion['correctAnswer'];
@@ -75,14 +134,21 @@ class _HintPageState extends State<HintPage> {
     });
   }
 
+  // دالة لحفظ النقاط في Firebase
   void _saveScoreToFirebase(int score) async {
-    await _firestore.collection('leaderboard').add({
-      'name': 'Player',
-      'score': score,
-      'timestamp': FieldValue.serverTimestamp(),
-    });
+    try {
+      await _firestore.collection('Leaderboard').add({
+        'name': playerName,
+        'score': score,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+      print("Score saved successfully!");
+    } catch (e) {
+      print("Error saving score: $e");
+    }
   }
 
+  // دالة للانتقال إلى السؤال التالي
   void _goToNextQuestion() {
     setState(() {
       if (currentQuestionIndex < questions.length - 1) {
@@ -93,10 +159,10 @@ class _HintPageState extends State<HintPage> {
         incorrectAttempts = 0;
       } else {
         _saveScoreToFirebase(totalScore);
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => ResultsPage(score: totalScore),
+            builder: (context) => ResultsPage(score: totalScore,fullName:widget.fullName,email: widget.email,major: widget.major,),
           ),
         );
       }
@@ -107,7 +173,7 @@ class _HintPageState extends State<HintPage> {
   Widget build(BuildContext context) {
     if (questions.isEmpty) {
       return Scaffold(
-        backgroundColor: Color(0xFFE6F7FF),
+        backgroundColor: const Color.fromARGB(255, 230, 230, 230),
         body: Center(child: CircularProgressIndicator()),
       );
     }
@@ -117,7 +183,7 @@ class _HintPageState extends State<HintPage> {
     List<dynamic> answers = currentQuestion['answer'];
 
     return Scaffold(
-      backgroundColor: Color(0xFFE6F7FF),
+      backgroundColor: const Color.fromARGB(255, 230, 230, 230),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -125,10 +191,14 @@ class _HintPageState extends State<HintPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Align(
-                alignment: Alignment.topRight,
+                alignment: Alignment.center,
                 child: GestureDetector(
-                  onTap: () {},
-                  child: Icon(Icons.close, color: Colors.black, size: 30),
+                  onTap: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => GamifyScreen(fullName: widget.fullName,email: widget.email,major: widget.major,)));
+                  },
+                  child: Icon(Icons.close,
+                      color: Color.fromARGB(197, 0, 129, 189), size: 45),
                 ),
               ),
               SizedBox(height: 20),
@@ -214,13 +284,24 @@ class _HintPageState extends State<HintPage> {
 
 class ResultsPage extends StatelessWidget {
   final int score;
+  final String fullName;
+  final String email;
+  final String major;
+  
 
-  ResultsPage({required this.score});
+  ResultsPage({required this.score,required this.fullName,
+    required this.email,
+    required this.major,});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Results'), centerTitle: true),
+      backgroundColor: const Color.fromARGB(255, 231, 231, 231),
+      appBar: AppBar(
+        title: Text('Results'),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -233,6 +314,48 @@ class ResultsPage extends StatelessWidget {
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
                     color: Colors.blue)),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      
+                      children: [
+                        ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => ZayedLeaderboardPage(fullName:fullName,email: email,major: major,)));
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Color.fromARGB(197, 0, 129, 189),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(25),
+                                        ),
+                                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                      ),
+                                      child: Text(
+                                        "Leaderboard",
+                                        style: TextStyle(fontSize: 18, color: Colors.white),
+                                      ),
+                                    ),
+                                    SizedBox(width: 20,),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => St_home_page2(fullName:fullName,email: email,major: major,)));
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(197, 0, 129, 189),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              ),
+              child: Text(
+                "back to home",
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+            ),
+                      ],
+                    ),
           ],
         ),
       ),

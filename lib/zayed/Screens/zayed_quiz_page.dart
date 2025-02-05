@@ -1,18 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gamify_project/Anas/Screens/Anas.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_anas.dart';
 import 'package:gamify_project/Safwan/Screens/safwan_games_list.dart';
 import 'package:gamify_project/Safwan/Screens/test_fire_2.dart';
 import 'package:gamify_project/zayed/Screens/zayed_courses_page.dart';
 import 'package:gamify_project/zayed/Screens/zayed_lessons_page.dart';
+
 import 'package:gamify_project/zayed/Screens/zayed_quiz_cards.dart';
 
-void main() {
-  runApp(const Zayed_quiz_page());
-}
+
 
 class Zayed_quiz_page extends StatelessWidget {
-  const Zayed_quiz_page({super.key});
+  final String title;  
+  final String course_disc;
+  final String fullName;
+  final String email;
+  final String major;
+
+  const Zayed_quiz_page({super.key,
+  required this.title,
+  required this.course_disc,
+  required this.fullName,
+    required this.email,
+    required this.major,
+
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +56,10 @@ class Zayed_quiz_page extends StatelessWidget {
                 size: 39.4,
                 color: Color.fromARGB(197, 0, 129, 189),
               ),
-              onPressed: () {},
+              onPressed: () {Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => NotificationsScreen()));},
             ),
           ],
           leading: IconButton(
@@ -97,6 +113,10 @@ class Zayed_quiz_page extends StatelessWidget {
                             // Lessons button
                             TextButton(
                               onPressed: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => Zayed_lessons_page(title: title, cource_disc_lesson: course_disc,fullName: fullName,email: email,major: major,)),
+                                );
                                 
                               },
                               child: Text(
@@ -137,6 +157,7 @@ class Zayed_quiz_page extends StatelessWidget {
                   StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
                         .collection('quizes')
+                        .where('course_name', isEqualTo: title)
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -163,7 +184,7 @@ class Zayed_quiz_page extends StatelessWidget {
                             final subject =
                                 subjects[index].data() as Map<String, dynamic>;
                             return Quiz_cards(
-                              lessonTitle: subject['lesson_name'] ?? 'N/A',
+                              lessonTitle: subject['quiz_name'] ?? 'N/A',
                               chapterNumber: subject['quiz_number'] ?? 0,
                               date: subject['date'] ?? 'N/A',
                               grade: subject['grade'] ?? 0.0,
@@ -218,7 +239,7 @@ class Zayed_quiz_page extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => St_home_page()));
+                              builder: (context) => St_home_page2(fullName: fullName,email: email,major: major,)));
                     },
                   ),
                   const Text("Home",
@@ -239,7 +260,7 @@ class Zayed_quiz_page extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  Zayed_standard_navigations()));
+                                  Zayed_standard_navigations(fullName: fullName,email: email,major: major,)));
                     },
                   ),
                   const Text(
@@ -261,7 +282,7 @@ class Zayed_quiz_page extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Games_list()));
+                              builder: (context) => Games_list(fullName: fullName,email: email,major: major,)));
                     },
                   ),
                   const Text("Games", style: TextStyle(height: 0.1)),
@@ -277,7 +298,7 @@ class Zayed_quiz_page extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MyProfilePage()));
+                              builder: (context) => MyProfilePage(FirstName: fullName,email: email,major: major,)));
                     },
                   ),
                   const Text("Profile", style: TextStyle(height: 0.1)),
